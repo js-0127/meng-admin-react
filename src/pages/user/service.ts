@@ -74,6 +74,12 @@ export interface Menu {
   //验证码
   getCaptcha: () => {
     return axios.get('/api/auth/captcha')
+  },
+
+  //获取当前用户信息
+
+  getUserInfo: () => {
+    return axios.get('/api/auth/current/user')
   }
  }
  export default userService

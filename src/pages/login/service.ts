@@ -3,7 +3,6 @@ import axios from "axios"
 export interface LoginDTO {
     accountNumber: string;
     password: string;
-    captchaId: string;
     captcha: string;
     publicKey: string;
   }

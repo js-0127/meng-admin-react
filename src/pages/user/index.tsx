@@ -16,7 +16,7 @@ import {
 
 import type { ColumnsType } from 'antd/es/table';
 import { useAntdTable, useRequest } from 'ahooks';
-import {   useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs'
 import NewAndEditForm from './newAndEdit';
@@ -33,7 +33,8 @@ const UserPage = () => {
     const {runAsync: deleteUser} = useRequest(userService.deleteUser, {manual: true})
     const [editData, setEditData] = useState<User | null>(null)
     const [saveLoding, setSaveLoding] = useState(false)
-
+  
+    
     const formRef = useRef<FormInstance>(null)
 
     const columns: ColumnsType<any> = [
