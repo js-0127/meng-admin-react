@@ -1,9 +1,9 @@
 import { IconBuguang } from "~/assets/icons/buguang"
 import { t } from "~/utils/i18n"
-import { Button, Carousel, Form, Input, message } from "antd"
+import { Button, Carousel, Form, Input } from "antd"
 import { LockOutlined, UserOutlined } from "@ant-design/icons"
 import { IconYanzhengma } from "~/assets/icons/yanzhengma"
-import { useRequest } from "ahooks"
+import { useRequest } from "~/hooks/use-request"
 import loginService, { LoginDTO } from "./service"
 import { useGlobalStore } from "~/stores/global"
 import { useNavigate } from "react-router-dom"
@@ -22,39 +22,28 @@ const Login = () => {
     if(!captcha?.data){
       return ;
     }
-    
     //获取公钥
-   const {data: publicKey} = await getPublicKey()
-
-  //  if (error) {
-  //   return;
-  // }
+   const [error, publicKey] = await getPublicKey()
+   if (error) {
+    return;
+  }
    // 使用公钥对密码加密
    const encrypt = new JSEncrypt()
    encrypt.setPublicKey(publicKey)
    const password = encrypt.encrypt(values.password)
-
    if(!password) {
     return;
    }
    values.password = password
    values.publicKey = publicKey
-
-
-    try {
-      const {data} = await login(values)
-      console.log(data);
+      const [loginError, data] = await login(values)
+      if(loginError) {
+        return 
+      }
       setToken(data.token)
       setRefreshToken(data.refreshToken)
       navigate('/')
-    } catch (error:any) {
-      console.log(error);
-      
-      message.error(error.response?.data?.messages ? error.response?.data?.messages.message[0] : error.response.data.message)
-    }
-
-  }
-
+    } 
 
     return (
       <div className="bg-primary light:bg-[rgb(238,242,246)] bg-[rgb(238,242,246)] flex justify-center items-center h-[100vh]">
@@ -107,7 +96,7 @@ const Login = () => {
                 suffix={
                 ( <div 
                   className="cursor-pointer " 
-                  dangerouslySetInnerHTML={{__html: captcha?.data.data as string}}
+                  dangerouslySetInnerHTML={{__html: captcha?.data as string}}
                   onClick={refreshCaptcha} 
                 />)
                 }
@@ -191,6 +180,6 @@ const Login = () => {
       </div>
         </div>
     )
-}
+        }
 
 export default Login

@@ -15,19 +15,18 @@ import {
     Tag,} from 'antd'
 
 import type { ColumnsType } from 'antd/es/table';
-import { useAntdTable, useRequest } from 'ahooks';
+import { useAntdTable } from 'ahooks';
 import { useRef, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs'
 import NewAndEditForm from './newAndEdit';
 import userService, { User } from './service';
-
+import {useRequest} from '~/hooks/use-request'
 
 const UserPage = () => {
     const [form] = Form.useForm()
  
     const {message} = App.useApp()
-    
    
     const {tableProps, search: {submit, reset}} = useAntdTable(userService.getUserListByPage, {defaultPageSize: 10,form})
     const {runAsync: deleteUser} = useRequest(userService.deleteUser, {manual: true})

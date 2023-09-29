@@ -1,4 +1,4 @@
-import axios from 'axios'
+import request from '~/request'
 
 export interface Menu {
     id: string;
@@ -17,7 +17,6 @@ export interface Menu {
     parentPaths?: string[];
     authCode?: string;
   }
-  
 
   export interface User {
     id: number;
@@ -28,11 +27,6 @@ export interface Menu {
     createDate: string;
     updateDate: string;
     avatar?: any;
-    menus: Menu[];
-    routes: any[];
-    flatMenus: Menu[];
-    avatarPath: string;
-    authList: string[];
   }
   
  export interface pageData {
@@ -40,46 +34,42 @@ export interface Menu {
   total: number
  } 
 
+
  const userService = {
    // 分页获取用户列表
    getUserListByPage: ({current, pageSize}: {current:number, pageSize: number}, formData:any) => {
-    return axios.get<pageData>('/api/user/page',  {
+     return request.get<pageData>('/api/user/page',  {
       params: {
-        page: current - 1,
+        page: current,
         size: pageSize,
         ...formData
       }
-    }).then(({ data }) => {
-     
+    }).then(([error, pageData]) => {
+      console.log(pageData);
+      
       return ({
-        list: data.data,
-        total: data.total,
+        list: pageData.data,
+        total: pageData.total,
       })
     })
           
     },
 
    addUser: (data: User) => {
-    return axios.post('/api/user', data)
+    return request.post('/api/user', data)
    },
    // 更新用户
   updateUser: (data: User) => {
-    return axios.patch('/api/user', data);
+    return request.put('/api/user', data);
   },
   // 删除用户
   deleteUser: (id: number) => {
-    return axios.delete(`/api/user/${id}`);
-  },
-
-  //验证码
-  getCaptcha: () => {
-    return axios.get('/api/auth/captcha')
+    return request.delete(`/api/user/${id}`);
   },
 
   //获取当前用户信息
-
   getUserInfo: () => {
-    return axios.get('/api/auth/current/user')
+    return request.get<User>('/api/auth/current/user')
   }
  }
  export default userService

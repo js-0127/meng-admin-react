@@ -10,9 +10,9 @@ import { defaultSetting } from '~/default-settings';
 import { useGlobalStore } from '~/stores/global';
 import { i18n, t } from '~/utils/i18n';
 import { BellOutlined, MenuOutlined, SettingOutlined } from '@ant-design/icons';
-// import { useUserStore } from '~/stores/global/user';
-// import { useRequest } from '~/hooks/use-request';
-// import loginService from '~/pages/login/service';
+import { useUserStore } from '~/stores/global/user';
+import { useRequest } from '~/hooks/use-request';
+import loginService from '~/pages/login/service';
 
 const Header = () => {
 
@@ -25,19 +25,22 @@ const Header = () => {
     lang,
   } = useGlobalStore();
 
-//   const { currentUser } = useUserStore();
+  const { currentUser } = useUserStore();
 
-//   const { runAsync } = useRequest(loginService.logout, { manual: true });
+  const { runAsync} = useRequest(loginService.logout, { manual: true });
 
-//   const logout = async () => {
-//     const [error] = await runAsync();
-//     if (error) return;
+  const logout = async () => {
+    const [error] = await runAsync();
+    if (error) return;
 
-//     useGlobalStore.setState({
-//       token: '',
-//       refreshToken: ''
-//     });
-//   }
+    useGlobalStore.setState({
+      token: '',
+      refreshToken: ''
+    });
+
+  }
+
+  
 
   return (
     <div
@@ -111,7 +114,7 @@ const Header = () => {
             placement="bottom"
             overlayClassName='w-[160px]'
           >
-            <div className='btn-icon text-[20px] bg-[rgb(227,242,253)] dark:text-[rgb(30,136,229)] text-[rgb(30,136,229)] hover:(bg-[rgb(33,150,243)] dark:text-[rgb(227,242,253)] text-[rgb(227,242,253)])'>
+            <div className='btn-icon text-[20px] bg-[rgb(227,242,253)]  text-[rgb(30,136,229)] hover:(bg-[rgb(33,150,243)] dark:text-[rgb(227,242,253)] text-[rgb(227,242,253)])'>
               {lang === 'zh' ? (
                 <IconShuyi_fanyi36 />
               ) : (
@@ -138,7 +141,7 @@ const Header = () => {
                   }}
                   className='dark:bg-[rgb(33,41,70)] bg-white rounded-lg w-[200px]'
                 >
-                  {/* <div className='p-[16px]'>
+                  <div className='p-[16px]'>
                     <p className='text-[16px] dark:text-[rgb(237,242,247)] text-[rgb(17,25,39)] '>
                       {currentUser?.nickName}
                     </p>
@@ -152,17 +155,18 @@ const Header = () => {
                   <hr style={{ borderWidth: '0 0 thin' }} className='m-[0] border-solid dark:border-[rgb(45,55,72)] border-[rgb(242,244,247)]' />
                   <div className='p-[16px] text-center'>
                     <Button onClick={logout} type='text' size='small'>退出登录</Button>
-                  </div> */}
+                  </div>
                 </div>
               )
             }}
           >
             <div className='btn-icon rounded-[27px] pl-[10px] pr-[14px] justify-between h-[48px] w-[92px] text-[20px] bg-[rgb(227,242,253)] text-[rgb(30,136,229)] hover:(bg-[rgb(33,150,243)] text-[rgb(227,242,253)])'>
-              {/* {currentUser?.avatarPath ? (
-                <Avatar style={{ verticalAlign: 'middle' }} src={currentUser.avatarPath} />
+              
+              {currentUser?.avatar ? (
+                <Avatar style={{ verticalAlign: 'middle' }} src={currentUser.avatar} />
               ) : (
-                <Avatar style={{ backgroundColor: 'gold', verticalAlign: 'middle' }} icon={<IconBuguang />} />
-              )} */}
+                <Avatar style={{ backgroundColor: 'gold', verticalAlign: 'middle' }} size={35} icon={<IconBuguang />} />
+              )}
               <SettingOutlined />
             </div>
           </Dropdown>

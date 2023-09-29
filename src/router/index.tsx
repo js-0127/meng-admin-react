@@ -4,7 +4,8 @@ import Result404 from '~/pages/404';
 import Login from '~/pages/login';
 import { routeConfig } from './routeConfig';
 
-const  Router = () => {
+
+
   const router = createBrowserRouter(
     [
       {
@@ -20,9 +21,17 @@ const  Router = () => {
       }
     ]
   );
-	return (
+  
+  export const toLoginPage = () => {
+    router.navigate('/login');
+  }
+  
+
+	
+  const  Router = () => {
+    return (
 	    <RouterProvider router={router} />
 	)
-}
+  }
 
 export default Router

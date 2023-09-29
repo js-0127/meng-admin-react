@@ -1,4 +1,4 @@
-import axios from "axios"
+import request from "~/request";
 
 export interface LoginDTO {
     accountNumber: string;
@@ -24,17 +24,27 @@ export interface captchaDto {
 const loginService = {
     //登录
     login: (loginDto:LoginDTO) => {
-        return axios.post<TokenDTO>('api/auth/login', loginDto)
+        return request.post<TokenDTO>('api/auth/login', loginDto)
     },
 
     //获取验证码
     getCaptcha: () => {
-        return axios.get<captchaDto>('/api/auth/captcha')
+        return request.get<captchaDto>('/api/auth/captcha')
     },
 
     //获取公钥
     getPublicKey: () => {
-        return axios.get<string>('/api/auth/publicKey')
+        return request.get<string>('/api/auth/publicKey')
+    },
+
+    //刷新token
+    rerefshToken(refreshToken: string) {
+        return request.post<TokenDTO>('/api/auth/refresh/token', {refreshToken});
+      },
+    
+    //退出登录
+    logout() {
+        return request.post<TokenDTO>('api/auth/logout')
     }
 
 }
