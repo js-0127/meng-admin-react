@@ -37,8 +37,6 @@ const Avatar: React.FC<PropsType> = ({value, onChange}) => {
    }
 
    const onPreview = async(file:UploadFile) => {
-    
-    
     const src = file.url || file?.response.filePath
     console.log(src);
     if(src) {
