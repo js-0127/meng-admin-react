@@ -1,10 +1,10 @@
 import { t } from '~/utils/i18n';
 import { Form, Input, Radio, App, FormInstance } from 'antd'
-import { forwardRef, useImperativeHandle, ForwardRefRenderFunction, useMemo, useEffect } from 'react'
+import { forwardRef, useImperativeHandle, ForwardRefRenderFunction, useMemo, useEffect, useState } from 'react'
 import userService, { User } from './service';
 import { useRequest } from 'ahooks';
 import Avatar from './avatar';
-
+import EmailInput from './mail';
 
 interface PropsType {
     open: boolean;
@@ -22,24 +22,30 @@ const NewAndEditForm:ForwardRefRenderFunction<FormInstance, PropsType> = ({
     const {message} = App.useApp()
     const {runAsync: updateUser} = useRequest(userService.updateUser, {manual: true})
     const {runAsync: addUser} = useRequest(userService.addUser, {manual: true})
-
     useImperativeHandle(ref, () => form, [form])
 
     const finishHandle = async(values: User) => {
         try {
             setSaveLoading(true);
-            console.log(values.avatar?.[0]?.response);
-            if(values.avatar?.[0]?.response?.pkValue) {
+            if(values.avatar?.[0]?.response) {
+              console.log(values.avatar?.[0]);
               values.avatar = values.avatar?.[0]?.response
             } else {
               values.avatar = null
             }
-            
             if(editData) {
-                await updateUser({...editData, ...values})
+              const [error] = await updateUser({...editData, ...values})
+              setSaveLoading(false);
+              if(error) {
+                return 
+              }
                 message.success(t("NfOSPWDa" /* 更新成功！ */))
             } else {
-                await addUser(values)
+              const [error] = await addUser(values)
+              setSaveLoading(false);
+              if(error) {
+                return 
+              }
                 message.success(t("JANFdKFM" /* 创建成功！ */));
             }
             onSave()
@@ -130,7 +136,13 @@ const NewAndEditForm:ForwardRefRenderFunction<FormInstance, PropsType> = ({
           message: t("EfwYKLsR" /* 邮箱格式不正确 */),
         }]}
       >
-        <Input />
+       <EmailInput disabled={!!editData} />
+      </Form.Item>
+
+      <Form.Item 
+         name="emailCaptcha" label="邮箱验证码" rules={[{required: true,}]}
+      >
+        <Input  />
       </Form.Item>
       <Form.Item
         label={t("ykrQSYRh" /* 性别 */)}

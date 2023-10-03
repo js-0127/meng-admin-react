@@ -24,9 +24,11 @@ export interface Menu {
     nickName: string;
     phoneNumber: string;
     email: string;
+    emailCaptcha?:string
     createDate: string;
     updateDate: string;
     avatar?: any;
+
   }
   
  export interface pageData {
@@ -37,7 +39,7 @@ export interface Menu {
 
  const userService = {
    // 分页获取用户列表
-   getUserListByPage: ({current, pageSize}: {current:number, pageSize: number}, formData:any) => {
+   getUserListByPage: async({current, pageSize}: {current:number, pageSize: number}, formData:any) => {
      return request.get<pageData>('/api/user/page',  {
       params: {
         page: current,
@@ -46,7 +48,6 @@ export interface Menu {
       }
     }).then(([error, pageData]) => {
       console.log(pageData);
-      
       return ({
         list: pageData.data,
         total: pageData.total,
@@ -70,6 +71,12 @@ export interface Menu {
   //获取当前用户信息
   getUserInfo: () => {
     return request.get<User>('/api/auth/current/user')
+  },
+
+  //发送邮箱验证吗
+  sendEmailCaptcha: (email:string) => {
+    return request.post('/api/user//send/email/captcha', {email})
   }
+
  }
  export default userService
