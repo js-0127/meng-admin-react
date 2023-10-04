@@ -1,6 +1,6 @@
 import { IconBuguang } from "~/assets/icons/buguang"
 import { t } from "~/utils/i18n"
-import { Button, Carousel, Form, Input } from "antd"
+import { Button, Carousel, Form, Input, Modal } from "antd"
 import { LockOutlined, UserOutlined } from "@ant-design/icons"
 import { IconYanzhengma } from "~/assets/icons/yanzhengma"
 import { useRequest } from "~/hooks/use-request"
@@ -9,15 +9,25 @@ import { useGlobalStore } from "~/stores/global"
 import { useNavigate } from "react-router-dom"
 import './index.css'
 import { JSEncrypt } from "jsencrypt"
+import { useState } from "react"
+import { antdUtils } from "~/utils/antd"
 
 const Login = () => {
   
+
+ 
   const navigate = useNavigate()
   const {setToken, setRefreshToken} = useGlobalStore()
   const { data: captcha, refresh: refreshCaptcha } = useRequest(loginService.getCaptcha);
   const {runAsync: login, loading} = useRequest(loginService.login, {manual: true})
   const {runAsync: getPublicKey} = useRequest(loginService.getPublicKey, {manual: true})
-  
+
+
+  const [emailResetPasswordOpen, setEmailResetPasswordOpen ] = useState<boolean>(false)
+  const [emailInputFocus,setEmailInputFocus] = useState<boolean>(false)
+  const [checkEmail,setCheckEmail] = useState<string>()
+
+  const {loading: resetPasswordBtnLoading, runAsync:sendResetCheckEmail} = useRequest(loginService.sendCheckEmail, {manual: true})
   const onFinish = async(values:LoginDTO) =>{
     if(!captcha?.data){
       return ;
@@ -44,6 +54,19 @@ const Login = () => {
       setRefreshToken(data.refreshToken)
       navigate('/')
     } 
+
+  const sendCheckEmail = async() => {
+        if(!checkEmail) {
+          antdUtils.message?.error('无效的邮箱格式!')
+          return 
+        } 
+        const [error] = await sendResetCheckEmail(checkEmail) 
+
+        if(!error){
+          antdUtils.message?.success('邮件已发送，请到邮箱查看。');
+          setEmailResetPasswordOpen(false);
+        }
+  }
 
     return (
       <div className="bg-primary light:bg-[rgb(238,242,246)] bg-[rgb(238,242,246)] flex justify-center items-center h-[100vh]">
@@ -102,6 +125,15 @@ const Login = () => {
                 }
              >
              </Input>
+            </Form.Item>
+            
+            <Form.Item noStyle style={{marginBottom: 0}}>
+              <div className="text-right mb-[18px]">
+                <a onClick={() => {
+                  setEmailResetPasswordOpen(true)
+                }} className="text-[16px] !text-[rgb(124,77,255)] select-none" type="link" >忘记密码?</a>
+              </div>
+
             </Form.Item>
 
             <Form.Item style={{ marginBottom: 18 }}>
@@ -178,6 +210,50 @@ const Login = () => {
           </Carousel>
         </div>
       </div>
+
+      <Modal 
+         title="重置密码"
+         open={emailResetPasswordOpen}
+         footer={null}
+         width={400}
+         maskClosable={false}
+         bodyStyle={{padding: '20px', position: 'relative'}}
+         style={{top: 240}}
+         onCancel={() => {
+          setEmailResetPasswordOpen(false)
+         }}
+      >
+        {!emailInputFocus && (
+          <img className="absolute top-[-139px] left-[calc(50%-67px)]"
+          src="https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web/ad7fa76844a2df5c03151ead0ce65ea6.svg"
+           />
+        )}
+        {emailInputFocus && (
+          <img
+          className='absolute top-[-139px] left-[calc(50%-67px)]'
+          src='https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web/500c1180a96859e5c54a5359f024a397.svg'
+        />
+        )}
+       
+       <Input 
+         size="large"
+         placeholder="请输入邮箱"
+         onBlur={() => {setEmailInputFocus(false)}}
+         onFocus={() => {setEmailInputFocus(true)}}
+         onChange={(e) => {
+          setCheckEmail(e.target.value)
+         }} 
+        />
+        <Button
+          className="mt-[16px]"
+          type="primary"
+          block
+          onClick={sendCheckEmail}
+          loading={resetPasswordBtnLoading}
+        >
+          发送验证邮件
+        </Button>
+      </Modal>
         </div>
     )
         }

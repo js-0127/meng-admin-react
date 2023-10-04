@@ -14,6 +14,13 @@ export interface LoginDTO {
     refreshToken: string;
   }
 
+  export interface ResetPasswordDTO {
+    password: string;
+    email: string;
+    emailCaptcha: string;
+    publicKey: string;
+    comfirmPassword?: string;
+  }
 
 export interface captchaDto {
     id: string
@@ -45,7 +52,16 @@ const loginService = {
     //退出登录
     logout() {
         return request.post<TokenDTO>('api/auth/logout')
-    }
+    },
+
+    //发送邮箱验证码
+    sendCheckEmail(email:string) {
+        return request.post('/api/auth/send/reset/password/email', {email})
+    },
+     //重置密码
+    resetPassaword(resetPasswordDTO: ResetPasswordDTO) {
+        return request.post('/api/auth/reset/password', resetPasswordDTO);
+      },
 
 }
 
