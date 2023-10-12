@@ -36,12 +36,13 @@ const UserPage = () => {
   
     
     const formRef = useRef<FormInstance>(null)
-
+ 
     const columns: ColumnsType<any> = [
         {
             title: '头像',
-            dataIndex: 'avatarPath',
+            dataIndex: 'avatar',
             render: (value: string) => (
+              
               <div className='flex justify-center'>
                 {value ? (
                   <img src={value} className='w-[40px] h-[40px] flex items-center rounded-[50%]' />

@@ -8,7 +8,6 @@ import { useUserStore } from '~/stores/global/user';
 import {antdIcons} from '~/assets/antd-icons'
 
 import {Menu as MenuType} from '~/pages/user/service'
-import { routeConfig } from "~/router/routeConfig";
 
 
 const SLideMenu = () => {
@@ -29,11 +28,11 @@ const SLideMenu = () => {
     useEffect(() => {
         if(collapsed) {
             setOpenKeys([])
-        } else {
+        } else { 
             const [macth] = matches || [];
             if(macth) {
                  // 获取当前匹配的路由，默认为最后一个
-                const route = matches.at(-1) 
+                const route = matches[matches.length - 1]
                   // 从匹配的路由中取出自定义参数
                 const handle = route?.handle as any
                 // 从自定义参数中取出上级path，让菜单自动展开
@@ -53,7 +52,7 @@ const SLideMenu = () => {
             return menu.name
         } else {
             return (
-                <Link to={menu.path}>{menu.name}</Link>
+                <Link to={menu.route}>{menu.name}</Link>
             )
         }
     }
@@ -61,24 +60,20 @@ const SLideMenu = () => {
     const treeMenuData = useCallback((menus: MenuType[]) : ItemType[] => {
       return (menus).map((menu: MenuType) => {
         const children = menu?.children?.filter(menu => menu.show) || []
+        
         return {
             key: menu.path,
             label: getMenuTitle(menu),
             icon: menu.icon && antdIcons[menu.icon] && React.createElement(antdIcons[menu.icon]),
             children: children.length ?  treeMenuData(children || []) : null
         }
-      })
+        
+      })  as ItemType[]
     }, []) 
 
-    // const menuData = useMemo(() => {
-    //     return treeMenuData(currentUser?.menus.filter(menu => menu.show) || [])
-    // }, [currentUser])
-     
-    const items: MenuProps['items'] = routeConfig.map((nav) => ({
-        key: nav.path,
-        icon: nav.icon,
-        label: nav.title,
-      }))
+    const menuData = useMemo(() => {
+        return treeMenuData(currentUser?.menus.filter((menu: any) => menu.show) || [])
+    }, [currentUser])
      
       const navigate = useNavigate()
       const handleMenuClick: MenuProps['onClick'] = ({ key }) => {
@@ -94,7 +89,7 @@ const SLideMenu = () => {
         mode="inline"
         selectedKeys={selectKeys}
         style={{height: '100%', borderRight: 0}}
-        items={items}
+        items={menuData}
         inlineCollapsed={collapsed}
         openKeys={openKeys}
         onOpenChange={setOpenKeys}

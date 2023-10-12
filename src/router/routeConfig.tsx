@@ -1,8 +1,6 @@
 import {DashboardOutlined, TableOutlined} from '@ant-design/icons';
 import { lazy } from 'react';
-import { Navigate } from 'react-router-dom';
-
-
+ 
 export interface MenuItem {
     path: string;
     title?: string;
@@ -10,7 +8,8 @@ export interface MenuItem {
     element?: any;
     children?: MenuItem[];
     layout?: boolean;
-    Component?:any
+    Component?:any,
+    handle?:any
 }
 
 export const routeConfig: MenuItem[] = [
@@ -18,18 +17,19 @@ export const routeConfig: MenuItem[] = [
         path: '/dashboard',
         title: 'Dashboard',
         icon: <DashboardOutlined />,
-        Component: lazy(() => import('~/pages/dashboard'))
+        Component: lazy(() => import('~/pages/dashboard')),
+        handle: {
+          path: '/dashboard'
+        }
 
     },
     {
         path: '/user',
         title: 'User',
         icon: <TableOutlined />,
-        Component: lazy(() => import('~/pages/user'))
-
+        Component: lazy(() => import('~/pages/user')),
+        handle: {
+            path: '/user'
+          }
     },
-    {
-        path: '/',
-        element: <Navigate to='/dashboard' />
-    }
 ]

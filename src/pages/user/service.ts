@@ -2,17 +2,17 @@ import request from '~/request'
 
 export interface Menu {
     id: string;
-    parentId?: string;
+    parentId?: number;
     name?: string;
     icon?: string;
     type?: number;
-    route?: string;
+    route: string;
     filePath?: string;
     orderNumber?: number;
     url?: string;
     show?: boolean;
     children?: Menu[];
-    path: string;
+    path?: string;
     Component?: any;
     parentPaths?: string[];
     authCode?: string;
@@ -28,7 +28,7 @@ export interface Menu {
     createDate: string;
     updateDate: string;
     avatar?: any;
-
+    menus? :any
   }
   
  export interface pageData {

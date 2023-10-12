@@ -27,9 +27,10 @@ const NewAndEditForm:ForwardRefRenderFunction<FormInstance, PropsType> = ({
     const finishHandle = async(values: User) => {
         try {
             setSaveLoading(true);
+            
             if(values.avatar?.[0]?.response) {
               console.log(values.avatar?.[0]);
-              values.avatar = values.avatar?.[0]?.response
+              values.avatar = values.avatar?.[0]?.response?.filePath
             } else {
               values.avatar = null
             }

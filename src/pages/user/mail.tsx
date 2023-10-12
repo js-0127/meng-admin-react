@@ -25,7 +25,6 @@ const EmailInput: React.FC<PropsType> = ({
 
     const sendEmailCaptcha = async() => {
         const values = await form.validateFields(['email']);
-        setTimer
         setTimer(180)
         await runAsync(values.email);
 
