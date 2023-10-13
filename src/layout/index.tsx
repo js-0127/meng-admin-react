@@ -61,7 +61,6 @@ const BasicLayout : React.FC = () => {
         const children = menuGroup[menu.id]
 
         const parentPaths = parentMenu?.parentPaths || [];
-
         const path = (parentMenu ? `${parentPaths[parentPaths.length - 1]}${menu.route}` : menu.route) || ''
         routes.push({...menu, path, parentPaths})
 
@@ -107,18 +106,20 @@ const BasicLayout : React.FC = () => {
              pre[menu.parentId].push(menu)
              return pre
        }, {})
+
+       console.log(menuGroup);
+       
             
        const routes: Menu[] = []
        
-       currentUserDetail.menus = format(menus.filter((item:any) => item !== item.parentId), menuGroup, routes);
-
+       currentUserDetail.menus = format(menus.filter((item:any) =>!item.parentId), menuGroup, routes);
        replaceRoutes('*', [...routes.map(menu => ({
-        path: `/*${menu.route}`,
+        path:`/*${menu.path}`,
         Component: menu.filePath ? lazy(components[menu.filePath]) : null,
-        id: `/*${menu.route}`,
+        id: `/*${menu.path}`,
         handle: {
           parentPaths: menu.parentPaths,
-          path:menu.route
+          path:menu.path
         }
        })),
        {

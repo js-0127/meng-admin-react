@@ -1,5 +1,5 @@
 export const modules = import.meta.glob('../pages/**/index.tsx');
-
+ /* @vite-ignore */
 export const componentPaths = Object.keys(modules).map((path: string) => path.replace('../pages', ''));
 
 let manifest: any;

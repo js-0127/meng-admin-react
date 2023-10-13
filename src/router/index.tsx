@@ -1,8 +1,6 @@
 import { Navigate, RouteObject, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import BasicLayout from '~/layout';
-import Result404 from '~/pages/404';
 import Login from '~/pages/login';
-import { routeConfig } from './routeConfig';
 import { App } from 'antd';
 import { useEffect } from 'react';
 import { antdUtils } from '~/utils/antd';
