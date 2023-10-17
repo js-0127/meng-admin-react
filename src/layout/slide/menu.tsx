@@ -77,9 +77,7 @@ const SLideMenu = () => {
      
       const navigate = useNavigate()
       const handleMenuClick: MenuProps['onClick'] = ({ key }) => {
-        startTransition(() => {
-          navigate(key)
-        });
+       navigate(key)
        
       }
 

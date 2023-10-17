@@ -29,7 +29,8 @@ const NewAndEditForm:ForwardRefRenderFunction<FormInstance, PropsType> = ({
             setSaveLoading(true);
             
             if(values.avatar?.[0]?.response) {
-              console.log(values.avatar?.[0]);
+              console.log(values.avatar?.[0]?.response);
+              
               values.avatar = values.avatar?.[0]?.response?.filePath
             } else {
               values.avatar = null
@@ -66,15 +67,6 @@ const NewAndEditForm:ForwardRefRenderFunction<FormInstance, PropsType> = ({
        if(editData) {
         return {
           ...editData,
-          avatar: editData.avatarEntity ? [{
-            uid: '-1',
-            name: editData.avatarEntity.fileName,
-            states: 'done',
-            url: editData.avatarEntity.filePath,
-            response: {
-              id: editData.avatarEntity.pkValue,
-            }
-          }] : []
         }
        }
     }, [editData])

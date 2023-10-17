@@ -2,30 +2,30 @@ import { PageData } from '~/interface';
 import request from '~/request';
 
 export interface Menu {
-  parentId?: string;
+  parentId?: number | null;
   name?: string;
   icon?: string;
   type?: number;
-  route?: string;
-  filePath?: string;
+  route: string;
+  filePath: string;
   orderNumber?: number;
   url?: string;
   show?: boolean;
-  id: string;
+  id: number;
   _loaded_?: boolean;
   hasChild?: boolean;
-  children?: Menu[] | null;
+  children?: Menu[]  | null;
 }
 
 export interface Api {
-  id?: string;
+  id?: number;
   path: string;
   method: string;
 }
 
 export interface MenuApi {
-  id?: string;
-  menuId: string;
+  id?: number;
+  menuId: number;
   path: string;
   method: string;
 }
@@ -45,11 +45,18 @@ const menuService = {
     },
     
     removeMenu: async(value: any) => {
-        return request.delete('api/menu', value)
+        return request.delete('api/menu/delete', value)
     },
-    getChildren: (parentId: string) => {
+    getChildren: (parentId: number) => {
         return request.get<Menu[]>('/api/menu/children', {params: {parentId}});
       },
+
+    updateMenu: (menu: Menu) => {
+      return request.put('/api/menu/update', menu)
+    },
+    addMenu: (menu: Menu) => {
+      return request.post('/api/menu/create', menu)
+    }
 }
 
 export default menuService

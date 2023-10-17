@@ -16,7 +16,7 @@ import { components } from '~/config/routes';
 import  { replaceRoutes, router } from '~/router';
 const BasicLayout : React.FC = () => {
     const { lang,token, refreshToken } = useGlobalStore();
-    const {setCurrentUser} = useUserStore()
+    const {currentUser , setCurrentUser} = useUserStore()
     const navigate = useNavigate()
 
     const {loading, data: currentUserDetail, run: getUserInfo} = useRequest(userService.getUserInfo, {manual: true})
@@ -32,7 +32,6 @@ const BasicLayout : React.FC = () => {
 
     useEffect(() => {
       setCurrentUser(currentUserDetail || null)
-      console.log(currentUserDetail);
       
     }, [currentUserDetail, setCurrentUser])
 
@@ -76,22 +75,8 @@ const BasicLayout : React.FC = () => {
       })
     }
 
-
-
-    useEffect(() => {
-      function storageChange(e: StorageEvent) {
-            if(e.key === useGlobalStore.persist.getOptions().name) {
-              useGlobalStore.persist.rehydrate()
-            }
-      } 
-      window.addEventListener<'storage'>('storage',storageChange )
-
-      return () => {window.removeEventListener('storage', storageChange)}
-    }, [])
-
       useEffect(() => {
         if(!currentUserDetail) return
-
         const {menus = []} = currentUserDetail
 
        const menuGroup = menus.reduce((pre: any, menu: any) => {
@@ -106,20 +91,20 @@ const BasicLayout : React.FC = () => {
              pre[menu.parentId].push(menu)
              return pre
        }, {})
-
-       console.log(menuGroup);
-       
             
        const routes: Menu[] = []
        
        currentUserDetail.menus = format(menus.filter((item:any) =>!item.parentId), menuGroup, routes);
+       
        replaceRoutes('*', [...routes.map(menu => ({
         path:`/*${menu.path}`,
         Component: menu.filePath ? lazy(components[menu.filePath]) : null,
         id: `/*${menu.path}`,
         handle: {
           parentPaths: menu.parentPaths,
-          path:menu.path
+          path:menu.path,
+          name: menu.name,
+          icon: menu.icon,
         }
        })),
        {
@@ -134,15 +119,29 @@ const BasicLayout : React.FC = () => {
        }
       ])
 
+      console.log(router.routes);
+      
+
       setCurrentUser(currentUserDetail)
     
       router.navigate(`${location.pathname}${location.search}`, {replace: true})
-
+      
        
     }, [currentUserDetail, setCurrentUser])
   
 
-    if(loading) {
+    useEffect(() => {
+      function storageChange(e: StorageEvent) {
+            if(e.key === useGlobalStore.persist.getOptions().name) {
+              useGlobalStore.persist.rehydrate()
+            }
+      } 
+      window.addEventListener<'storage'>('storage',storageChange )
+
+      return () => {window.removeEventListener('storage', storageChange)}
+    }, [])
+
+    if(loading || !currentUser) {
       return (
         <GlobalLoading />
       )

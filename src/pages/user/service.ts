@@ -47,7 +47,6 @@ export interface Menu {
         ...formData
       }
     }).then(([error, pageData]) => {
-      console.log(pageData);
       return ({
         list: pageData.data,
         total: pageData.total,

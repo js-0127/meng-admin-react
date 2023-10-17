@@ -5,14 +5,12 @@ import { antdUtils } from '~/utils/antd';
 import { antdIcons } from '~/assets/antd-icons';
 import { useRequest } from '~/hooks/use-request';
 
-// import NewAndEditForm, { MenuType } from './new-edit-form';
+import NewAndEditForm from './new-edit-form';
 import menuService, { Menu } from './service';
 import { MenuType } from "./interface";
 
+
 const MenuPage:React.FC = () => {
-    
-    
- 
     const [dataSource, setDataSource] = useState<Menu[]>([])
 
     const [pagination, setPagination] = useState<TablePaginationConfig>({
@@ -20,8 +18,8 @@ const MenuPage:React.FC = () => {
         pageSize: 10,
       });
 
-      const [createVisible, setCreateVisible] = useState(false);
-  const [parentId, setParentId] = useState<string>('');
+  const [createVisible, setCreateVisible] = useState(false);
+  const [parentId, setParentId] = useState<number>();
   const [expandedRowKeys, setExpandedRowKeys] = useState<readonly React.Key[]>([]);
   const [curRowData, setCurRowData] = useState<Menu>();
   const [editData, setEditData] = useState<null | Menu>(null);
@@ -36,8 +34,6 @@ const MenuPage:React.FC = () => {
         current,
         pageSize
     })
-
-    console.log(data);
     
 
     if(!error){
@@ -98,7 +94,7 @@ const MenuPage:React.FC = () => {
         dataIndex: 'id',
         align: 'center',
         width: 200,
-        render: (value: string, record: Menu) => {
+        render: (value: number, record: Menu) => {
           return (
             <Space
               split={(
@@ -209,13 +205,14 @@ const MenuPage:React.FC = () => {
           },
         }}
       />
-      {/* <NewAndEditForm
+
+      <NewAndEditForm
         onSave={saveHandle}
         onCancel={cancelHandle}
         visible={createVisible}
         parentId={parentId}
         editData={editData}
-      /> */}
+      />
     </div>
   );
 };

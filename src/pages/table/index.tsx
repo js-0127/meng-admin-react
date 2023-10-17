@@ -12,7 +12,6 @@ interface DataType {
 
 const TablePage: React.FC = () => {
 
-
   const columns: ColumnsType<DataType> = [
     {
       title: t("LhjNVSoc" /* 名称 */),
@@ -125,17 +124,17 @@ const TablePage: React.FC = () => {
     <div>
       <Form size="large" className='dark:bg-[rgb(33,41,70)] bg-white p-[24px] rounded-md'>
         <Row gutter={24}>
-          <Col className='w-[100%]' lg={24} xl={8} >
+          <Col className='w-full' lg={24} xl={8} >
             <Form.Item name="name" label={t("EOSDTAVT" /* 名称 */)}>
               <Input />
             </Form.Item>
           </Col>
-          <Col className='w-[100%]' lg={24} xl={8}>
+          <Col className='w-full' lg={24} xl={8}>
             <Form.Item name="age" label={t("hQeqcUTv" /* 年龄 */)}>
               <InputNumber style={{ width: '100%' }} />
             </Form.Item>
           </Col>
-          <Col className='w-[100%] text-right' lg={24} xl={8}>
+          <Col className='w-full text-right' lg={24} xl={8}>
             <Space>
               <Button type='primary'>{t("YHapJMTT" /* 搜索 */)}</Button>
               <Button>{t("uCkoPyVp" /* 清除 */)}</Button>
