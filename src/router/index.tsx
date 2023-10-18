@@ -9,7 +9,7 @@ import RouterErrorElement from '~/router-error-element';
 export const router = createBrowserRouter(
     [
       {
-        path: '/user/login',
+        path: '/login',
         Component: Login,
       },
       // {

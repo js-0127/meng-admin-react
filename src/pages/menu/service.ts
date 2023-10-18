@@ -45,7 +45,7 @@ const menuService = {
     },
     
     removeMenu: async(value: any) => {
-        return request.delete('api/menu/delete', value)
+        return request.delete('api/menu', value)
     },
     getChildren: (parentId: number) => {
         return request.get<Menu[]>('/api/menu/children', {params: {parentId}});
