@@ -2,7 +2,7 @@ import { PageData } from '~/interface';
 import request from '~/request';
 
 export interface Menu {
-  parentId?: number | null;
+  parentId?: string | null;
   name?: string;
   icon?: string;
   type?: number;
@@ -11,7 +11,7 @@ export interface Menu {
   orderNumber?: number;
   url?: string;
   show?: boolean;
-  id: number;
+  id: string;
   _loaded_?: boolean;
   hasChild?: boolean;
   children?: Menu[]  | null;
@@ -47,7 +47,7 @@ const menuService = {
     removeMenu: async(value: any) => {
         return request.delete('api/menu', value)
     },
-    getChildren: (parentId: number) => {
+    getChildren: (parentId: string) => {
         return request.get<Menu[]>('/api/menu/children', {params: {parentId}});
       },
 

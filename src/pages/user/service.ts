@@ -1,8 +1,9 @@
 import request from '~/request'
+import { Role } from '../role/service';
 
 export interface Menu {
     id: string;
-    parentId?: number;
+    parentId?: string;
     name?: string;
     icon?: string;
     type?: number;
@@ -75,6 +76,12 @@ export interface Menu {
   //发送邮箱验证吗
   sendEmailCaptcha: (email:string) => {
     return request.post('/api/user//send/email/captcha', {email})
+  },
+
+  //获取全部角色
+
+  getAllRoles: () => {
+    return request.get<Role[]>('/api/role')
   }
 
  }

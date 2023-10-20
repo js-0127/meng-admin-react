@@ -5,6 +5,7 @@ import { forwardRef, useImperativeHandle, ForwardRefRenderFunction, useState } f
 import roleService, { Role } from './service';
 import { antdUtils } from '~/utils/antd';
 import { useRequest } from '~/hooks/use-request';
+import RoleMenu from './role-menu';
 
 
 interface PropsType {
@@ -25,11 +26,9 @@ const NewAndEditForm: ForwardRefRenderFunction<FormInstance, PropsType> = ({
      const {runAsync:updateRole} = useRequest(roleService.updateRole, {manual: true})
      const {runAsync: addRole} = useRequest(roleService.addRole, {manual: true})
      const [roleMenuVisible, setRoleMenuVisible] = useState<boolean>(false)
-     const [menuIds, setMenuIds] = useState<number[]>()
+     const [menuIds, setMenuIds] = useState<string[]>()
 
      useImperativeHandle(ref, () => form, [form])
-
-      
 
      const finishHandle = async(values: Role) => {
         setSaveLoading(true)
@@ -94,7 +93,18 @@ const NewAndEditForm: ForwardRefRenderFunction<FormInstance, PropsType> = ({
         }}>选择菜单</a>
         
       </Form.Item>
-     
+     <RoleMenu
+        onSave={(menuIds: string[]) => {
+          setMenuIds(menuIds)
+          setRoleMenuVisible(false)
+        }
+      }
+      visible={roleMenuVisible}
+      onCancel={() => {
+        setRoleMenuVisible(false)
+      }}
+      roleId={editData?.id}
+     />
         </Form>
      )
 }

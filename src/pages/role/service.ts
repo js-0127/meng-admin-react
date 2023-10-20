@@ -1,5 +1,6 @@
 import { PageData } from '~/interface';
 import request from '~/request'
+import { Menu } from '../menu/service';
 
 export interface Role {
     id?: string;
@@ -7,12 +8,10 @@ export interface Role {
     code: string;
   }
 
-
-
 const roleService = {
 
     getRoleListByPage: async({current, pageSize}: {current:number, pageSize: number}, formData:any) => {
-        return request.get<PageData<Role>>('/api/role/page',  {
+        return request.get<PageData<Role>>('/api/role/list',  {
          params: {
            page: current,
            size: pageSize,
@@ -26,7 +25,7 @@ const roleService = {
        })
     },
 
-    removeRole: async(id:number) => {
+    removeRole: async(id:string) => {
         return request.delete('/api/role', {params: id})
     },
     addRole: async(data:Role) => {
@@ -34,6 +33,18 @@ const roleService = {
     },
     updateRole: async(role:Role) => {
        return request.put('/api/role', role)
+    },
+
+    getAllMenus:async () => {
+      return request.get<Menu[]>('/api/menu')
+    },
+
+    getRoleMenus: async (roleId: string) => {
+        return request.get<string[]>('/api/role/menu/list', {params: roleId})
+    },
+
+    setRoleMenus: (checkedKeys: string[], roleId:string) => {
+      return request.post('/api/role/alloc/menu', {checkedKeys, roleId})
     }
 }
 

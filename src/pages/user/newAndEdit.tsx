@@ -1,10 +1,11 @@
 import { t } from '~/utils/i18n';
-import { Form, Input, Radio, App, FormInstance } from 'antd'
+import { Form, Input, Radio, App, FormInstance, Select } from 'antd'
 import { forwardRef, useImperativeHandle, ForwardRefRenderFunction, useMemo, useEffect, useState } from 'react'
 import userService, { User } from './service';
-import { useRequest } from 'ahooks';
+import { useRequest } from '~/hooks/use-request';
 import Avatar from './avatar';
 import EmailInput from './mail';
+import { Role } from '../role/service';
 
 interface PropsType {
     open: boolean;
@@ -22,6 +23,10 @@ const NewAndEditForm:ForwardRefRenderFunction<FormInstance, PropsType> = ({
     const {message} = App.useApp()
     const {runAsync: updateUser} = useRequest(userService.updateUser, {manual: true})
     const {runAsync: addUser} = useRequest(userService.addUser, {manual: true})
+    const {runAsync: getAllRoles}  =  useRequest(userService.getAllRoles, {manual: true})
+    const [getRolesLoding, setGetRolesLoding] = useState<boolean>(false)
+    const [roles, setRoles] = useState<Role[] | null>([])
+
     useImperativeHandle(ref, () => form, [form])
 
     const finishHandle = async(values: User) => {
@@ -29,7 +34,6 @@ const NewAndEditForm:ForwardRefRenderFunction<FormInstance, PropsType> = ({
             setSaveLoading(true);
             
             if(values.avatar?.[0]?.response) {
-              console.log(values.avatar?.[0]?.response);
               
               values.avatar = values.avatar?.[0]?.response?.filePath
             } else {
@@ -57,10 +61,17 @@ const NewAndEditForm:ForwardRefRenderFunction<FormInstance, PropsType> = ({
         }
         setSaveLoading(false)
     }
+   
+    const getRolesData = async () => {
+      setGetRolesLoding(true)
+      const [error, data] = await getAllRoles()
+     
+      setRoles(data)
+      setGetRolesLoding(false)
+    }
 
     useEffect(() => {
-      console.log(editData);
-      
+      getRolesData()
     }, []) 
 
     const initialValues = useMemo(() => {
@@ -147,6 +158,23 @@ const NewAndEditForm:ForwardRefRenderFunction<FormInstance, PropsType> = ({
           <Radio value={0}>{t("yduIcxbx" /* 女 */)}</Radio>
         </Radio.Group>
       </Form.Item>
+        
+         <Form.Item 
+           label="角色"
+           name="roleIds"
+         >
+          <Select 
+             options= {(roles || []).map(role => ({
+              label: role.name,
+              value: role.id
+             }))}
+
+             mode='multiple'
+             loading={getRolesLoding}
+          >
+          </Select>
+         </Form.Item>
+
         </Form>
     )
 }

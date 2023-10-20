@@ -76,6 +76,7 @@ class Requeset {
 
     private async responseErrorInterceptor(error:any):Promise<any>{
         const {status, config} = error?.response || {}
+        
         if(status === 401) {
               // TODO 刷新token
               return new Promise(resolve => {
@@ -99,8 +100,6 @@ class Requeset {
         }
         return Promise.resolve([true, error?.response?.data]);
     }
-  
-
 
     private async refreshToken(){
         //准备刷新token,把标记设置为true
@@ -148,7 +147,7 @@ class Requeset {
         if(!this.requestQueue.length) {
             return 
         }
-        console.log(this.limit, this.limit - this.requestingCount, 'count');
+        console.log(this.limit - this.requestingCount, 'count');
         
     }
 

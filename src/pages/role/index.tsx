@@ -13,15 +13,14 @@ import {
   Popconfirm,
 } from 'antd';
 import { useAntdTable } from 'ahooks';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
-
-// import NewAndEditForm from './new-edit-form';
 import roleService, { Role } from './service';
 import dayjs from 'dayjs';
 import { antdUtils } from '~/utils/antd';
 import NewAndEditForm from './new-edit-form';
-// import RoleMenu from './role-menu';
+import RoleMenu from './role-menu';
+
 
 
 const rolePage = () => {
@@ -33,7 +32,7 @@ const rolePage = () => {
 
     const [roleMenuVisible, setRoleMenuVisible] = useState<boolean>(false)
 
-    const [curRoleId, setCurRoleId] = useState<number>()
+    const [curRoleId, setCurRoleId] = useState<string | null>()
     
     const [formOpen, setFormOpen] = useState<boolean>(false)
     const formRef = useRef<FormInstance>(null)
@@ -66,14 +65,14 @@ const rolePage = () => {
             width: 240,
             align: 'center',
             search: false,
-            render: (id: number, record: Role) => (
+            render: (id: string, record: Role) => (
               <Space
                 split={(
                   <Divider type='vertical' />
                 )}
               >
                 <a
-                  onClick={async () => {
+                  onClick={() => {
                     setCurRoleId(id);
                     setRoleMenuVisible(true);
                   }}
@@ -122,8 +121,6 @@ const rolePage = () => {
         setFormOpen(false);
         setEditData(null);
       };
-
-
       return (
         <div>
             <Form
@@ -192,7 +189,6 @@ const rolePage = () => {
                destroyOnClose
                onCancel={closeForm}
                confirmLoading={saveLoading}
-
             >
              <NewAndEditForm
               ref={formRef}
@@ -200,13 +196,18 @@ const rolePage = () => {
               onSave={saveHandle}
               open={formOpen}
               setSaveLoading={setSaveLoading}
-
            />
+     
+        </Modal>
 
-
-            </Modal>
-
-
+        <RoleMenu
+        onCancel={() => {
+          setCurRoleId(null); 
+          setRoleMenuVisible(false);
+        }}
+        roleId={curRoleId}
+        visible={roleMenuVisible}
+      />
         </div>
       )
 

@@ -118,8 +118,6 @@ const BasicLayout : React.FC = () => {
         )
        }
       ])
-
-      console.log(router.routes);
       
 
       setCurrentUser(currentUserDetail)
