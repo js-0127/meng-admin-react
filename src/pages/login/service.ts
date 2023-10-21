@@ -31,7 +31,7 @@ export interface captchaDto {
 const loginService = {
     //登录
     login: (loginDto:LoginDTO) => {
-        return request.post<TokenDTO>('api/auth/login', loginDto)
+        return request.post<TokenDTO>('/api/auth/login', loginDto)
     },
 
     //获取验证码
@@ -51,7 +51,7 @@ const loginService = {
     
     //退出登录
     logout() {
-        return request.post<TokenDTO>('api/auth/logout')
+        return request.post<TokenDTO>('/api/auth/logout')
     },
 
     //发送邮箱验证码

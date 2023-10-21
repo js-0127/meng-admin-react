@@ -2,10 +2,9 @@ import React, {useState, useEffect} from "react";
 import { Modal, Spin, Tree, Radio } from 'antd';
 import { antdUtils } from '~/utils/antd';
 import roleService from './service';
-import { DataNode } from "antd/es/tree";
+import { DataNode, TreeProps } from "antd/es/tree";
 import { Menu } from "../menu/service";
 import { useRequest } from "~/hooks/use-request";
-
 interface RoleMenuProps {
     visible: boolean;
     onCancel: () => void;
@@ -41,28 +40,26 @@ const RoleMenu: React.FC<RoleMenuProps> = ({
 
     const getFirstChildrenKeys = (children: any[], keys: any[]):void => {
         (children || []).forEach((node) => {
-            
             keys.push(node.key)
             console.log(keys);
             
         })
     }
 
-    // const onCheck:TreeProps['onCheck'] = (checkedKeys, info) => {
-    //     // const keys =  [node.key]
-    //     // if(selectType === 'allChildren'){
-    //     //     getAllChildrenKeys(node.children, keys)
-    //     // } else if(selectType === 'firstChildren') {
-    //     //     getFirstChildrenKeys(node.children, keys)
-    //     // }
+    const onCheck:TreeProps['onCheck'] = (_:any,{ checked, node }: any) => {
+        const keys =  [node.key]
+        if(selectType === 'allChildren'){
+            getAllChildrenKeys(node.children, keys)
+        } else if(selectType === 'firstChildren') {
+            getFirstChildrenKeys(node.children, keys)
+        }
 
-    //     // if(checkd) {
-    //     //        setCheckedKeys((pre) => [...pre, ...keys])
-    //     // } else {
-    //     //     setCheckedKeys((pre) => pre.filter(o => !keys.includes(o)))
-    //     // }
-    //     console.log(checkedKeys, info);
-    // }
+        if(checked) {
+               setCheckedKeys((pre) => [...pre, ...keys])
+        } else {
+            setCheckedKeys((pre) => pre.filter(o => !keys.includes(o)))
+        }
+    }
     
 
     const formatTree = (roots: Menu[] = [], group: Record<string, Menu[]>): DataNode[] => {
@@ -76,10 +73,10 @@ const RoleMenu: React.FC<RoleMenuProps> = ({
     }
 
      const getData = async() => {
-         setGetDataLoading(true)
-         
+         setGetDataLoading(true)  
          const [error, data] = await roleService.getAllMenus()
-        
+         console.log(data);
+         
          if(!error) {
             const group = data.reduce<Record<string, Menu[]>>((pre:any, cur:any) => {
                 if(!cur.parentId) {
@@ -95,17 +92,19 @@ const RoleMenu: React.FC<RoleMenuProps> = ({
 
             const roots = data.filter((o: any) => !o.parentId)
 
-            const newTreeData = formatTree(roots, group)            
-            setTreeData(newTreeData)
+            const newTreeData = formatTree(roots, group)
+            console.log(newTreeData);
+             setTreeData(newTreeData)
+            console.log(treeData);
+            
          }
          setGetDataLoading(false)
      }
    
      const getCheckedKeys = async () =>{
             if(!roleId) return; 
-            const [error, data] = await getRoleMenus(roleId)
-            console.log(data);
             
+            const [error, data] = await getRoleMenus(roleId)     
               if(!error) {
                 setCheckedKeys(data)
               }
@@ -116,7 +115,6 @@ const RoleMenu: React.FC<RoleMenuProps> = ({
             onSave(checkedKeys)
             return;
         }
-
         if(!roleId) return;
 
         setSaveLoading(true)
@@ -128,11 +126,6 @@ const RoleMenu: React.FC<RoleMenuProps> = ({
             onCancel()
         }
     }
-
-    const onCheck = (checkedKeysValue: any, info:any) => {
-        console.log('onCheck', checkedKeysValue, info);
-        setCheckedKeys(checkedKeysValue);
-      };
     
       const onSelect = (selectedKeysValue: React.Key[], info: any) => {
         console.log('onSelect', selectedKeysValue, info);
@@ -142,10 +135,8 @@ const RoleMenu: React.FC<RoleMenuProps> = ({
 
     useEffect(() => {
         if(visible) {
-            console.log(111);
            getData()
            getCheckedKeys()
-          
                      
         } else {
             setCheckedKeys([])

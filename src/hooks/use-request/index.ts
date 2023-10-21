@@ -25,28 +25,28 @@ export function useRequest<T>(
 
     const paramsRef = useRef<any[]>([]);
 
-    const resolveData = async () => {
+    const resolveData = useCallback(async () => {
         setLoading(true)
         const [error, requestdata] = await serviceMethod(...(options?.defaultParams || []))
         setLoading(false)
         setData(requestdata)
         setError(error)
-    }
+    }, [serviceMethod, options])
+
 
     const runAsync = useCallback(async (...params: any) => {
         paramsRef.current = params;
          setLoading(true)
          const res = await serviceMethod(...params)
+         const [err, data] = res
+         setError(err)
          setLoading(false)
+         setData(data)
          return res
     }, [serviceMethod])
 
     const run = useCallback(async (...params: any) => {
-         setLoading(true)
-         const [error, requestData] = await serviceMethod(...params)
-         setLoading(false)
-         setData(requestData)
-         setError(error)
+        await runAsync(...params)
     }, [serviceMethod])
     
     const refresh = useCallback(async() => {

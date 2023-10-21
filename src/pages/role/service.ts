@@ -26,7 +26,7 @@ const roleService = {
     },
 
     removeRole: async(id:string) => {
-        return request.delete('/api/role', {params: id})
+        return request.delete(`/api/role/${id}`,)
     },
     addRole: async(data:Role) => {
          return request.post('/api/role', data)
@@ -40,7 +40,7 @@ const roleService = {
     },
 
     getRoleMenus: async (roleId: string) => {
-        return request.get<string[]>('/api/role/menu/list', {params: roleId})
+        return request.get<string[]>(`/api/role/menu/list/${roleId}`,)
     },
 
     setRoleMenus: (checkedKeys: string[], roleId:string) => {

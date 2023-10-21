@@ -13,7 +13,7 @@ import {
   Popconfirm,
 } from 'antd';
 import { useAntdTable } from 'ahooks';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import roleService, { Role } from './service';
 import dayjs from 'dayjs';
@@ -66,23 +66,28 @@ const rolePage = () => {
             align: 'center',
             search: false,
             render: (id: string, record: Role) => (
+              
               <Space
                 split={(
                   <Divider type='vertical' />
                 )}
               >
                 <a
-                  onClick={() => {
+                  onClick={() => {      
                     setCurRoleId(id);
                     setRoleMenuVisible(true);
+                    
                   }}
                 >
                   分配菜单
                 </a>
                 <a
-                  onClick={() => {
+                  onClick={async() => {
                     setEditData(record);
                     openForm()
+                    const res = await roleService.getRoleMenus(id)
+                    console.log(res);
+                    
                   }}
                 >
                   编辑

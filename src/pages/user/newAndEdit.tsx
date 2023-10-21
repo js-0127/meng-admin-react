@@ -75,13 +75,16 @@ const NewAndEditForm:ForwardRefRenderFunction<FormInstance, PropsType> = ({
     }, []) 
 
     const initialValues = useMemo(() => {
+      
+      
        if(editData) {
         return {
           ...editData,
+          roleIds: (editData.user_Role || []).map((roleId:string) => roleId)
         }
        }
+       return ;
     }, [editData])
-
 
     return (
         <Form 
@@ -161,7 +164,7 @@ const NewAndEditForm:ForwardRefRenderFunction<FormInstance, PropsType> = ({
         
          <Form.Item 
            label="角色"
-           name="roleIds"
+           name="user_Role"
          >
           <Select 
              options= {(roles || []).map(role => ({

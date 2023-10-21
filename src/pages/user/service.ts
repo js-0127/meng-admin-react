@@ -30,6 +30,7 @@ export interface Menu {
     updateDate: string;
     avatar?: any;
     menus? :any
+    
   }
   
  export interface pageData {
@@ -41,7 +42,7 @@ export interface Menu {
  const userService = {
    // 分页获取用户列表
    getUserListByPage: async({current, pageSize}: {current:number, pageSize: number}, formData:any) => {
-     return request.get<pageData>('/api/user/page',  {
+     return request.get<pageData>('/api/user/list',  {
       params: {
         page: current,
         size: pageSize,
