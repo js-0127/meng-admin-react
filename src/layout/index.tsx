@@ -14,6 +14,9 @@ import GlobalLoading from '~/components/global-loading';
 import Result404 from '~/pages/404';
 import { components } from '~/config/routes';
 import  { replaceRoutes, router } from '~/router';
+import { useWebSocket } from 'ahooks';
+import {SocketMessage, useMessageStore} from '~/stores/global/message'
+import MessageHandle from './message-handle';
 const BasicLayout : React.FC = () => {
     const { lang,token, refreshToken } = useGlobalStore();
     const {currentUser , setCurrentUser} = useUserStore()
@@ -21,6 +24,27 @@ const BasicLayout : React.FC = () => {
 
     const {loading, data: currentUserDetail, run: getUserInfo} = useRequest(userService.getUserInfo, {manual: true})
      
+    //获取用户信息手动连接
+    const {latestMessage, connect} = useWebSocket(`ws://${window.location.host}/ws?token=${token}`, {manual: true})
+    
+    const {setLatestMessage} = useMessageStore()
+    useEffect(() => {
+           connect && connect()
+    }, [token])
+
+   useEffect(() => {
+      if(latestMessage?.data) {
+        try {
+          const socketMessage = JSON.parse(latestMessage?.data) as SocketMessage
+          setLatestMessage(socketMessage)
+        }
+        catch {
+          console.error(latestMessage?.data);
+          
+        }
+      }
+   }, [latestMessage])
+
     useEffect(() => {
       if (!refreshToken) {
         navigate('/login');
@@ -146,6 +170,7 @@ const BasicLayout : React.FC = () => {
     }
     return (
         <div key={lang} className='bg-primary overflow-hidden'>
+          <MessageHandle/>
         <Header />
         <Slide/>
         <Content>

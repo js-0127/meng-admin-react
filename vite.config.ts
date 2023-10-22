@@ -18,7 +18,14 @@ export default defineConfig({
       },
       '/upload': {
         target: 'http://localhost:9000',
-        changeOrigin: true
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/upload/, '')
+      },
+      'ws': {
+        target: 'ws://localhost:3001',
+        changeOrigin: true,
+        ws: true,
+        rewrite: (path) => path.replace(/^\/ws/, '')
       }
     }
   }
