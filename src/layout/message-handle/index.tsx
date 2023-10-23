@@ -8,7 +8,6 @@ import { SocketMessageType } from "~/socket/message";
 
 
 const MessageHandle = () => {
-
     const {latestMessage} = useMessageStore()
     const {refreshToken, setToken} = useGlobalStore()
     

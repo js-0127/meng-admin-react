@@ -6,6 +6,7 @@ import { FC, Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 
 
+
 const Content: FC<any> = ({ children }) => {
 
   const isPC = usePCScreen();
