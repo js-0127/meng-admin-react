@@ -24,16 +24,11 @@ const BasicLayout : React.FC = () => {
     const {setLatestMessage} = useMessageStore()
     const navigate = useNavigate()
     const location = useLocation()
-   
-     
-    let socketUrl = `ws://127.0.0.1:3001?token=${token}`
-    const {latestMessage, connect, sendMessage, readyState} = useWebSocketMessage(socketUrl, {manual: true})
+    const {latestMessage, connect} = useWebSocketMessage(`ws://localhost:3001/?token=${token}`, {manual: true})
 
     const {loading, data: currentUserDetail, run: getUserInfo} = useRequest(userService.getUserInfo, {manual: true})
 
-
     useEffect(() => {
-      
       if (!refreshToken) {
         navigate('/login');
         return;
@@ -90,11 +85,11 @@ const BasicLayout : React.FC = () => {
     }
   
   useEffect(() => {
- if(latestMessage?.data) {
-   console.log(latestMessage?.data);
-   
+ if(latestMessage) {   
    try {
-     const socketMessage = JSON.parse(latestMessage?.data) as SocketMessage
+    console.log(latestMessage);
+    
+     const socketMessage =JSON.parse(latestMessage?.data) as SocketMessage
      setLatestMessage(socketMessage)
    }
    catch {
@@ -112,8 +107,6 @@ useEffect(() => {
   }
 }, [navigate, token])
 
-  
-
       useEffect(() => {
         if(!currentUserDetail) return
         const {menus = []} = currentUserDetail
@@ -126,7 +119,6 @@ useEffect(() => {
              if(!pre[menu.parentId]){
               pre[menu.parentId] = []
              }
-
              pre[menu.parentId].push(menu)
              return pre
        }, {})
@@ -158,12 +150,9 @@ useEffect(() => {
        }
       ])
       setCurrentUser(currentUserDetail)
+        // 连接websocket
       connect && connect();
       router.navigate(`${location.pathname}${location.search}`, {replace: true})
-         // 连接websocket
-        
-      console.log(readyState);
-      
        
     }, [currentUserDetail, setCurrentUser])
   

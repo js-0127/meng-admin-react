@@ -30,12 +30,13 @@ export interface MenuApi {
   method: string;
 }
 
+const baseUrl = 'http://localhost:3000/api'
 const menuService = {
     getMenusByPage: async (
       {current, pageSize}: {current: number; pageSize: number},
       formData?: any
     ) => {
-      return request.get<PageData<Menu>>('/api/menu/page', {
+      return request.get<PageData<Menu>>(`${baseUrl}/menu/page`, {
         params: {
           page: current - 1,
           size: pageSize,
@@ -45,14 +46,14 @@ const menuService = {
     },
     
     removeMenu: async(value: any) => {
-        return request.delete('api/menu', value)
+        return request.delete(`/api/menu`, value)
     },
     getChildren: (parentId: string) => {
-        return request.get<Menu[]>('/api/menu/children', {params: {parentId}});
+        return request.get<Menu[]>(`/api/menu/children`, {params: {parentId}});
       },
 
     updateMenu: (menu: Menu) => {
-      return request.put('/api/menu/update', menu)
+      return request.put(`/api/menu/update`, menu)
     },
     addMenu: (menu: Menu) => {
       return request.post('/api/menu/create', menu)

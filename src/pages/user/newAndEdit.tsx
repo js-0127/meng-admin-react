@@ -64,7 +64,7 @@ const NewAndEditForm:ForwardRefRenderFunction<FormInstance, PropsType> = ({
    
     const getRolesData = async () => {
       setGetRolesLoding(true)
-      const [error, data] = await getAllRoles()
+      const [_, data] = await getAllRoles()
      
       setRoles(data)
       setGetRolesLoding(false)

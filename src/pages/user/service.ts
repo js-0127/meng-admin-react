@@ -38,8 +38,8 @@ export interface Menu {
   total: number
  } 
 
-
  const userService = {
+  
    // 分页获取用户列表
    getUserListByPage: async({current, pageSize}: {current:number, pageSize: number}, formData:any) => {
      return request.get<pageData>('/api/user/list',  {
@@ -48,7 +48,7 @@ export interface Menu {
         size: pageSize,
         ...formData
       }
-    }).then(([error, pageData]) => {
+    }).then(([_, pageData]) => {
       return ({
         list: pageData.data,
         total: pageData.total,
@@ -68,6 +68,7 @@ export interface Menu {
   deleteUser: (id: number) => {
     return request.delete(`/api/user/${id}`);
   },
+ 
 
   //获取当前用户信息
   getUserInfo: () => {

@@ -13,7 +13,7 @@ import {
   Popconfirm,
 } from 'antd';
 import { useAntdTable } from 'ahooks';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import roleService, { Role } from './service';
 import dayjs from 'dayjs';
@@ -37,6 +37,12 @@ const rolePage = () => {
     const [formOpen, setFormOpen] = useState<boolean>(false)
     const formRef = useRef<FormInstance>(null)
 
+
+    useEffect(() => {
+      if(tableProps.dataSource){
+        
+      }
+    })
     const columns: any[] = [
         {
             title: '名称',

@@ -24,15 +24,12 @@ const RoleMenu: React.FC<RoleMenuProps> = ({
     const [getDataLoading, setGetDataLoading] = useState<boolean>(false)
     const [checkedKeys, setCheckedKeys] = useState<string[]>([])
     const [selectType, setSelectType] = useState('allChildren')
-    const [selectedKeys, setSelectedKeys] = useState<any>([])
-
     const {runAsync: getRoleMenus} = useRequest(roleService.getRoleMenus, {manual: true})
 
 
     const getAllChildrenKeys = (children: any[], keys: string[]): void => {
         (children || []).forEach((node) => {
-            keys.push(node)
-            console.log(keys);
+            keys.push(node.key)
             getAllChildrenKeys(node.children, keys)
         })
     }
@@ -41,13 +38,12 @@ const RoleMenu: React.FC<RoleMenuProps> = ({
     const getFirstChildrenKeys = (children: any[], keys: any[]):void => {
         (children || []).forEach((node) => {
             keys.push(node.key)
-            console.log(keys);
             
         })
     }
 
     const onCheck:TreeProps['onCheck'] = (_:any,{ checked, node }: any) => {
-        const keys =  [node.key]
+        const keys =  [node.key]     
         if(selectType === 'allChildren'){
             getAllChildrenKeys(node.children, keys)
         } else if(selectType === 'firstChildren') {
@@ -56,6 +52,8 @@ const RoleMenu: React.FC<RoleMenuProps> = ({
 
         if(checked) {
                setCheckedKeys((pre) => [...pre, ...keys])
+               console.log(checkedKeys);
+               
         } else {
             setCheckedKeys((pre) => pre.filter(o => !keys.includes(o)))
         }
@@ -75,7 +73,6 @@ const RoleMenu: React.FC<RoleMenuProps> = ({
      const getData = async() => {
          setGetDataLoading(true)  
          const [error, data] = await roleService.getAllMenus()
-         console.log(data);
          
          if(!error) {
             const group = data.reduce<Record<string, Menu[]>>((pre:any, cur:any) => {
@@ -89,13 +86,13 @@ const RoleMenu: React.FC<RoleMenuProps> = ({
                 }
                 return pre
             }, {})
-
+             
+            
             const roots = data.filter((o: any) => !o.parentId)
 
             const newTreeData = formatTree(roots, group)
-            console.log(newTreeData);
-             setTreeData(newTreeData)
-            console.log(treeData);
+
+             setTreeData(newTreeData)             
             
          }
          setGetDataLoading(false)
@@ -118,6 +115,8 @@ const RoleMenu: React.FC<RoleMenuProps> = ({
         if(!roleId) return;
 
         setSaveLoading(true)
+        console.log(checkedKeys);
+        
         const [error] = await roleService.setRoleMenus(checkedKeys, roleId)
         setSaveLoading(false)
 
@@ -126,12 +125,6 @@ const RoleMenu: React.FC<RoleMenuProps> = ({
             onCancel()
         }
     }
-    
-      const onSelect = (selectedKeysValue: React.Key[], info: any) => {
-        console.log('onSelect', selectedKeysValue, info);
-        setSelectedKeys(selectedKeysValue);
-      };
-
 
     useEffect(() => {
         if(visible) {
@@ -180,9 +173,6 @@ const RoleMenu: React.FC<RoleMenuProps> = ({
                        onCheck={onCheck}
                        treeData={treeData}
                        checkedKeys={checkedKeys}
-                    //    checkStrictly
-                       onSelect={onSelect}
-                       selectedKeys={selectedKeys}
                        className="py-[10px]"
                        />
                 </div>

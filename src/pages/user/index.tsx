@@ -12,7 +12,7 @@ import {
     Modal,
     FormInstance,
     Avatar,
-    Tag,} from 'antd'
+    } from 'antd'
 
 import type { ColumnsType } from 'antd/es/table';
 import { useAntdTable } from 'ahooks';
@@ -34,7 +34,7 @@ const UserPage = () => {
     const [editData, setEditData] = useState<User | null>(null)
     const [saveLoding, setSaveLoding] = useState(false)
   
-    
+  
     const formRef = useRef<FormInstance>(null)
  
     const columns: ColumnsType<any> = [

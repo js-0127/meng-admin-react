@@ -7,7 +7,6 @@ export interface Role {
     name: string;
     code: string;
   }
-
 const roleService = {
 
     getRoleListByPage: async({current, pageSize}: {current:number, pageSize: number}, formData:any) => {
@@ -17,7 +16,7 @@ const roleService = {
            size: pageSize,
            ...formData
          }
-       }).then(([error, pageData]) => {
+       }).then(([_, pageData]) => {
          return ({
            list: pageData.data,
            total: pageData.total,

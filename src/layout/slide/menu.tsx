@@ -1,4 +1,4 @@
-import React, {startTransition, useCallback, useEffect, useMemo, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {Menu, MenuProps} from 'antd'
 import type { ItemType } from "antd/es/menu/hooks/useItems";
 import {Link, useMatches, useNavigate} from 'react-router-dom'
@@ -16,7 +16,6 @@ const SLideMenu = () => {
     const [openKeys, setOpenKeys] = useState<string[]>([])
     const [selectKeys, setSelectKeys] = useState<string[]>([])
 
-    
     const {
         collapsed
     } = useGlobalStore()
