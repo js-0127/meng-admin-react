@@ -48,14 +48,14 @@ cat >> /etc/nginx/conf.d/default.conf <<EOF
     }
 
     location /api {
-        proxy_pass http://localhost:3000;
+        proxy_pass $SERVER_URL;
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
     }
 
     location /upload/ {
-        proxy_pass http://localhost:9000;
+        proxy_pass $FILE_URL;
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;

@@ -24,7 +24,9 @@ const BasicLayout : React.FC = () => {
     const {setLatestMessage} = useMessageStore()
     const navigate = useNavigate()
     const location = useLocation()
-    const {latestMessage, connect} = useWebSocketMessage(`ws://localhost:3001/?token=${token}`, {manual: true})
+    const {latestMessage, connect} = useWebSocketMessage(
+      `${window.location.protocol.replace('http', 'ws')}//localhost:3001/?token=${token}`,
+       {manual: true})
 
     const {loading, data: currentUserDetail, run: getUserInfo} = useRequest(userService.getUserInfo, {manual: true})
 
