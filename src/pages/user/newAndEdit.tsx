@@ -34,6 +34,7 @@ const NewAndEditForm:ForwardRefRenderFunction<FormInstance, PropsType> = ({
             setSaveLoading(true);
             
             if(values.avatar?.[0]?.response) {
+              console.log(values.avatar?.[0]?.response);
               
               values.avatar = values.avatar?.[0]?.response?.filePath
             } else {
@@ -41,6 +42,7 @@ const NewAndEditForm:ForwardRefRenderFunction<FormInstance, PropsType> = ({
             }
             if(editData) {
               const [error] = await updateUser({...editData, ...values})
+              
               setSaveLoading(false);
               if(error) {
                 return 
@@ -75,15 +77,21 @@ const NewAndEditForm:ForwardRefRenderFunction<FormInstance, PropsType> = ({
     }, []) 
 
     const initialValues = useMemo(() => {
-      
-      
        if(editData) {
         return {
           ...editData,
+          avatar: editData.fileEntity ? [{
+            uid: '-1',
+            name: editData.fileEntity[0].fileName,
+            states: 'done',
+            url: editData.fileEntity[0].filePath,
+            response: {
+              id: editData.fileEntity[0].id,
+            }, 
+          }] : [],
           roleIds: (editData.user_Role || []).map((roleId:string) => roleId)
         }
        }
-       return ;
     }, [editData])
 
     return (

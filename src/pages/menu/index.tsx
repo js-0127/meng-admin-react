@@ -8,7 +8,7 @@ import { useRequest } from '~/hooks/use-request';
 import NewAndEditForm from './new-edit-form';
 import menuService, { Menu } from './service';
 import { MenuType } from "./interface";
-
+import { WithAuth } from "~/components/with-auth";
 
 const MenuPage:React.FC = () => {
     const [dataSource, setDataSource] = useState<Menu[]>([])
@@ -19,7 +19,7 @@ const MenuPage:React.FC = () => {
       });
 
   const [createVisible, setCreateVisible] = useState(false);
-  const [parentId, setParentId] = useState<number>();
+  const [parentId, setParentId] = useState<string>();
   const [expandedRowKeys, setExpandedRowKeys] = useState<readonly React.Key[]>([]);
   const [curRowData, setCurRowData] = useState<Menu>();
   const [editData, setEditData] = useState<null | Menu>(null);
@@ -48,13 +48,15 @@ const MenuPage:React.FC = () => {
         }))
     }
   }
-     
+
+  const CreateButton = WithAuth('menu:create')(Button)
+  
   const columns: any[] = useMemo(
     () => [
       {
         title: '名称',
         dataIndex: 'name',
-        width: 300,
+        width: 150,
       },
       {
         title: '类型',
@@ -62,7 +64,7 @@ const MenuPage:React.FC = () => {
         align: 'center',
         width: 100,
         render: (value: number) => (
-          <Tag color="processing">{value === MenuType.DIRECTORY ? '目录' : '菜单'}</Tag>
+          <Tag color="processing">{value === MenuType.DIRECTORY ? '目录' : value === MenuType.MENU ? '菜单' : '按钮'}</Tag>
         ),
       },
       {
@@ -90,11 +92,15 @@ const MenuPage:React.FC = () => {
         width: 100,
       },
       {
+        title: '按钮权限码',
+        dataIndex: 'authCode'
+      },
+      {
         title: '操作',
         dataIndex: 'id',
         align: 'center',
         width: 200,
-        render: (value: number, record: Menu) => {
+        render: (value: string, record: Menu) => {
           return (
             <Space
               split={(
@@ -119,8 +125,13 @@ const MenuPage:React.FC = () => {
                 编辑
               </a>
               <Popconfirm
+                
                 title="是否删除？"
+                cancelText="取消"
+                okText="确定"
                 onConfirm={async () => {
+                  console.log(value);
+                  
                   const [error] = await menuService.removeMenu(value);
 
                   if (!error) {
@@ -177,9 +188,11 @@ const MenuPage:React.FC = () => {
     
  }, [pagination.size, pagination.current])
 
+
+
   return (
     <div>
-      <Button
+      <CreateButton
         className="mb-[12px]"
         type="primary"
         onClick={() => {
@@ -187,7 +200,7 @@ const MenuPage:React.FC = () => {
         }}
       >
         新建
-      </Button>
+      </CreateButton>
       <Table
         columns={columns}
         dataSource={dataSource}

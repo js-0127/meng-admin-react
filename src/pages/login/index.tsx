@@ -217,6 +217,8 @@ const Login = () => {
          open={emailResetPasswordOpen}
          footer={null}
          width={400}
+         cancelText='取消'
+         okText="确认"
          maskClosable={false}
          bodyStyle={{padding: '20px', position: 'relative'}}
          style={{top: 240}}

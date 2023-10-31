@@ -11,7 +11,7 @@ import { componentPaths } from '~/config/routes';
 interface CreateMemuProps {
     visible: boolean;
     onCancel: (flag?: boolean) => void;
-    parentId?: number;
+    parentId?: string;
     onSave: () => void;
     editData?: Menu | null;
 }
@@ -67,6 +67,8 @@ const NewAndEditForm : React.FC<CreateMemuProps> = (props) => {
         <Modal
           open={visible}
           title='新建'
+          cancelText='取消'
+          okText="确认"
           onOk={() => {
             form.submit()
           }}
@@ -81,7 +83,6 @@ const NewAndEditForm : React.FC<CreateMemuProps> = (props) => {
         >
         <Form
            form={form}
-           
            onFinish={save}
            labelCol={{flex: '0 0 100px'}}
            wrapperCol={{span: 16}}
@@ -99,11 +100,15 @@ const NewAndEditForm : React.FC<CreateMemuProps> = (props) => {
                </Radio.Group>
             </Form.Item>  
 
-             <Form.Item label="名称" name="name">
+             <Form.Item 
+                label="名称" 
+                name="name"
+                required
+                >
                     <Input />
              </Form.Item>
 
-             <Form.Item label="图标" name="icon">
+             <Form.Item label="图标" name="icon" required>
                  <Select>
                     {Object.keys(antdIcons).map((key: React.Key) => (
                         <Select.Option key={key}>{React.createElement(antdIcons[key])}</Select.Option>
@@ -115,6 +120,7 @@ const NewAndEditForm : React.FC<CreateMemuProps> = (props) => {
                 tooltip="以/开头, 不用手动拼接上级路由。参数格式:/id"
                 label="路由"
                 name="route"
+                required
                 rules={[{
                     pattern: /^\//,
                     message: '必须以/开头'
@@ -124,7 +130,7 @@ const NewAndEditForm : React.FC<CreateMemuProps> = (props) => {
              </Form.Item>
                
 
-             <Form.Item noStyle shouldUpdate>
+             <Form.Item noStyle shouldUpdate required>
                    {() => (
                     form.getFieldValue("type") === 2 && (
                         <Form.Item
@@ -142,7 +148,7 @@ const NewAndEditForm : React.FC<CreateMemuProps> = (props) => {
                    )}
              </Form.Item>
              
-                 <Form.Item noStyle shouldUpdate>
+                 <Form.Item noStyle shouldUpdate >
                      {() => (
                         form.getFieldValue('type') === 2 && (
                             <Form.Item
@@ -156,7 +162,7 @@ const NewAndEditForm : React.FC<CreateMemuProps> = (props) => {
                      )}
                  </Form.Item>
 
-                 <Form.Item label="排序号" name="orderNumber">
+                 <Form.Item label="排序号" name="orderNumber" required>
                     <InputNumber />
                  </Form.Item>
 

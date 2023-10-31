@@ -4,12 +4,12 @@ import { t } from "i18next"
 import { LoginLogService } from "./service"
 import type { ColumnsType } from "antd/es/table"
 import dayjs from "dayjs"
-
 export const LoginLog = () => {
+
 
     const [form] = Form.useForm()
 
-    const {tableProps, search: {submit, reset}} = useAntdTable(LoginLogService.getUserListByPage, {defaultPageSize: 10, defaultCurrent: 1}) 
+    const {tableProps, search: {submit, reset}} = useAntdTable(LoginLogService.getUserListByPage, {form}) 
      
     const columns: ColumnsType<any> = [
        
@@ -57,7 +57,6 @@ export const LoginLog = () => {
           },
     ]
 
-
      return  (
         <div>
         <Form 
@@ -72,7 +71,7 @@ export const LoginLog = () => {
             </Col>
             <Col className='w-full text-right' lg={24} xl={8}>
               <Space>
-                <Button type='primary' onClick={submit}>{t("YHapJMTT" /* 搜索 */)}</Button>
+               <Button onClick={submit} type='primary'>{t("YHapJMTT" /* 搜索 */)}</Button>
                 <Button onClick={reset}>{t("uCkoPyVp" /* 清除 */)}</Button>
               </Space>
             </Col>
@@ -83,6 +82,7 @@ export const LoginLog = () => {
              scroll={{ x: true }} 
              columns={columns} 
              {...tableProps} 
+             rowKey="id"
              className='bg-transparent' />
         </div>
       </div>

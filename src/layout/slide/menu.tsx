@@ -45,7 +45,6 @@ const SLideMenu = () => {
     },
     [matches, collapsed]
     )
-
     const getMenuTitle = (menu: MenuType) => {
         if(menu?.children?.filter(menu => menu.show) ?.length)  {
             return menu.name
@@ -71,7 +70,7 @@ const SLideMenu = () => {
     }, []) 
 
     const menuData = useMemo(() => {
-        return treeMenuData(currentUser?.menus.filter((menu: any) => menu.show) || [])
+        return treeMenuData((currentUser?.menus as MenuType[]).filter((menu: any) => menu.show) || [])
     }, [currentUser])
      
       const navigate = useNavigate()

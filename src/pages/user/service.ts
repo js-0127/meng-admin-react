@@ -29,8 +29,9 @@ export interface Menu {
     createDate: string;
     updateDate: string;
     avatar?: any;
-    menus? :any
-    
+    menus? :Menu[]
+    fileEntity? :any,
+    authList?: string[]
   }
   
  export interface pageData {
@@ -49,6 +50,8 @@ export interface Menu {
         ...formData
       }
     }).then(([_, pageData]) => {
+      console.log(pageData);
+      
       return ({
         list: pageData.data,
         total: pageData.total,
@@ -68,7 +71,6 @@ export interface Menu {
   deleteUser: (id: number) => {
     return request.delete(`/api/user/${id}`);
   },
- 
 
   //获取当前用户信息
   getUserInfo: () => {

@@ -140,6 +140,8 @@ const RoleMenu: React.FC<RoleMenuProps> = ({
         <Modal
            title='分配菜单'
            open={visible}
+           cancelText='取消'
+           okText="确认"
            onCancel={() => {
             onCancel()
            }} 
@@ -171,6 +173,7 @@ const RoleMenu: React.FC<RoleMenuProps> = ({
                     <Tree
                        checkable
                        onCheck={onCheck}
+                       checkStrictly
                        treeData={treeData}
                        checkedKeys={checkedKeys}
                        className="py-[10px]"

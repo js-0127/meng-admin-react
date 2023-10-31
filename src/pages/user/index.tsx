@@ -16,13 +16,15 @@ import {
 
 import type { ColumnsType } from 'antd/es/table';
 import { useAntdTable } from 'ahooks';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs'
 import NewAndEditForm from './newAndEdit';
 import userService, { User } from './service';
 import {useRequest} from '~/hooks/use-request'
 import { IconBuguang } from '~/assets/icons/buguang';
+import { WithAuth } from '~/components/with-auth';
+import { useUserStore } from '~/stores/global/user';
 
 const UserPage = () => {
     const [form] = Form.useForm()
@@ -34,7 +36,8 @@ const UserPage = () => {
     const [editData, setEditData] = useState<User | null>(null)
     const [saveLoding, setSaveLoding] = useState(false)
   
-  
+    const CreateButton = WithAuth('user:create')(Button)
+
     const formRef = useRef<FormInstance>(null)
  
     const columns: ColumnsType<any> = [
@@ -83,16 +86,19 @@ const UserPage = () => {
           {
             title: t("QkOmYwne" /* 操作 */),
             key: 'action',
-            render: (_,record) => record.userName !== 'admin' && (
+            render: (_,record) => (
                 <Space size="middle">
                     <a onClick={() => {
                         setEditData(record)
+                        console.log(record);
                         setFormOpen(true)
                     }}>
                         {t("qEIlwmxC"  /*编辑 */)}
                     </a>
                     <Popconfirm
                     title={t("JjwFfqHG" /* 警告*/ )}
+                    cancelText="取消"
+                    okText="确认"
                     description={t("nlZBTfzL" /* 确认删除这条数据？ */)}
                     onConfirm={async () => {
                         await deleteUser(record.id);
@@ -124,6 +130,12 @@ const UserPage = () => {
        setFormOpen(false)
        setEditData(null)
     }
+ 
+   const {currentUser} = useUserStore()
+    useEffect(() => {
+      console.log(currentUser);
+      
+    }, [])
 
     return (
         <div>
@@ -150,7 +162,7 @@ const UserPage = () => {
         
             <div className='mt-[16px] dark:bg-[rgb(33,41,70)] bg-white rounded-lg px-[12px]'>
                 <div className='py-[16px]'>
-                    <Button onClick={openForm} type='primary' size='large' icon={<PlusOutlined/> }>{t("morEPEyc" /* 新增 */)}</Button>
+                    <CreateButton onClick={openForm} type='primary' size='large' icon={<PlusOutlined/> }>{t("morEPEyc" /* 新增 */)}</CreateButton>
 
                 </div>
                 <Table
@@ -167,6 +179,8 @@ const UserPage = () => {
                onOk={() => {
                 formRef.current?.submit()
                }}
+               cancelText='取消'
+               okText="确认"
                destroyOnClose
                width={640}
                zIndex={999}

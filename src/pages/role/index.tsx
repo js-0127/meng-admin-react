@@ -20,6 +20,7 @@ import dayjs from 'dayjs';
 import { antdUtils } from '~/utils/antd';
 import NewAndEditForm from './new-edit-form';
 import RoleMenu from './role-menu';
+import { WithAuth } from '~/components/with-auth';
 
 
 
@@ -36,8 +37,9 @@ const rolePage = () => {
     
     const [formOpen, setFormOpen] = useState<boolean>(false)
     const formRef = useRef<FormInstance>(null)
-
-
+    
+    const CreateButton = WithAuth('role:create')(Button)
+    
     useEffect(() => {
       if(tableProps.dataSource){
         
@@ -99,8 +101,10 @@ const rolePage = () => {
                   编辑
                 </a>
                 <Popconfirm
-                  title="确认删除？"
-                  onConfirm={async () => {
+                   cancelText="取消"
+                   okText="确认"
+                   title="确认删除？"
+                   onConfirm={async () => {
                     const [error] = await roleService.removeRole(id);
                     if (!error) {
                       antdUtils.message?.success('删除成功!');
@@ -170,14 +174,14 @@ const rolePage = () => {
 
             <div className='mt-[16px] dark:bg-[rgb(33,41,70)] bg-white rounded-lg px-[12px]'>
                 <div className='py-[16px]'>
-                    <Button 
+                    <CreateButton 
                        onClick={openForm}
                        type='primary'
                        size='large'
                        icon={<PlusOutlined />}
                        >
                            {t('morEPEyc' /* 新增 */)}
-                       </Button>
+                       </CreateButton>
                 </div>
 
                 <Table
@@ -197,6 +201,8 @@ const rolePage = () => {
                onOk={() => {
                 formRef.current?.submit()
                }}
+               cancelText='取消'
+               okText="确认"
                destroyOnClose
                onCancel={closeForm}
                confirmLoading={saveLoading}

@@ -1,6 +1,6 @@
 import { t } from '~/utils/i18n';
 import { Space, Tag, Table, Form, Row, Col, Input, InputNumber, Button } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
+import type { ColumnsType } from 'antd/es/table'
 
 interface DataType {
   key: string;
@@ -11,6 +11,9 @@ interface DataType {
 }
 
 const TablePage: React.FC = () => {
+
+  const [form] = Form.useForm()
+
 
   const columns: ColumnsType<DataType> = [
     {
@@ -122,7 +125,7 @@ const TablePage: React.FC = () => {
 
   return (
     <div>
-      <Form size="large" className='dark:bg-[rgb(33,41,70)] bg-white p-[24px] rounded-md'>
+      <Form form={form} size="large" className='dark:bg-[rgb(33,41,70)] bg-white p-[24px] rounded-md'>
         <Row gutter={24}>
           <Col className='w-full' lg={24} xl={8} >
             <Form.Item name="name" label={t("EOSDTAVT" /* 名称 */)}>
@@ -136,6 +139,7 @@ const TablePage: React.FC = () => {
           </Col>
           <Col className='w-full text-right' lg={24} xl={8}>
             <Space>
+            
               <Button type='primary'>{t("YHapJMTT" /* 搜索 */)}</Button>
               <Button>{t("uCkoPyVp" /* 清除 */)}</Button>
             </Space>

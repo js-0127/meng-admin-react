@@ -17,6 +17,7 @@ import  { replaceRoutes, router } from '~/router';
 import { useWebSocketMessage } from '~/hooks/use-websocket';
 import {SocketMessage, useMessageStore} from '~/stores/global/message'
 import MessageHandle from './message-handle';
+import { MenuType } from '~/pages/menu/interface';
 const BasicLayout : React.FC = () => {
 
     const { lang,token, refreshToken } = useGlobalStore();
@@ -111,7 +112,7 @@ useEffect(() => {
 
       useEffect(() => {
         if(!currentUserDetail) return
-        const {menus = []} = currentUserDetail
+        const { menus = [] } = currentUserDetail
 
        const menuGroup = menus.reduce((pre: any, menu: any) => {
              if(!menu.parentId) {
@@ -126,8 +127,12 @@ useEffect(() => {
        }, {})
             
        const routes: Menu[] = []
+        
+      
        
        currentUserDetail.menus = format(menus.filter((item:any) =>!item.parentId), menuGroup, routes);
+
+       currentUserDetail.authList = menus.filter((menu) => menu.type === MenuType.BUTTON && menu.authCode).map(menu => menu.authCode!)
        
        replaceRoutes('*', [...routes.map(menu => ({
         path:`/*${menu.path}`,
