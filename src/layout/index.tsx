@@ -3,10 +3,10 @@ import Content from './content';
 import Header from './header';
 import './index.css'
 import Slide from './slide';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { lazy, useEffect } from 'react';
 import { antdUtils } from '~/utils/antd';
-import { App } from 'antd';
+import { App, Tabs } from 'antd';
 import { useRequest } from '~/hooks/use-request';
 import userService, { Menu } from '~/pages/user/service';
 import { useUserStore } from '~/stores/global/user';
@@ -186,6 +186,16 @@ useEffect(() => {
         <Header />
         <Slide/>
         <Content>
+          <Tabs 
+             defaultActiveKey='test'
+             items={[
+               {
+                label: '测试',
+                key: 'test',
+                children: <Outlet/>,
+               }
+             ]}
+          />
         </Content>
       </div>
        

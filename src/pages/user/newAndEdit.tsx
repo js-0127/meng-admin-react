@@ -80,7 +80,7 @@ const NewAndEditForm:ForwardRefRenderFunction<FormInstance, PropsType> = ({
        if(editData) {
         return {
           ...editData,
-          avatar: editData.fileEntity ? [{
+          avatar: editData.avatar ? [{
             uid: '-1',
             name: editData.fileEntity[0].fileName,
             states: 'done',

@@ -3,8 +3,6 @@ import { defaultSetting } from '~/default-settings';
 import { usePCScreen } from '~/hooks/use-pc-screen';
 import { useGlobalStore } from '~/stores/global';
 import { FC, Suspense } from 'react';
-import { Outlet } from 'react-router-dom';
-
 
 
 const Content: FC<any> = ({ children }) => {
@@ -35,7 +33,7 @@ const Content: FC<any> = ({ children }) => {
           )}
         >
           {children}
-          <Outlet />
+     
         </Suspense>
        
       </div>

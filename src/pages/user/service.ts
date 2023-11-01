@@ -79,7 +79,7 @@ export interface Menu {
 
   //发送邮箱验证吗
   sendEmailCaptcha: (email:string) => {
-    return request.post('/api/user//send/email/captcha', {email})
+    return request.post('/api/user/send/email/captcha', {email})
   },
 
   //获取全部角色
