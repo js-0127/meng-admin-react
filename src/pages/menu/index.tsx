@@ -130,7 +130,6 @@ const MenuPage:React.FC = () => {
                 cancelText="取消"
                 okText="确定"
                 onConfirm={async () => {
-                  console.log(value);
                   
                   const [error] = await menuService.removeMenu(value);
 

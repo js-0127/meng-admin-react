@@ -93,8 +93,7 @@ const rolePage = () => {
                   onClick={async() => {
                     setEditData(record);
                     openForm()
-                    const res = await roleService.getRoleMenus(id)
-                    console.log(res);
+                     await roleService.getRoleMenus(id)
                     
                   }}
                 >

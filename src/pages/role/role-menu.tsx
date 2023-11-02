@@ -52,7 +52,6 @@ const RoleMenu: React.FC<RoleMenuProps> = ({
 
         if(checked) {
                setCheckedKeys((pre) => [...pre, ...keys])
-               console.log(checkedKeys);
                
         } else {
             setCheckedKeys((pre) => pre.filter(o => !keys.includes(o)))
@@ -115,7 +114,6 @@ const RoleMenu: React.FC<RoleMenuProps> = ({
         if(!roleId) return;
 
         setSaveLoading(true)
-        console.log(checkedKeys);
         
         const [error] = await roleService.setRoleMenus(checkedKeys, roleId)
         setSaveLoading(false)

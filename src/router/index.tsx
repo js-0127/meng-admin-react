@@ -74,7 +74,7 @@ export const router = createBrowserRouter(
 	
  
 
-  const  Router = () => {
+  const Router = () => {
     const {notification, message, modal} = App.useApp()
 
     useEffect(() => {

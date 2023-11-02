@@ -6,16 +6,14 @@ import { FC, Suspense } from 'react';
 
 
 const Content: FC<any> = ({ children }) => {
-
   const isPC = usePCScreen();
-
   const {
     collapsed,
   } = useGlobalStore();
 
   return (
     <div
-      className='color-transition mt-[80px] w-[100%] bg-container !<lg:ml-[16px] p-6'
+      className='color-transition mt-[80px] w-[100%] bg-container !<lg:ml-[16px]'
       style={{
         borderRadius: '8px',
         marginLeft: collapsed ? 112 : defaultSetting.slideWidth,
@@ -33,7 +31,6 @@ const Content: FC<any> = ({ children }) => {
           )}
         >
           {children}
-     
         </Suspense>
        
       </div>

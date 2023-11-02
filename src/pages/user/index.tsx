@@ -16,7 +16,7 @@ import {
 
 import type { ColumnsType } from 'antd/es/table';
 import { useAntdTable } from 'ahooks';
-import { useEffect, useRef, useState } from 'react';
+import {  useRef, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs'
 import NewAndEditForm from './newAndEdit';
@@ -24,7 +24,6 @@ import userService, { User } from './service';
 import {useRequest} from '~/hooks/use-request'
 import { IconBuguang } from '~/assets/icons/buguang';
 import { WithAuth } from '~/components/with-auth';
-import { useUserStore } from '~/stores/global/user';
 
 const UserPage = () => {
     const [form] = Form.useForm()
@@ -90,7 +89,6 @@ const UserPage = () => {
                 <Space size="middle">
                     <a onClick={() => {
                         setEditData(record)
-                        console.log(record);
                         setFormOpen(true)
                     }}>
                         {t("qEIlwmxC"  /*编辑 */)}
@@ -130,12 +128,6 @@ const UserPage = () => {
        setFormOpen(false)
        setEditData(null)
     }
- 
-   const {currentUser} = useUserStore()
-    useEffect(() => {
-      console.log(currentUser);
-      
-    }, [])
 
     return (
         <div>

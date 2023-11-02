@@ -3,10 +3,10 @@ import Content from './content';
 import Header from './header';
 import './index.css'
 import Slide from './slide';
-import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useMatches, useNavigate } from 'react-router-dom';
 import { lazy, useEffect } from 'react';
 import { antdUtils } from '~/utils/antd';
-import { App, Tabs } from 'antd';
+import { App } from 'antd';
 import { useRequest } from '~/hooks/use-request';
 import userService, { Menu } from '~/pages/user/service';
 import { useUserStore } from '~/stores/global/user';
@@ -18,6 +18,7 @@ import { useWebSocketMessage } from '~/hooks/use-websocket';
 import {SocketMessage, useMessageStore} from '~/stores/global/message'
 import MessageHandle from './message-handle';
 import { MenuType } from '~/pages/menu/interface';
+import TabsLayout from './tabs-layout';
 const BasicLayout : React.FC = () => {
 
     const { lang,token, refreshToken } = useGlobalStore();
@@ -90,8 +91,6 @@ const BasicLayout : React.FC = () => {
   useEffect(() => {
  if(latestMessage) {   
    try {
-    console.log(latestMessage);
-    
      const socketMessage =JSON.parse(latestMessage?.data) as SocketMessage
      setLatestMessage(socketMessage)
    }
@@ -146,22 +145,21 @@ useEffect(() => {
         }
        })),
        {
+        id: '*',
         path: '*',
-        Component: Result404
-       },
-       {
-        path: '/*/',
-        element: (
-          <Navigate to="/dashboard"/>
-        )
-       }
+        Component: Result404,
+        handle: {
+          path: '404',
+          name: '404',
+        },
+      }
       ])
       setCurrentUser(currentUserDetail)
         // 连接websocket
       connect && connect();
       router.navigate(`${location.pathname}${location.search}`, {replace: true})
        
-    }, [currentUserDetail, setCurrentUser])
+    }, [currentUserDetail])
   
 
     useEffect(() => {
@@ -174,6 +172,12 @@ useEffect(() => {
 
       return () => {window.removeEventListener('storage', storageChange)}
     }, [])
+       
+    const matches = useMatches()
+   useEffect(() => {
+         console.log(matches);
+         
+   }, [matches])
 
     if(loading || !currentUser) {
       return (
@@ -186,16 +190,7 @@ useEffect(() => {
         <Header />
         <Slide/>
         <Content>
-          <Tabs 
-             defaultActiveKey='test'
-             items={[
-               {
-                label: '测试',
-                key: 'test',
-                children: <Outlet/>,
-               }
-             ]}
-          />
+         <TabsLayout />
         </Content>
       </div>
        

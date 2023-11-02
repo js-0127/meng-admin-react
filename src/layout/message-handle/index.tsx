@@ -45,10 +45,6 @@ const MessageHandle = () => {
     }
 
     useEffect(() => {
-        if(latestMessage){
-            console.log(latestMessage);
-            
-        }
         if(latestMessage && messageHandleMap[latestMessage?.type]) {
             messageHandleMap[latestMessage?.type]()
         }

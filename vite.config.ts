@@ -21,12 +21,10 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/upload/, '')
       },
-      // '/ws': {
-      //   target: 'ws://localhost:3001',
-      //   changeOrigin: true,
-      //   ws: true,
-      //   rewrite: (path) => path.replace(/^\/ws/, '')
-      // }
     }
-  }
+  },
+  build: {
+    manifest: true,
+    sourcemap: true,
+  },
 })
