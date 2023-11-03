@@ -68,9 +68,9 @@ const ResetPassword = () => {
     
       
 return (
-    <div className="bg-primary light:bg-[rgb(238,242,246)] bg-[rgb(238,242,246)] flex justify-center items-center h-[100vh]">
+    <div className="bg-primary  bg-[rgb(238,242,246)] flex justify-center items-center h-screen">
     <div className='flex-[2.5] flex justify-center'>
-      <div className='dark:bg-[rgb(33,41,70)] w-[400px] px-[32px] py-[20px] mt-[-12%] bg-white rounded-lg <lg:(w-[94%] mx-auto)'>
+      <div className='dark:bg-[rgb(33,41,70)] w-[94%] px-[32px] py-[20px] mx-auto bg-white rounded-lg lg:mt-[-12%] lg:w-[400px]'>
         <div className='mb-[32px]'>
           <div className='flex gap-2'>
             <h2 className='text-[rgb(124,77,255)]' style={{ marginBottom: '0.6em' }}>重置密码</h2>
@@ -125,7 +125,7 @@ return (
       </div>
     </div>
     <div
-      className='flex-[1.7] dark:bg-[rgb(33,41,70)] bg-white h-[100vh] relative <lg:hidden'
+      className='flex-[1.7] dark:bg-[rgb(33,41,70)] bg-white h-[100vh] relative hidden lg:block'
       style={{
         backgroundImage: 'url(/images/login-right-bg.svg)'
       }}

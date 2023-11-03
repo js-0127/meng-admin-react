@@ -21,7 +21,7 @@ export function useMatchRoute(): MatchRouteType | undefined {
   const matches = useMatches();
   // 获取当前url
   
-  const { pathname } = useLocation();
+  const location = useLocation();
 
   const [matchRoute, setMatchRoute] = useState<MatchRouteType | undefined>();
 
@@ -29,12 +29,12 @@ export function useMatchRoute(): MatchRouteType | undefined {
   useEffect(() => {
     // 获取当前匹配的路由
      
-    const lastRoute = matches[matches.length - 1];
+    const lastRoute = matches[matches.length - 1];    
     
     if (!lastRoute?.handle) return;
     setMatchRoute({
       title: (lastRoute?.handle as any)?.name,
-      pathname,
+      pathname:location.pathname,
       children,
       routePath: lastRoute?.pathname || '',
       icon: (lastRoute?.handle as any)?.icon,

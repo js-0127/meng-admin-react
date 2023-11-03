@@ -1,6 +1,7 @@
 import { defineConfig } from 'windicss/helpers'
 
 export default defineConfig({
+  important: true,
   preflight: false,
   darkMode: 'class',
   shortcuts: {

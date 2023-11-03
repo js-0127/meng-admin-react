@@ -47,7 +47,7 @@ const SlideIndex :React.FC = () => {
                 style={{width: defaultSetting.slideWidth}}
                >
                      <IconBuguang className='text-blue-500'/>
-                     <h1 className='text-primary font-bold text-[22px] '>meng</h1>
+                     <h1 className='text-primary font-bold text-[22px]'>meng</h1>
                 </div>
             )}
 
@@ -66,7 +66,7 @@ const SlideIndex :React.FC = () => {
     return (
         <div
         style={{width: collapsed ? 112 : defaultSetting.slideWidth}}
-        className='menu-slide color-transition top-[80px] fixed box-border left-0 bottom-0 overflow-y-auto px-[16px] bg-primary <lg:hidden'
+        className='menu-slide color-transition top-[80px] fixed box-border left-0 bottom-0 overflow-y-auto px-[16px] bg-primary hidden lg:block'
         >
          {renderMenu()}
         </div>

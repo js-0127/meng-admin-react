@@ -13,7 +13,7 @@ const Content: FC<any> = ({ children }) => {
 
   return (
     <div
-      className='color-transition mt-[80px] w-[100%] bg-container !<lg:ml-[16px]'
+    className='color-transition mt-[80px] w-full bg-container ml-large'
       style={{
         borderRadius: '8px',
         marginLeft: collapsed ? 112 : defaultSetting.slideWidth,
@@ -23,7 +23,7 @@ const Content: FC<any> = ({ children }) => {
       }}
     >
       <div
-        className='m-0 rounded-md z-1 p-[0px]'
+        className='m-0 rounded-md z-[1] p-0'
       >
         <Suspense
           fallback={(

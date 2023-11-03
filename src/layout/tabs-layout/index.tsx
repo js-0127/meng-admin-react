@@ -1,10 +1,11 @@
-import { Dropdown, Tabs } from "antd"
+import { Dropdown } from "antd"
 import { MenuItemType } from "antd/es/menu/hooks/useItems"
-import React, { useCallback, useMemo } from "react"
+import React, { useCallback,  useMemo,  } from "react"
 import { antdIcons } from "~/assets/antd-icons"
 import { KeepAliveTab, useTabs } from "~/hooks/use-tabs"
 import {router} from "~/router"
 import { KeepAliveTabContext } from "../tabs-context"
+import DraggableTab from "~/components/draggable-Tab"
 
 
 enum OperationType {
@@ -13,10 +14,10 @@ enum OperationType {
    CLOSEOTHER = 'close-other',
  }
 
-
  const TabsLayout:React.FC = () => {
    
    const {activeTabRoutePath, keepAliveTabs, closeTab, refreshTab, closeOtherTab} = useTabs()
+
 
    const getIcon = (icon?: string):React.ReactElement | undefined => {
           return icon && antdIcons[icon] && React.createElement(antdIcons[icon])
@@ -51,10 +52,8 @@ enum OperationType {
                  domEvent.stopPropagation();
                    //@ts-ignore
                  domEventMap[key] && domEventMap[key](tab.routePath)
-                
       
          }, [closeOtherTab, closeTab, refreshTab])
-      
       
          const renderTabTitle = useCallback((tab: KeepAliveTab) => {
                    return (
@@ -76,31 +75,27 @@ enum OperationType {
          }, [menuItems])
                
 
-
-   const tabItems = useMemo(() => {
-      return (
-         keepAliveTabs.map(tab => 
-         {
-            return {
-               key:tab.key,
-               label: renderTabTitle(tab),
-               children:(
-                <div className="px-[16px]" key={tab.key}>
-                    {tab.children}
-                </div>
-               ),
-               closable: keepAliveTabs.length > 1
-            }
-         }
-         )
-      )
-
-   }, [keepAliveTabs])
-
+      const tabItems = useMemo(() => {
+            return keepAliveTabs.map(tab => {
+               return {
+                 key: tab.routePath,
+                 label: renderTabTitle(tab),
+                 children: (
+                   <div
+                     key={tab.key}
+                     className='px-[16px]'
+                   >
+                     {tab.children}
+                   </div>
+                 ),
+                 closable: keepAliveTabs.length > 1, // 剩最后一个就不能删除了
+               }
+             })
+          }, [keepAliveTabs]);
    
+
    const onTabsChange = useCallback((tabRoutePath:string) => {
       router.navigate(tabRoutePath)
-     
    }, [])
 
    const onEditTab = (
@@ -118,9 +113,10 @@ enum OperationType {
            closeTab
         }
     }, [closeOtherTab, closeTab, refreshTab])
+
     return (
-        <KeepAliveTabContext.Provider value={keepAliveTabsValue}>
-         <Tabs
+   <KeepAliveTabContext.Provider value={keepAliveTabsValue}>
+     <DraggableTab
         hideAdd
         activeKey={activeTabRoutePath}
         type='editable-card'
@@ -128,6 +124,7 @@ enum OperationType {
         onChange={onTabsChange}
         onEdit={onEditTab}
         size="small"
+        tabBarGutter={2}
      />
         </KeepAliveTabContext.Provider>
     )

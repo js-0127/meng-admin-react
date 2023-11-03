@@ -68,7 +68,7 @@ const Header = () => {
             outline: 'none',
             boxShadow: 'none'
           }}
-          className='w-[400px] h-[50px] focus:(border-[rgb(135,94,196)]) <lg:hidden'
+          className='w-[400px] h-[50px] focus:border-[rgb(135,94,196)] sm:hidden md:hidden lg:flex'
           size="large"
           prefix={
             <IconFangdajing
@@ -114,7 +114,7 @@ const Header = () => {
             placement="bottom"
             overlayClassName='w-[160px]'
           >
-            <div className='btn-icon text-[20px] bg-[rgb(227,242,253)]  text-[rgb(30,136,229)] hover:(bg-[rgb(33,150,243)] dark:text-[rgb(227,242,253)] text-[rgb(227,242,253)])'>
+            <div className='btn-icon text-[20px] bg-[rgb(227,242,253)]  text-[rgb(30,136,229)] hover:bg-[rgb(33,150,243)] hover:text-[rgb(227,242,253)]'>
               {lang === 'zh' ? (
                 <IconShuyi_fanyi36 />
               ) : (
@@ -160,7 +160,7 @@ const Header = () => {
               )
             }}
           >
-            <div className='btn-icon rounded-[27px] pl-[10px] pr-[14px] justify-between h-[48px] w-[92px] text-[20px] bg-[rgb(227,242,253)] text-[rgb(30,136,229)] hover:(bg-[rgb(33,150,243)] text-[rgb(227,242,253)])'>
+            <div className='btn-icon rounded-[27px] pl-[10px] pr-[14px] justify-between h-[48px] w-[92px] text-[20px] bg-[rgb(227,242,253)] text-[rgb(30,136,229)] hover:bg-[rgb(33,150,243)] hover:text-[rgb(227,242,253)]'>
               
               {currentUser?.avatar ? (
                 <Avatar style={{ verticalAlign: 'middle' }} src={currentUser.avatar} />

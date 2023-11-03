@@ -24,7 +24,7 @@ import { useLayoutEffect, useRef } from 'react';
       }, []);
 
       return (
-        <div ref={container} className='w-[100%]' />
+        <div ref={container} className='w-full' />
       );
 }
 

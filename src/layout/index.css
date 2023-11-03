@@ -22,3 +22,17 @@
   ::-webkit-scrollbar-track {
     background-color: transparent;
   }
+
+
+
+@media (min-width: 1024px) {
+  .ml-large {
+    margin-left: 16px ;
+  }
+}
+
+@media (max-width: 1023px) {
+  .ml-large {
+    margin-left: 0 !important;
+  }
+}

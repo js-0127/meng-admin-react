@@ -11,7 +11,7 @@ const Dashboard:React.FC = () => {
     return (
         <>
          <Row gutter={[16, 16]}>
-              <Col lg={24} xl={8} className='w-[100%]'>
+              <Col lg={24} xl={8} className='w-full'>
                 <div className='color-transition dark:bg-[rgb(33,41,70)] w-full bg-[rgb(94,53,177)]  overflow-hidden relative h-[241px] rounded-md bg-card p-[32px] box-border'>
                     <div className='absolute top-[24px] right-[24px] z-10'>
                         <Tooltip title={t("yAdJryjx" /* 指标说明 */)}>
@@ -74,7 +74,7 @@ const Dashboard:React.FC = () => {
             </div>
           </div>
         </Col>
-        <Col lg={24} xl={8} className='w-[100%]'>
+        <Col lg={24} xl={8} className='w-full'>
           <div className='color-transition dark:bg-[rgb(33,41,70)] bg-[rgb(94,53,177)] theme2 overflow-hidden h-[241px] relative rounded-md bg-card p-[32px] box-border'>
             <div className='absolute top-[24px] right-[24px] z-10'>
               <Tooltip title={t("sdOusITo" /* 指标说明 */)}>

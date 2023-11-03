@@ -16,6 +16,7 @@ function getKey() {
   return new Date().getTime().toString();
 }
 
+
 export function useTabs() {
   // 存放页面记录
   const [keepAliveTabs, setKeepAliveTabs] = useState<KeepAliveTab[]>([]);
@@ -46,13 +47,18 @@ export function useTabs() {
   // 关闭除了自己其它tab
   const closeOtherTab = useCallback((routePath: string = activeTabRoutePath) => {
     setKeepAliveTabs(prev => prev.filter(o => o.routePath === routePath));
+    setActiveTabRoutePath(routePath);
+    router.navigate(routePath)
   }, [activeTabRoutePath]);
 
   // 刷新tab
   const refreshTab = useCallback((routePath: string = activeTabRoutePath) => {    
-    setKeepAliveTabs([...keepAliveTabs]);
-  }, [activeTabRoutePath]);
-
+    
+    setKeepAliveTabs(prev => {
+      return [...prev];
+    });
+  }, [activeTabRoutePath])
+  
   useEffect(() => {
 
     if (!matchRoute) return;
@@ -74,7 +80,7 @@ export function useTabs() {
       setKeepAliveTabs(prev => {
         const index = prev.findIndex(tab => tab.routePath === matchRoute.routePath);
         if (index >= 0) {
-          prev[index].key = getKey();
+          prev[index].key = matchRoute.routePath;
           prev[index].pathname = matchRoute.pathname;
           prev[index].children = matchRoute.children;
         }

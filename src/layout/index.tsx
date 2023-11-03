@@ -3,10 +3,8 @@ import Content from './content';
 import Header from './header';
 import './index.css'
 import Slide from './slide';
-import { useLocation, useMatches, useNavigate } from 'react-router-dom';
-import { lazy, useEffect } from 'react';
-import { antdUtils } from '~/utils/antd';
-import { App } from 'antd';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { lazy, useEffect, useState } from 'react';
 import { useRequest } from '~/hooks/use-request';
 import userService, { Menu } from '~/pages/user/service';
 import { useUserStore } from '~/stores/global/user';
@@ -19,132 +17,125 @@ import {SocketMessage, useMessageStore} from '~/stores/global/message'
 import MessageHandle from './message-handle';
 import { MenuType } from '~/pages/menu/interface';
 import TabsLayout from './tabs-layout';
-const BasicLayout : React.FC = () => {
+const BasicLayout: React.FC = () => {
 
-    const { lang,token, refreshToken } = useGlobalStore();
-    const {currentUser , setCurrentUser} = useUserStore()
-    const {setLatestMessage} = useMessageStore()
-    const navigate = useNavigate()
-    const location = useLocation()
-    const {latestMessage, connect} = useWebSocketMessage(
-      `${window.location.protocol.replace('http', 'ws')}//localhost:3001/?token=${token}`,
-       {manual: true})
+  const [loading, setLoading] = useState(true);
 
-    const {loading, data: currentUserDetail, run: getUserInfo} = useRequest(userService.getUserInfo, {manual: true})
+  const { refreshToken, lang, token } = useGlobalStore();
+  const { setCurrentUser, currentUser } = useUserStore();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { setLatestMessage } = useMessageStore();
 
-    useEffect(() => {
-      if (!refreshToken) {
-        navigate('/login');
-        return;
-      }
-      getUserInfo()
+  // 当获取完用户信息后，手动连接
+  const { latestMessage, connect } = useWebSocketMessage(
+    `${window.location.protocol.replace('http', 'ws')}//localhost:3001/?token=${token}`,
+    { manual: true }
+  );
 
-    }, [refreshToken, getUserInfo, navigate])
+  const {
+    data: currentUserDetail,
+    run: getCurrentUserDetail,
+  } = useRequest(
+    userService.getUserInfo,
+    { manual: true }
+  );
 
-    
-   
+  const formatMenus = (
+    menus: Menu[],
+    menuGroup: Record<string, Menu[]>,
+    routes: Menu[],
+    parentMenu?: Menu
+  ): Menu[] => {
+    return menus.map(menu => {
+      const children = menuGroup[menu.id];
 
-    useEffect(() => {
-      setCurrentUser(currentUserDetail || null)
-      
-    }, [currentUserDetail, setCurrentUser])
+      const parentPaths = parentMenu?.parentPaths || [];
+      const path = (parentMenu ? `${parentPaths[parentPaths.length - 1]}${menu.route}` : menu.route) || '';
 
-    useEffect(() => { 
-      if(currentUser)     
-      connect && connect()
-    
-   }, [token])
-     
-    const {message, notification, modal} = App.useApp()
-    useEffect(() => {
-      antdUtils.setMessageInstance(message)
-      antdUtils.setNotificationInstance(notification)
-      antdUtils.setModalInstance(modal)
-    }, [message, notification, modal])
+      routes.push({ ...menu, path, parentPaths });
 
-
-    const format = (
-      menus: Menu[],
-      menuGroup: Record<string, Menu[]>,
-      routes: Menu[],
-      parentMenu?: Menu
-    ): Menu[] => {
-      return menus.map((menu) => {
-        const children = menuGroup[menu.id]
-
-        const parentPaths = parentMenu?.parentPaths || [];
-        const path = (parentMenu ? `${parentPaths[parentPaths.length - 1]}${menu.route}` : menu.route) || ''
-        routes.push({...menu, path, parentPaths})
-
-        return {
+      return {
+        ...menu,
+        path,
+        parentPaths,
+        children: children?.length ? formatMenus(children, menuGroup, routes, {
           ...menu,
-          path,
-          parentPaths,
-          children: children?.length ? format(children, menuGroup, routes, {
-            ...menu,
-            parentPaths: [...parentPaths, path || ''].filter(item => item),
-          }) : undefined
-        }
-      })
-    }
-  
-  useEffect(() => {
- if(latestMessage) {   
-   try {
-     const socketMessage =JSON.parse(latestMessage?.data) as SocketMessage
-     setLatestMessage(socketMessage)
-   }
-   catch {
-     console.error(latestMessage?.data);
-     
-   }
- }
-}, [latestMessage])
-
-
-
-useEffect(() => {
-  if(!token) {
-    navigate('/login')
+          parentPaths: [...parentPaths, path || ''].filter(o => o),
+        }) : undefined,
+      };
+    });
   }
-}, [navigate, token])
 
-      useEffect(() => {
-        if(!currentUserDetail) return
-        const { menus = [] } = currentUserDetail
-
-       const menuGroup = menus.reduce((pre: any, menu: any) => {
-             if(!menu.parentId) {
-              return pre
-             }
-
-             if(!pre[menu.parentId]){
-              pre[menu.parentId] = []
-             }
-             pre[menu.parentId].push(menu)
-             return pre
-       }, {})
-            
-       const routes: Menu[] = []
-        
-      
+  useEffect(() => {
+    if (latestMessage?.data) {
+      console.log(latestMessage?.data);
+      try {
        
-       currentUserDetail.menus = format(menus.filter((item:any) =>!item.parentId), menuGroup, routes);
+        const socketMessage = JSON.parse(latestMessage?.data) as SocketMessage;
+        setLatestMessage(socketMessage)
+      } catch {
+        console.error(latestMessage?.data);
+      }
+    }
+  }, [latestMessage]);
 
-       currentUserDetail.authList = menus.filter((menu) => menu.type === MenuType.BUTTON && menu.authCode).map(menu => menu.authCode!)
-       
-       replaceRoutes('*', [...routes.map(menu => ({
-        path:`/*${menu.path}`,
+
+  useEffect(() => {
+    if (!refreshToken) {
+      navigate('/login');
+      return;
+    }
+    getCurrentUserDetail();
+  }, [refreshToken, getCurrentUserDetail, navigate]);
+
+  useEffect(() => {
+    if (currentUserDetail) {
+      connect && connect();
+    }
+  }, [token]);
+
+  useEffect(() => {
+    if (!currentUserDetail) return;
+
+    const { menus = [] } = currentUserDetail;
+
+    const menuGroup = menus.reduce<Record<string, Menu[]>>((prev, menu) => {
+      if (!menu.parentId) {
+        return prev;
+      }
+
+      if (!prev[menu.parentId]) {
+        prev[menu.parentId] = [];
+      }
+
+      prev[menu.parentId].push(menu);
+      return prev;
+    }, {});
+
+    const routes: Menu[] = [];
+
+    currentUserDetail.menus = formatMenus(menus.filter(o => !o.parentId), menuGroup, routes);
+
+    currentUserDetail.authList = menus
+      .filter(menu => menu.type === MenuType.BUTTON && menu.authCode)
+      .map(menu => menu.authCode!);
+
+
+    console.log(components, 'components');
+
+    replaceRoutes('*', [
+      ...routes.map(menu => ({
+        path: `/*${menu.path}`,
         Component: menu.filePath ? lazy(components[menu.filePath]) : null,
         id: `/*${menu.path}`,
         handle: {
           parentPaths: menu.parentPaths,
-          path:menu.path,
+          path: menu.path,
           name: menu.name,
           icon: menu.icon,
-        }
-       })),
-       {
+        },
+      })), {
         id: '*',
         path: '*',
         Component: Result404,
@@ -153,48 +144,50 @@ useEffect(() => {
           name: '404',
         },
       }
-      ])
-      setCurrentUser(currentUserDetail)
-        // 连接websocket
-      connect && connect();
-      router.navigate(`${location.pathname}${location.search}`, {replace: true})
-       
-    }, [currentUserDetail])
-  
+    ]);
 
-    useEffect(() => {
-      function storageChange(e: StorageEvent) {
-            if(e.key === useGlobalStore.persist.getOptions().name) {
-              useGlobalStore.persist.rehydrate()
-            }
-      } 
-      window.addEventListener<'storage'>('storage',storageChange )
+    setCurrentUser(currentUserDetail);
+    setLoading(false);
 
-      return () => {window.removeEventListener('storage', storageChange)}
-    }, [])
-       
-    const matches = useMatches()
-   useEffect(() => {
-         console.log(matches);
-         
-   }, [matches])
+    // 连接websocket
+    connect && connect();
 
-    if(loading || !currentUser) {
-      return (
-        <GlobalLoading />
-      )
+    // replace一下当前路由，为了触发路由匹配
+    router.navigate(`${location.pathname}${location.search}`, { replace: true });
+  }, [currentUserDetail, setCurrentUser]);
+
+  useEffect(() => {
+    function storageChange(e: StorageEvent) {
+      if (e.key === useGlobalStore.persist.getOptions().name) {
+        useGlobalStore.persist.rehydrate();
+      }
     }
+
+    window.addEventListener<'storage'>('storage', storageChange);
+
+    return () => {
+      window.removeEventListener<'storage'>('storage', storageChange);
+    }
+  }, []);
+
+  if (loading || !currentUser) {
     return (
-        <div key={lang} className='bg-primary overflow-hidden'>
-          <MessageHandle/>
+      <GlobalLoading />
+    )
+  }
+
+  return (
+    <div>
+      <div key={lang} className='bg-primary overflow-hidden'>
+        <MessageHandle />
         <Header />
-        <Slide/>
+        <Slide />
         <Content>
-         <TabsLayout />
+          <TabsLayout />
         </Content>
       </div>
-       
-    )
-}
+    </div>
+  );
+};
 
-export default BasicLayout
+export default BasicLayout;

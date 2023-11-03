@@ -52,10 +52,10 @@ const menuService = {
       },
 
     updateMenu: (menu: Menu) => {
-      return request.put(`/api/menu/update`, menu)
+      return request.put(`/api/menu/`, menu)
     },
     addMenu: (menu: Menu) => {
-      return request.post('/api/menu/create', menu)
+      return request.post('/api/menu/', menu)
     }
 }
 
