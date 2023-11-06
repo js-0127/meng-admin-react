@@ -1,10 +1,11 @@
+@tailwind components;
 
 * {
     margin: 0;
     box-sizing: border-box;
   }
 
-  
+
   .ant-menu-item {
     height: 50px !important;
     line-height: 50px !important;
@@ -19,12 +20,13 @@
     transition: none !important;
   }
   
-  
   .ant-menu-item:hover {
     color: rgb(124, 77, 255) !important;
     background-color: #f0e9f7 !important;
   }
-  
+   
+  @tailwind utilities;  
+
   .light .ant-menu-item:hover {
     color: rgb(124, 77, 255) !important;
     background-color: #f0e9f7 !important;

@@ -37,7 +37,7 @@ const menuService = {
     ) => {
       return request.get<PageData<Menu>>(`/api/menu/page`, {
         params: {
-          page: current - 1,
+          page: current,
           size: pageSize,
           ...formData,
         },

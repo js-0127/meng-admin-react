@@ -15,7 +15,7 @@ const MenuPage:React.FC = () => {
 
     const [pagination, setPagination] = useState<TablePaginationConfig>({
         current: 1,
-        pageSize: 10,
+        pageSize: 20,
       });
 
   const [createVisible, setCreateVisible] = useState(false);
@@ -24,18 +24,16 @@ const MenuPage:React.FC = () => {
   const [curRowData, setCurRowData] = useState<Menu>();
   const [editData, setEditData] = useState<null | Menu>(null);
 
-  const { loading, runAsync: getMenusByPage } = useRequest(menuService.getMenusByPage, { manual: true });
+  const { loading, runAsync: getMenusByPage } = useRequest(menuService.getMenusByPage, { manual: true});
 
    
   const getMenus = async () => {
     const {current, pageSize} = pagination || {}
-
+  
     const [error, data] = await getMenusByPage({
         current,
         pageSize
     })
-    
-
     if(!error){
         setDataSource(data.data.map((item:any) => ({
             ...item,
@@ -56,7 +54,7 @@ const MenuPage:React.FC = () => {
       {
         title: '名称',
         dataIndex: 'name',
-        width: 150,
+        width: 170,
       },
       {
         title: '类型',
@@ -182,8 +180,13 @@ const MenuPage:React.FC = () => {
               }
  }
 
+ const tabChangeHandle = (tablePagination: TablePaginationConfig) => {
+  setPagination(tablePagination);
+}
+
  useEffect(() => {
     getMenus()
+    console.log(pagination.pageSize, pagination.current);
     
  }, [pagination.size, pagination.current])
 
@@ -206,7 +209,7 @@ const MenuPage:React.FC = () => {
         rowKey="id"
         loading={loading}
         pagination={pagination}
-        // onChange={tabChangeHandle}
+        onChange={tabChangeHandle}
         tableLayout="fixed"
         expandable={{
           rowExpandable: () => true,

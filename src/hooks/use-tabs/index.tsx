@@ -12,9 +12,9 @@ export interface KeepAliveTab {
   children: any;
 }
 
-function getKey() {
-  return new Date().getTime().toString();
-}
+// function getKey() {
+//   return new Date().getTime().toString();
+// }
 
 
 export function useTabs() {
@@ -52,7 +52,7 @@ export function useTabs() {
   }, [activeTabRoutePath]);
 
   // 刷新tab
-  const refreshTab = useCallback((routePath: string = activeTabRoutePath) => {    
+  const refreshTab = useCallback((_: string = activeTabRoutePath) => {    
     
     setKeepAliveTabs(prev => {
       return [...prev];

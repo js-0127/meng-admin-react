@@ -13,6 +13,7 @@ import { BellOutlined, MenuOutlined, SettingOutlined } from '@ant-design/icons';
 import { useUserStore } from '~/stores/global/user';
 import { useRequest } from '~/hooks/use-request';
 import loginService from '~/pages/login/service';
+import { antdUtils } from '~/utils/antd';
 
 const Header = () => {
 
@@ -31,7 +32,13 @@ const Header = () => {
 
   const logout = async () => {
     const [error] = await runAsync();
-    if (error) return;
+    if (error) {
+      return;
+    } else {
+      antdUtils.notification?.success({
+        message: '退出成功'
+      })
+    }
 
     useGlobalStore.setState({
       token: '',
@@ -39,7 +46,6 @@ const Header = () => {
     });
 
   }
-
   
 
   return (
@@ -47,7 +53,7 @@ const Header = () => {
       style={{ zIndex: 998 }}
       className="color-transition h-[80px] flex basis-[48px] items-center px-0 gap-[16px] fixed top-0 right-0 left-0 bg-primary"
     >
-      <div style={{ width: defaultSetting.slideWidth }} className="<lg:hidden flex justify-between items-center">
+      <div style={{ width: defaultSetting.slideWidth }} className="hidden lg:flex justify-between items-center">
         <div className='flex items-center gap-[4px] text-[20px] px-[24px] pr-0'>
           <IconBuguang className="text-blue-500" />
           <h1 className='text-primary font-bold text-[22px]'>meng-admin</h1>
@@ -160,10 +166,10 @@ const Header = () => {
               )
             }}
           >
-            <div className='btn-icon rounded-[27px] pl-[10px] pr-[14px] justify-between h-[48px] w-[92px] text-[20px] bg-[rgb(227,242,253)] text-[rgb(30,136,229)] hover:bg-[rgb(33,150,243)] hover:text-[rgb(227,242,253)]'>
+            <div  className='btn-icon rounded-[27px] pl-[10px] pr-[14px] justify-between h-[48px] w-[92px] text-[20px] bg-[rgb(227,242,253)] text-[rgb(30,136,229)] hover:bg-[rgb(33,150,243)] hover:text-[rgb(227,242,253)]'>
               
               {currentUser?.avatar ? (
-                <Avatar style={{ verticalAlign: 'middle' }} src={currentUser.avatar} />
+                <Avatar style={{ verticalAlign: 'middle' }} src={currentUser?.avatar} />
               ) : (
                 <Avatar style={{ backgroundColor: 'gold', verticalAlign: 'middle' }} size={35} icon={<IconBuguang />} />
               )}

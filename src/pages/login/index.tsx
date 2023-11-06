@@ -54,11 +54,16 @@ const Login = () => {
       setToken(data.token)
       setRefreshToken(data.refreshToken)
       navigate('/')
+      antdUtils.notification?.success({
+        message: '登陆成功',
+      })
     } 
 
   const sendCheckEmail = async() => {
         if(!checkEmail) {
-          antdUtils.message?.error('无效的邮箱格式!')
+          antdUtils.notification?.error({
+            message: '无效的邮箱格式',
+          })
           return 
         } 
         const [error] = await sendResetCheckEmail(checkEmail) 

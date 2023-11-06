@@ -1,0 +1,19 @@
+@tailwind components;
+
+@layer components {
+    .color-transition {
+       @apply  transition-colors duration-200 ease-in-out delay-0
+    }
+    .btn-icon {
+        @apply dark:bg-[rgb(41,49,79)] dark:text-[rgb(124,77,255)] w-[34px] text-[16px] h-[34px] flex items-center justify-center bg-[rgb(237,231,246)] text-[rgb(94,53,177)] rounded-[8px] color-transition select-none cursor-pointer hover:bg-[rgb(94,53,177)] hover:text-[rgb(237,231,246)]
+    }
+    .bg-primary {
+        @apply dark:bg-bgPrimaryColor-dark  bg-bgPrimaryColor-light
+    }
+    .bg-container {
+        @apply dark:bg-bgContainerColor-dark  bg-bgContainerColor-light
+    }
+    .text-primary {
+        @apply dark:text-textPrimaryColor-dark  text-textPrimaryColor-light
+    }
+}

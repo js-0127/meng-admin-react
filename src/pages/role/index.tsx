@@ -147,18 +147,18 @@ const rolePage = () => {
                    gutter={24}
                 
                 >
-                       <Col className='w-full lg={24} xl={8}'>
+                       <Col className='w-full' lg={24} xl={8}>
                         <Form.Item name="code" label="代码">
                               <Input onPressEnter={submit} />
                         </Form.Item>
                        </Col>
-                       <Col className='w-full lg={24} xl={8}'>
+                       <Col className='w-full' lg={24} xl={8}>
                         <Form.Item name="name" label="名称">
                               <Input onPressEnter={submit} />
                         </Form.Item>
                        </Col>
 
-                       <Col className='w-full lg={24} xl={8}'>
+                       <Col className='w-full' lg={24} xl={8}>
                          <Space>
                             <Button onClick={submit} type="primary">
                             {t('YHapJMTT' /* 搜索 */)}

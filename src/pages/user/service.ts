@@ -50,6 +50,8 @@ export interface Menu {
         ...formData
       }
     }).then(([_, pageData]) => {
+      console.log(pageData);
+      
       
       return ({
         list: pageData.data,

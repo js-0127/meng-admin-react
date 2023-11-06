@@ -21,10 +21,10 @@ const Dashboard:React.FC = () => {
                     <div className='text-[rgba(229,224,246,0.45)] text-[16px]'>
                     {t("nKMAkrqJ" /* 总销售额 */)}
                     </div>
-                    <div className='text-white text-2xl mt-[28px] text-[30px]'>
+                    <div className='text-white text-2xl mt-[20px] text-[30px]'>
                     ¥ 126,560
                     </div>
-                    <div className='mt-[50px] text-[rgba(229,224,216,0.85)] text-[16px] flex gap-[24px]'>
+                    <div className='mt-[40px] text-[rgba(229,224,216,0.85)] text-[16px] flex gap-[24px]'>
               <div className='flex items-center'>
                 <span>{t("NpRFMJyD" /* 周同比 */)}</span>
                 <span className='ml-[12px]'>12%</span>
@@ -36,7 +36,7 @@ const Dashboard:React.FC = () => {
                 <CaretUpOutlined className='ml-[6px] text-green-500' />
               </div>
             </div>
-            <Divider className='dark:bg-[rgb(189,200,240)] bg-[rgb(227,232,239)] opacity-[0.2] my-[16px]' />
+            <Divider className='dark:bg-[rgb(189,200,240)] bg-[rgb(227,232,239)] opacity-[0.2] my-[12px]' />
             <div className='text-[rgba(229,224,216,0.85)] text-[16px]'>
             <span>
                 {t("ZPCQOWAn" /* 日销售额 */)}
@@ -47,7 +47,7 @@ const Dashboard:React.FC = () => {
              </div>
                 </div>
               </Col>
-              <Col lg={24} xl={8} className='w-[100%]'>
+              <Col lg={24} xl={8} className='w-full'>
           <div className='color-transition dark:bg-[rgb(33,41,70)] bg-[rgb(30,136,229)] theme1 overflow-hidden h-[241px] relative rounded-md bg-card p-[32px] box-border'>
             <div className='absolute top-[24px] right-[24px] z-10'>
               <Tooltip title={t("iLyPEqwQ" /* 指标说明 */)}>
@@ -60,10 +60,10 @@ const Dashboard:React.FC = () => {
             <div className="text-white text-2xl mt-[20px] text-[30px]">
               8,930
             </div>
-            <div className='mt-[20px] text-[rgba(229,224,216,0.85)] text-[16px] flex gap-[24px]'>
+            <div className='mt-[14px] text-[rgba(229,224,216,0.85)] text-[16px] flex gap-[24px]'>
               <DemoTinyLine />
             </div>
-            <Divider className='dark:bg-[rgb(189,200,240)] bg-[rgb(227,232,239)] opacity-[0.2] my-[16px]' />
+            <Divider className='dark:bg-[rgb(189,200,240)] bg-[rgb(227,232,239)] opacity-[0.2] my-[12px]' />
             <div className='text-[rgba(229,224,216,0.85)] text-[16px]'>
               <span>
                 {t("sehypRaO" /* 日访问量 */)}
@@ -87,10 +87,10 @@ const Dashboard:React.FC = () => {
             <div className="text-white text-2xl mt-[20px] text-[30px]">
               8,943
             </div>
-            <div className='mt-[12px] text-[rgba(229,224,216,0.85)] text-[16px] flex gap-[24px]'>
+            <div className='mt-[10px] text-[rgba(229,224,216,0.85)] text-[16px] flex gap-[24px]'>
               <DemoTinyColumn />
             </div>
-            <Divider className='dark:bg-[rgb(189,200,240)] bg-[rgb(227,232,239)] opacity-[0.2] my-[16px]' />
+            <Divider className='dark:bg-[rgb(189,200,240)] bg-[rgb(227,232,239)] opacity-[0.2] my-[12px]' />
             <div className='text-[rgba(229,224,216,0.85)] text-[16px]'>
               <span>
                 {t("BUjwpMzX" /* 转化率 */)}
@@ -101,8 +101,8 @@ const Dashboard:React.FC = () => {
             </div>
           </div>
         </Col>
-        <Col className='w-[100%]' lg={24} xl={16} >
-          <div className='color-transition dark:bg-[rgb(33,41,70)] bg-white h-[600px] rounded-md p-[24px] relative'>
+        <Col className='w-full' lg={24} xl={16} >
+          <div className='color-transition dark:bg-[rgb(33,41,70)] bg-white h-[650px] rounded-md p-[24px] relative'>
             <div className='flex justify-between items-center'>
               <div>
                 <div className='text-[rgb(132,146,196)]'>{t("fHpiDHYH" /* 总增长 */)}</div>
@@ -133,8 +133,8 @@ const Dashboard:React.FC = () => {
             </div>
           </div>
         </Col>
-        <Col className='w-[100%]' lg={24} xl={8}>
-          <div className='color-transition dark:bg-[rgb(33,41,70)] bg-white h-[600px] rounded-md p-[24px] relative'>
+        <Col className='w-full' lg={24} xl={8}>
+          <div className='color-transition dark:bg-[rgb(33,41,70)] bg-white h-[650px] rounded-md p-[24px] relative'>
             <div className='flex justify-between'>
               <span className='dark:text-[rgb(215,220,236)] text-[18px] text-[rgb(18,25,38)]'>{t("yzUIyMhr" /* 门店销售额 */)}</span>
               <Dropdown menu={{
@@ -186,7 +186,7 @@ const Dashboard:React.FC = () => {
               <Divider className='dark:bg-[rgb(189,200,240)] bg-[rgb(227,232,239)] dark:opacity-[0.2] my-[16px]' />
               <div>
                 <div className='flex justify-between items-center'>
-                  <span className='dark:text-[rgb(189,200,240)] text-[rgb(54,65,82)]font-medium'>{t("WAiyAuwV" /* 合肥分店 */)}</span>
+                  <span className='dark:text-[rgb(189,200,240)] text-[rgb(54,65,82)] font-medium'>{t("WAiyAuwV" /* 合肥分店 */)}</span>
                   <div>
                     <span className='mr-[8px] dark:text-[rgb(189,200,240)] text-[rgb(54,65,82)] font-medium'>￥10,000</span>
                     <CaretUpOutlined className='text-[rgb(0,200,83)]' />
@@ -238,8 +238,6 @@ const Dashboard:React.FC = () => {
             </div>
           </div>
         </Col>
-
-
          </Row>
          
         </>

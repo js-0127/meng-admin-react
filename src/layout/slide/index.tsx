@@ -66,7 +66,7 @@ const SlideIndex :React.FC = () => {
     return (
         <div
         style={{width: collapsed ? 112 : defaultSetting.slideWidth}}
-        className='menu-slide color-transition top-[80px] fixed box-border left-0 bottom-0 overflow-y-auto px-[16px] bg-primary hidden lg:block'
+        className='menu-slide rounded-lg color-transition top-[80px] fixed box-border left-0 bottom-0 overflow-y-auto px-[16px] bg-primary hidden lg:block'
         >
          {renderMenu()}
         </div>

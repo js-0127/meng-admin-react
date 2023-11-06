@@ -99,9 +99,11 @@ const UserPage = () => {
                     okText="确认"
                     description={t("nlZBTfzL" /* 确认删除这条数据？ */)}
                     onConfirm={async () => {
-                        await deleteUser(record.id);
+                       const [error] =  await deleteUser(record.id);
+                       if(!error){
                         message.success(t("bvwOSeoJ" /* 删除成功！ */))
                         submit();
+                       }
                     }}
                     >
                        <a>{t("HJYhipnp" /* 删除 */)}</a> 
@@ -133,17 +135,17 @@ const UserPage = () => {
         <div>
             <Form onFinish={submit} form={form} size="large" className='dark:bg-[rgb(33,41,70)] bg-white p-[24px] rounded-lg'>
                 <Row gutter={24}>
-                    <Col className=' lg={16} xl={8}'>
+                    <Col lg={16} xl={8}>
                        <Form.Item name='nickName' label={t("rnyigssw" /* 昵称 */)}>
                          <Input onPressEnter={submit} />
                        </Form.Item>
                     </Col>
-                    <Col className=' lg={16} xl={8}'>
+                    <Col lg={16} xl={8}>
                        <Form.Item name="phoneNumber" label={t("SPsRnpyN" /* 手机号 */)}>
                          <Input onPressEnter={submit} />
                        </Form.Item>
                     </Col>
-                    <Col className='lg={24} xl={8}' >
+                    <Col lg={24} xl={8}>
                        <Space>
                          <Button onClick={submit} type='primary'>{t("YHapJMTT" /* 搜索 */)}</Button>
                          <Button onClick={reset}>{t("uCkoPyVp" /* 清除 */)}</Button>

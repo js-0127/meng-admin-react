@@ -38,7 +38,7 @@ const NewAndEditForm : React.FC<CreateMemuProps> = (props) => {
     const save = async (values:any) => {
         setSaveLoding(true)
         values.parentId = parentId || null
-        values.show = values.type === MenuType.DIRECTORY ? true : values.show
+        values.show = values.type === MenuType.DIRECTORY ? true :values.show === 'true' ? true : false
 
 
         if(editData) {
@@ -49,7 +49,9 @@ const NewAndEditForm : React.FC<CreateMemuProps> = (props) => {
                 onSave()
             }
         } else {
+            console.log(values);
             const [error] = await menuService.addMenu(values)
+           
             if(!error) {
                 antdUtils.message?.success('新增成功')
                 onSave()
@@ -87,7 +89,8 @@ const NewAndEditForm : React.FC<CreateMemuProps> = (props) => {
            labelCol={{flex: '0 0 100px'}}
            wrapperCol={{span: 16}}
            initialValues={{
-            type: MenuType.DIRECTORY
+            type: MenuType.DIRECTORY,
+            show: 'true'
            }}
         >
           <Form.Item label="类型" name="type">

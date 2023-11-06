@@ -1,11 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-
-import 'virtual:windi.css'
 import NProgress from 'nprogress'
 import App from './App.tsx'
+import './index.css'
 import './overwrite.css'
-
 
 NProgress.configure({
   minimum: 0.3,
@@ -17,5 +15,5 @@ NProgress.configure({
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <App />
-  //  </React.StrictMode>
+  </React.StrictMode>
 )

@@ -39,6 +39,8 @@ const NewAndEditForm:ForwardRefRenderFunction<FormInstance, PropsType> = ({
               values.avatar = null
             }
             if(editData) {
+              console.log(values,editData);
+              
               const [error] = await updateUser({...editData, ...values})
               
               setSaveLoading(false);

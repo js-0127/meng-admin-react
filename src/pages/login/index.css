@@ -1,3 +1,6 @@
+@tailwind components;
+@tailwind utilities;
+
 .img1 {
     animation: img1-anim 10s linear 0ms infinite normal backwards;
   }
@@ -34,6 +37,7 @@
     }
   }
   
+
   .custom.slick-dots .slick-active button {
     background: #000 !important;
   }
