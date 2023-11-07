@@ -1,12 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import { Form, Input, InputNumber, Modal, Radio, Select, Switch } from 'antd';
-import menuService, { Menu } from './service';
-import { antdUtils } from '~/utils/antd';
-import { MenuType } from './interface';
 import { antdIcons } from '~/assets/antd-icons';
 import { componentPaths } from '~/config/routes';
-
-
+import { antdUtils } from '~/utils/antd';
+import { MenuType } from './interface';
+import menuService, { Menu } from './service';
 
 interface CreateMemuProps {
     visible: boolean;

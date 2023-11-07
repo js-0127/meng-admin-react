@@ -1,12 +1,10 @@
-import {t} from '~/utils/i18n'
-import { Form, Input, FormInstance } from 'antd'
 import { forwardRef, useImperativeHandle, ForwardRefRenderFunction, useState } from 'react'
-
-import roleService, { Role } from './service';
+import { Form, Input, FormInstance } from 'antd'
+import {t} from '~/utils/i18n'
 import { antdUtils } from '~/utils/antd';
 import { useRequest } from '~/hooks/use-request';
+import roleService, { Role } from './service';
 import RoleMenu from './role-menu';
-
 
 interface PropsType {
     open: boolean;
@@ -15,7 +13,6 @@ interface PropsType {
     setSaveLoading: (loading: boolean) => void;
   }
   
-
 const NewAndEditForm: ForwardRefRenderFunction<FormInstance, PropsType> = ({
     editData,
     onSave,
@@ -27,7 +24,6 @@ const NewAndEditForm: ForwardRefRenderFunction<FormInstance, PropsType> = ({
      const {runAsync: addRole} = useRequest(roleService.addRole, {manual: true})
      const [roleMenuVisible, setRoleMenuVisible] = useState<boolean>(false)
      const [menuIds, setMenuIds] = useState<string[]>()
-
      useImperativeHandle(ref, () => form, [form])
 
      const finishHandle = async(values: Role) => {

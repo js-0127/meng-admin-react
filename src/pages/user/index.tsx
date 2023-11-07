@@ -1,42 +1,39 @@
-import { t } from '~/utils/i18n';
-import { 
-    Space,
-    Table,
-    Form,
-    Row,
-    Col,
-    Input,
-    Button,
-    Popconfirm,
-    App,
-    Modal,
-    FormInstance,
-    Avatar,
-    } from 'antd'
-
+import {  useRef, useState } from 'react';
 import type { ColumnsType } from 'antd/es/table';
 import { useAntdTable } from 'ahooks';
-import {  useRef, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs'
-import NewAndEditForm from './newAndEdit';
-import userService, { User } from './service';
-import {useRequest} from '~/hooks/use-request'
+import { 
+  Space,
+  Table,
+  Form,
+  Row,
+  Col,
+  Input,
+  Button,
+  Popconfirm,
+  App,
+  Modal,
+  FormInstance,
+  Avatar,
+} from 'antd'
 import { IconBuguang } from '~/assets/icons/buguang';
+import { t } from '~/utils/i18n';
+import {useRequest} from '~/hooks/use-request'
+import userService, { User } from './service';
+
+import NewAndEditForm from './newAndEdit';
 import { WithAuth } from '~/components/with-auth';
 
 const UserPage = () => {
     const [form] = Form.useForm()
- 
     const {message} = App.useApp()
-   
     const {tableProps, search: {submit, reset}} = useAntdTable(userService.getUserListByPage, {defaultPageSize: 10,form})
     const {runAsync: deleteUser} = useRequest(userService.deleteUser, {manual: true})
     const [editData, setEditData] = useState<User | null>(null)
+    
     const [saveLoding, setSaveLoding] = useState(false)
-  
     const CreateButton = WithAuth('user:create')(Button)
-
     const formRef = useRef<FormInstance>(null)
  
     const columns: ColumnsType<any> = [

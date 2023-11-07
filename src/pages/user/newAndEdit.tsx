@@ -1,11 +1,12 @@
-import { t } from '~/utils/i18n';
-import { Form, Input, Radio, App, FormInstance, Select } from 'antd'
 import { forwardRef, useImperativeHandle, ForwardRefRenderFunction, useMemo, useEffect, useState } from 'react'
-import userService, { User } from './service';
+import { Form, Input, Radio, App, FormInstance, Select } from 'antd'
+import { t } from '~/utils/i18n';
 import { useRequest } from '~/hooks/use-request';
+import userService, { User } from './service';
+import { Role } from '../role/service';
 import Avatar from './avatar';
 import EmailInput from './mail';
-import { Role } from '../role/service';
+
 
 interface PropsType {
     open: boolean;
@@ -32,17 +33,17 @@ const NewAndEditForm:ForwardRefRenderFunction<FormInstance, PropsType> = ({
     const finishHandle = async(values: User) => {
         try {
             setSaveLoading(true);
-            
             if(values.avatar?.[0]?.response) {  
-              values.avatar = values.avatar?.[0]?.response?.filePath
+              if(values.avatar?.[0]?.response?.filePath){
+                values.avatar = values.avatar?.[0]?.response.filePath
+              } else if(values.avatar?.[0]?.url){
+                values.avatar = values.avatar?.[0]?.url
+              } 
             } else {
               values.avatar = null
             }
             if(editData) {
-              console.log(values,editData);
-              
               const [error] = await updateUser({...editData, ...values})
-              
               setSaveLoading(false);
               if(error) {
                 return 

@@ -1,18 +1,14 @@
 import { useAntdTable } from "ahooks"
 import { Form, Row, Col, Input, Space, Button, Table, Badge } from "antd"
-import { t } from "i18next"
-import { LoginLogService } from "./service"
-import type { ColumnsType } from "antd/es/table"
 import dayjs from "dayjs"
+import type { ColumnsType } from "antd/es/table"
+import { t } from "~/utils/i18n"
+import { LoginLogService } from "./service"
+
 export const LoginLog = () => {
-
-
     const [form] = Form.useForm()
-
     const {tableProps, search: {submit, reset}} = useAntdTable(LoginLogService.getUserListByPage, {form}) 
-     
     const columns: ColumnsType<any> = [
-       
         {
             title: t('qYznwlfj'), /*用户名*/
             dataIndex: 'userName'

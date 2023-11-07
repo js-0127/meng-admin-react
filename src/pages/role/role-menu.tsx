@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from "react";
 import { Modal, Spin, Tree, Radio } from 'antd';
-import { antdUtils } from '~/utils/antd';
-import roleService from './service';
 import { DataNode, TreeProps } from "antd/es/tree";
-import { Menu } from "../menu/service";
+import { antdUtils } from '~/utils/antd';
 import { useRequest } from "~/hooks/use-request";
+import roleService from './service';
+import { Menu } from "../menu/service";
+
 interface RoleMenuProps {
     visible: boolean;
     onCancel: () => void;
@@ -26,7 +27,6 @@ const RoleMenu: React.FC<RoleMenuProps> = ({
     const [selectType, setSelectType] = useState('allChildren')
     const {runAsync: getRoleMenus} = useRequest(roleService.getRoleMenus, {manual: true})
 
-
     const getAllChildrenKeys = (children: any[], keys: string[]): void => {
         (children || []).forEach((node) => {
             keys.push(node.key)
@@ -38,7 +38,6 @@ const RoleMenu: React.FC<RoleMenuProps> = ({
     const getFirstChildrenKeys = (children: any[], keys: any[]):void => {
         (children || []).forEach((node) => {
             keys.push(node.key)
-            
         })
     }
 
@@ -57,7 +56,6 @@ const RoleMenu: React.FC<RoleMenuProps> = ({
             setCheckedKeys((pre) => pre.filter(o => !keys.includes(o)))
         }
     }
-    
 
     const formatTree = (roots: Menu[] = [], group: Record<string, Menu[]>): DataNode[] => {
         return roots.map((node) => {

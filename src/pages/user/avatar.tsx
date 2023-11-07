@@ -1,5 +1,4 @@
 import ImgCrop from 'antd-img-crop';
-
 import { Upload } from 'antd';
 import type { RcFile, UploadChangeParam, UploadFile, UploadProps } from 'antd/es/upload/interface';
 import { PlusOutlined } from '@ant-design/icons';

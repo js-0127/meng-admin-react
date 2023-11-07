@@ -5,15 +5,13 @@ import axios, {
     CreateAxiosDefaults,
     InternalAxiosRequestConfig,
   } from 'axios';
-  import {useGlobalStore} from '~/stores/global';
   import {router} from '~/router';
-  import loginService from '~/pages/login/service';
+  import {useGlobalStore} from '~/stores/global';
   import {antdUtils} from '~/utils/antd';
-  
+  import loginService from '~/pages/login/service';
   const refreshTokenUrl = '/api/auth/refresh/token';
   
   export type Response<T> = Promise<[boolean, T, AxiosResponse<T>]>;
-  
   class Request {
     constructor(config?: CreateAxiosDefaults) {
       this.axiosInstance = axios.create(config);

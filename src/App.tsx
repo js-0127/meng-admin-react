@@ -1,10 +1,10 @@
+import { useEffect, useMemo } from "react";
 import { ConfigProvider, ThemeConfig, theme, App as AntdApp } from "antd"
+import Router from "./router";
+import { useGlobalStore } from "./stores/global";
+import { i18n } from "./utils/i18n";
 import enUS from "./assets/locales/en-US"
 import zhCN from "./assets/locales/zh-CN"
-import { useGlobalStore } from "./stores/global";
-import { useEffect, useMemo } from "react";
-import { i18n } from "./utils/i18n";
-import Router from "./router";
 
 function App() {
 
@@ -56,9 +56,7 @@ function App() {
     componentSize='large'
   >
     <AntdApp>
-     
     <Router />
-    
     </AntdApp>
   </ConfigProvider>
   )

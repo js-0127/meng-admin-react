@@ -1,10 +1,10 @@
 import {memo} from 'react';
 import {Drawer} from 'antd';
 import { useUpdateEffect } from 'react-use';
-import { IconBuguang } from '~/assets/icons/buguang';
 import { useGlobalStore } from '~/stores/global';
-import { usePCScreen } from '~/hooks/use-pc-screen';
+import { IconBuguang } from '~/assets/icons/buguang';
 import { defaultSetting } from '~/default-settings';
+import { usePCScreen } from '~/hooks/use-pc-screen';
 import SLideMenu from './menu';
 const SlideIndex :React.FC = () => {
 

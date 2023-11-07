@@ -1,5 +1,6 @@
-import { TinyLine } from '@antv/g2plot';
 import { useLayoutEffect, useRef } from 'react';
+import { TinyLine } from '@antv/g2plot';
+
 
  const DemoTinyLine = () => {
     const container = useRef(null);

@@ -1,8 +1,7 @@
-import { useRequest } from "~/hooks/use-request";
-import { Button, Form, Input } from 'antd';
 import React, { ChangeEventHandler, useEffect, useRef, useState } from "react";
+import { Button, Form, Input } from 'antd';
+import { useRequest } from "~/hooks/use-request";
 import userService from './service';
-
 
 interface PropsType {
     value?: string

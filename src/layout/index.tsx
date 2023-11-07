@@ -1,22 +1,23 @@
-import { useGlobalStore } from '~/stores/global';
-import Content from './content';
-import Header from './header';
-import './index.css'
-import Slide from './slide';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { lazy, useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import  { replaceRoutes, router } from '~/router';
+import { useGlobalStore } from '~/stores/global';
+import { useUserStore } from '~/stores/global/user';
+import {SocketMessage, useMessageStore} from '~/stores/global/message'
+import { components } from '~/config/routes';
+import { useWebSocketMessage } from '~/hooks/use-websocket';
 import { useRequest } from '~/hooks/use-request';
 import userService, { Menu } from '~/pages/user/service';
-import { useUserStore } from '~/stores/global/user';
+
 import GlobalLoading from '~/components/global-loading';
 import Result404 from '~/pages/404';
-import { components } from '~/config/routes';
-import  { replaceRoutes, router } from '~/router';
-import { useWebSocketMessage } from '~/hooks/use-websocket';
-import {SocketMessage, useMessageStore} from '~/stores/global/message'
+import Content from './content';
+import Header from './header';
+import Slide from './slide';
 import MessageHandle from './message-handle';
 import { MenuType } from '~/pages/menu/interface';
 import TabsLayout from './tabs-layout';
+import './index.css'
 const BasicLayout: React.FC = () => {
 
   const [loading, setLoading] = useState(true);

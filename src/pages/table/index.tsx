@@ -1,6 +1,7 @@
-import { t } from '~/utils/i18n';
 import { Space, Tag, Table, Form, Row, Col, Input, InputNumber, Button } from 'antd';
 import type { ColumnsType } from 'antd/es/table'
+import { t } from '~/utils/i18n';
+
 
 interface DataType {
   key: string;
@@ -11,10 +12,7 @@ interface DataType {
 }
 
 const TablePage: React.FC = () => {
-
   const [form] = Form.useForm()
-
-
   const columns: ColumnsType<DataType> = [
     {
       title: t("LhjNVSoc" /* 名称 */),

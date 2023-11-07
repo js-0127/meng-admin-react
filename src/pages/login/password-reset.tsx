@@ -1,13 +1,13 @@
+import { useEffect } from "react"
+import { Link, useNavigate, useSearchParams } from "react-router-dom"
+import JSEncrypt from "jsencrypt"
 import { LockOutlined } from "@ant-design/icons"
 import { Form, Input, Button, Carousel } from "antd"
-import { t } from "i18next"
-import { Link, useNavigate, useSearchParams } from "react-router-dom"
+import { t } from "~/utils/i18n"
+import { antdUtils } from "~/utils/antd"
+import { getParamsBySearchParams } from "~/utils/util"
 import { useRequest } from "~/hooks/use-request"
 import loginService, { ResetPasswordDTO } from "./service"
-import { useEffect } from "react"
-import { antdUtils } from "~/utils/antd"
-import JSEncrypt from "jsencrypt"
-import { getParamsBySearchParams } from "~/utils/util"
 
 
 const ResetPassword = () => {
@@ -15,7 +15,6 @@ const ResetPassword = () => {
     const navigate = useNavigate()
     const {runAsync: getPublicKey} = useRequest(loginService.getPublicKey, {manual:true})
     const { runAsync: resetPassaword, loading } = useRequest(loginService.resetPassaword, { manual: true });
-
     const [query] = useSearchParams()
 
     useEffect(() => {
@@ -28,41 +27,33 @@ const ResetPassword = () => {
     }, [query])
 
     const onFinish = async (values: ResetPasswordDTO) => {
-
         if (values.comfirmPassword !== values.password) {
           antdUtils.message?.error('两次密码不一致');
           return;
         }
         // 获取公钥
         const [error, publicKey] = await getPublicKey();
-    
         if (error) {
           return;
         }
-    
         // 使用公钥对密码加密
         const encrypt = new JSEncrypt();
         encrypt.setPublicKey(publicKey);
         const password = encrypt.encrypt(values.password);
-    
         if (!password) {
           return;
         }
-    
+
         const params = getParamsBySearchParams(query);
-    
         values.password = password;
         values.publicKey = publicKey;
         values.email = params.email;
         values.emailCaptcha = params.emailCaptcha;
-    
         const [resetPassawordError] = await resetPassaword(values);
-    
         if (resetPassawordError) {
           return;
         }
         antdUtils.message?.success('密码重置成功');
-    
         navigate('/user/login');
       };
     

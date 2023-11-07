@@ -1,5 +1,6 @@
-import { TinyColumn } from "@antv/g2plot";
 import { useLayoutEffect, useRef } from "react";
+import { TinyColumn } from "@antv/g2plot";
+
 
 const DemoTinyColumn = () => {
     const container = useRef(null)

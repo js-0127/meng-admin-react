@@ -1,6 +1,7 @@
+import {useEffect} from 'react'
 import {Spin} from 'antd';
 import NProgress from 'nprogress'
-import {useEffect} from 'react'
+
 
 export const Loading = () => {
     useEffect(() => {

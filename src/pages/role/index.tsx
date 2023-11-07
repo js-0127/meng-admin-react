@@ -1,3 +1,7 @@
+import { useEffect, useRef, useState } from 'react';
+import { useAntdTable } from 'ahooks';
+import { PlusOutlined } from '@ant-design/icons';
+import dayjs from 'dayjs';
 import { t } from '~/utils/i18n';
 import {
   Space,
@@ -12,29 +16,19 @@ import {
   Divider,
   Popconfirm,
 } from 'antd';
-import { useAntdTable } from 'ahooks';
-import { useEffect, useRef, useState } from 'react';
-import { PlusOutlined } from '@ant-design/icons';
-import roleService, { Role } from './service';
-import dayjs from 'dayjs';
 import { antdUtils } from '~/utils/antd';
+import roleService, { Role } from './service';
 import NewAndEditForm from './new-edit-form';
 import RoleMenu from './role-menu';
 import { WithAuth } from '~/components/with-auth';
 
-
-
 const rolePage = () => {
     const [form] = Form.useForm();
-    
     const {tableProps, search: {submit, reset}} = useAntdTable(roleService.getRoleListByPage, {form})
     const [editData, setEditData] = useState<Role | null>(null)
     const [saveLoading, setSaveLoading] = useState<boolean>(false)
-
     const [roleMenuVisible, setRoleMenuVisible] = useState<boolean>(false)
-
     const [curRoleId, setCurRoleId] = useState<string | null>()
-    
     const [formOpen, setFormOpen] = useState<boolean>(false)
     const formRef = useRef<FormInstance>(null)
     

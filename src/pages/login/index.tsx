@@ -1,21 +1,21 @@
-import { IconBuguang } from "~/assets/icons/buguang"
-import { t } from "~/utils/i18n"
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { JSEncrypt } from "jsencrypt"
 import { Button, Carousel, Form, Input, Modal } from "antd"
 import { LockOutlined, UserOutlined } from "@ant-design/icons"
+import { useGlobalStore } from "~/stores/global"
+import { IconBuguang } from "~/assets/icons/buguang"
 import { IconYanzhengma } from "~/assets/icons/yanzhengma"
+
+import { t } from "~/utils/i18n"
+import { antdUtils } from "~/utils/antd"
 import { useRequest } from "~/hooks/use-request"
 import loginService, { LoginDTO } from "./service"
-import { useGlobalStore } from "~/stores/global"
-import { useNavigate } from "react-router-dom"
+
 import './index.css'
-import { JSEncrypt } from "jsencrypt"
-import { useState } from "react"
-import { antdUtils } from "~/utils/antd"
 
 const Login = () => {
   
-
- 
   const navigate = useNavigate()
   const {setToken, setRefreshToken} = useGlobalStore()
   const { data: captcha, refresh: refreshCaptcha } = useRequest(loginService.getCaptcha);
@@ -54,16 +54,16 @@ const Login = () => {
       setToken(data.token)
       setRefreshToken(data.refreshToken)
       navigate('/')
-      antdUtils.notification?.success({
-        message: '登陆成功',
-      })
+      antdUtils.message?.success(
+         '登陆成功',
+      )
     } 
 
   const sendCheckEmail = async() => {
         if(!checkEmail) {
-          antdUtils.notification?.error({
-            message: '无效的邮箱格式',
-          })
+          antdUtils.message?.error(
+            '无效的邮箱格式',
+          )
           return 
         } 
         const [error] = await sendResetCheckEmail(checkEmail) 

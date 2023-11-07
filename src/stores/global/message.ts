@@ -1,6 +1,7 @@
-import { SocketMessageType } from "~/socket/message";
 import {create} from 'zustand'
 import { devtools } from "zustand/middleware";
+import { SocketMessageType } from "~/socket/message";
+
 
 export interface SocketMessage {
     type: SocketMessageType

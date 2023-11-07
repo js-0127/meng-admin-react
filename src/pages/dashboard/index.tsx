@@ -1,12 +1,11 @@
-import { t } from '~/utils/i18n';
 import { InfoCircleOutlined, CaretUpOutlined, DashOutlined, CaretDownOutlined } from '@ant-design/icons';
 import { Col, Divider, Dropdown, Row, Select, Tooltip } from 'antd';
-
-import './index.css'
+import { t } from '~/utils/i18n';
 import DemoTinyLine from './tiny-line';
 import DemoTinyColumn from './tiny-column';
 import DemoColumn from './column';
 import DemoTinyArea from './tiny-area';
+import './index.css'
 const Dashboard:React.FC = () => {
     return (
         <>

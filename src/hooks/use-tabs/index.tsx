@@ -1,7 +1,7 @@
-// /src/layouts/useTabs.tsx 
+import { useCallback, useEffect, useState } from 'react';
 import { useMatchRoute } from '~/hooks/use-match-routes';
 import { router } from '~/router';
-import { useCallback, useEffect, useState } from 'react';
+
 
 export interface KeepAliveTab {
   title: string;
@@ -11,11 +11,6 @@ export interface KeepAliveTab {
   icon?: any;
   children: any;
 }
-
-// function getKey() {
-//   return new Date().getTime().toString();
-// }
-
 
 export function useTabs() {
   // 存放页面记录

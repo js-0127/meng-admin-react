@@ -1,8 +1,9 @@
+import { FC, Suspense } from 'react';
 import { Loading } from '~/components/loading';
 import { defaultSetting } from '~/default-settings';
 import { usePCScreen } from '~/hooks/use-pc-screen';
 import { useGlobalStore } from '~/stores/global';
-import { FC, Suspense } from 'react';
+
 
 
 const Content: FC<any> = ({ children }) => {

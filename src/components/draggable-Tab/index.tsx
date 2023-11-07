@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react';
 import type { DragEndEvent } from '@dnd-kit/core';
 import { DndContext, PointerSensor, useSensor } from '@dnd-kit/core';
 import {
@@ -7,7 +8,6 @@ import {
   useSortable,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import React, { useEffect, useState } from 'react';
 import { Tabs, TabsProps } from 'antd';
 import {
   restrictToHorizontalAxis,

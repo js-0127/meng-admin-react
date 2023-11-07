@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { Avatar, Button, Dropdown, Input } from 'antd';
+import { BellOutlined, MenuOutlined, SettingOutlined } from '@ant-design/icons';
 
 import { Icon3 } from '~/assets/icons/3';
 import { IconBuguang } from '~/assets/icons/buguang';
@@ -7,13 +8,13 @@ import { IconFangdajing } from '~/assets/icons/fangdajing';
 import { IconJiaretaiyang } from '~/assets/icons/jiaretaiyang';
 import { IconShuyi_fanyi36 } from '~/assets/icons/shuyi_fanyi-36';
 import { defaultSetting } from '~/default-settings';
-import { useGlobalStore } from '~/stores/global';
 import { i18n, t } from '~/utils/i18n';
-import { BellOutlined, MenuOutlined, SettingOutlined } from '@ant-design/icons';
-import { useUserStore } from '~/stores/global/user';
-import { useRequest } from '~/hooks/use-request';
-import loginService from '~/pages/login/service';
 import { antdUtils } from '~/utils/antd';
+import { useRequest } from '~/hooks/use-request';
+import { useUserStore } from '~/stores/global/user';
+import { useGlobalStore } from '~/stores/global';
+import loginService from '~/pages/login/service';
+
 
 const Header = () => {
 
@@ -25,29 +26,23 @@ const Header = () => {
     setLang,
     lang,
   } = useGlobalStore();
-
   const { currentUser } = useUserStore();
-
   const { runAsync} = useRequest(loginService.logout, { manual: true });
-
   const logout = async () => {
     const [error] = await runAsync();
     if (error) {
       return;
     } else {
-      antdUtils.notification?.success({
-        message: '退出成功'
-      })
+      antdUtils.message?.success(
+        '退出成功'
+      )
     }
-
     useGlobalStore.setState({
       token: '',
       refreshToken: ''
     });
 
   }
-  
-
   return (
     <div
       style={{ zIndex: 998 }}

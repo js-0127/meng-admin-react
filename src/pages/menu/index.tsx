@@ -1,18 +1,15 @@
 import React, {useEffect, useState, useMemo} from "react"
-
 import { Button, Divider, Table, Tag, Space, TablePaginationConfig, Popconfirm } from 'antd';
-import { antdUtils } from '~/utils/antd';
 import { antdIcons } from '~/assets/antd-icons';
+import { antdUtils } from '~/utils/antd';
 import { useRequest } from '~/hooks/use-request';
-
-import NewAndEditForm from './new-edit-form';
 import menuService, { Menu } from './service';
 import { MenuType } from "./interface";
+import NewAndEditForm from './new-edit-form';
 import { WithAuth } from "~/components/with-auth";
 
 const MenuPage:React.FC = () => {
     const [dataSource, setDataSource] = useState<Menu[]>([])
-
     const [pagination, setPagination] = useState<TablePaginationConfig>({
         current: 1,
         pageSize: 20,
@@ -25,8 +22,6 @@ const MenuPage:React.FC = () => {
   const [editData, setEditData] = useState<null | Menu>(null);
 
   const { loading, runAsync: getMenusByPage } = useRequest(menuService.getMenusByPage, { manual: true});
-
-   
   const getMenus = async () => {
     const {current, pageSize} = pagination || {}
   
@@ -48,7 +43,6 @@ const MenuPage:React.FC = () => {
   }
 
   const CreateButton = WithAuth('menu:create')(Button)
-  
   const columns: any[] = useMemo(
     () => [
       {
@@ -148,7 +142,6 @@ const MenuPage:React.FC = () => {
     ],
     [],
   );
-
   const cancelHandle = () => {
     setCreateVisible(false);
     setEditData(null)
@@ -220,7 +213,6 @@ const MenuPage:React.FC = () => {
           },
         }}
       />
-
       <NewAndEditForm
         onSave={saveHandle}
         onCancel={cancelHandle}

@@ -1,9 +1,9 @@
+import { useEffect } from 'react';
 import { Navigate, RouteObject, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { App } from 'antd';
+import { antdUtils } from '~/utils/antd';
 import BasicLayout from '~/layout';
 import Login from '~/pages/login';
-import { App } from 'antd';
-import { useEffect } from 'react';
-import { antdUtils } from '~/utils/antd';
 import RouterErrorElement from '~/router-error-element';
 
 export const router = createBrowserRouter(
@@ -34,7 +34,6 @@ export const router = createBrowserRouter(
   export const toLoginPage = () => {
     router.navigate('/login');
   }
-  
   
   function findNodeByPath(routes: RouteObject[], path:string){
     for(let i = 0; i < routes.length; i++){
