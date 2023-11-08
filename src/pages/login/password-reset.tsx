@@ -9,7 +9,6 @@ import { getParamsBySearchParams } from "~/utils/util"
 import { useRequest } from "~/hooks/use-request"
 import loginService, { ResetPasswordDTO } from "./service"
 
-
 const ResetPassword = () => {
 
     const navigate = useNavigate()
@@ -19,16 +18,15 @@ const ResetPassword = () => {
 
     useEffect(() => {
         const params = getParamsBySearchParams(query);
-
         if(!params.email || !params.emailCaptcha) {
-            antdUtils.message?.error('重置链接不正确，请检查')
+            antdUtils.message?.error(t('QgaYSPax'))
 
         }
     }, [query])
 
     const onFinish = async (values: ResetPasswordDTO) => {
         if (values.comfirmPassword !== values.password) {
-          antdUtils.message?.error('两次密码不一致');
+          antdUtils.message?.error(t('QgaYSPay'));
           return;
         }
         // 获取公钥
@@ -53,8 +51,8 @@ const ResetPassword = () => {
         if (resetPassawordError) {
           return;
         }
-        antdUtils.message?.success('密码重置成功');
-        navigate('/user/login');
+        antdUtils.message?.success(t('QgaYSPaw'));
+        navigate('/login');
       };
     
       
@@ -64,9 +62,9 @@ return (
       <div className='dark:bg-[rgb(33,41,70)] w-[94%] px-[32px] py-[20px] mx-auto bg-white rounded-lg lg:mt-[-12%] lg:w-[400px]'>
         <div className='mb-[32px]'>
           <div className='flex gap-2'>
-            <h2 className='text-[rgb(124,77,255)]' style={{ marginBottom: '0.6em' }}>重置密码</h2>
+            <h2 className='text-[rgb(124,77,255)]' style={{ marginBottom: '0.6em' }}>{t('QgaYSPau')}</h2>
           </div>
-          <div className='text-[16px]' >设置你的新密码</div>
+          <div className='text-[16px]' >{t('QgaYSPav')}</div>
         </div>
         <Form
           name="super-admin"
@@ -92,7 +90,7 @@ return (
             <Input
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
-              placeholder="重复密码"
+              placeholder={t('QgaYSPat')}
             />
           </Form.Item>
           <Form.Item style={{ marginBottom: 18 }}>
@@ -102,7 +100,7 @@ return (
               block
               htmlType='submit'
             >
-              确认
+              {t('QbaYSPaU')}
             </Button>
           </Form.Item>
           <Form.Item noStyle style={{ marginBottom: 0 }} >
@@ -141,10 +139,10 @@ return (
             <div className='h-[160px] bg-transparent flex items-center justify-center'>
               <div>
                 <h3 className='dark:text-[rgb(215,220,236)] text-[rgb(18,25,38)] text-[34px]'>
-                  fluxy-admin
+                meng-admin
                 </h3>
                 <div className='dark:text-[rgb(132,146,196)] text-[rgb(105,117,134)] text-[12px] my-[20px] '>
-                  一个高颜值后台管理系统
+                {t('wbTMzvDM')}
                 </div>
               </div>
             </div>
@@ -153,10 +151,10 @@ return (
             <div className='h-[160px] bg-transparent flex items-center justify-center'>
               <div>
                 <h3 className='dark:text-[rgb(215,220,236)] text-[rgb(18,25,38)] text-[34px]'>
-                  fluxy-admin
+                  meng-admin
                 </h3>
                 <div className='dark:text-[rgb(132,146,196)] text-[rgb(105,117,134)] text-[12px] my-[20px]'>
-                  一个高颜值后台管理系统
+                {t('wbTMzvDM')}
                 </div>
               </div>
             </div>
@@ -165,10 +163,10 @@ return (
             <div className='h-[160px] bg-transparent flex items-center justify-center'>
               <div>
                 <h3 className='dark:text-[rgb(215,220,236)] text-[rgb(18,25,38)] text-[34px]'>
-                  fluxy-admin
+                meng-admin
                 </h3>
                 <div className='dark:text-[rgb(132,146,196)] text-[rgb(105,117,134)] text-[12px] my-[20px] '>
-                  一个高颜值后台管理系统
+                  {t('wbTMzvDM')}
                 </div>
               </div>
             </div>

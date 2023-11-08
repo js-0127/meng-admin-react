@@ -7,6 +7,7 @@ import { antdIcons } from "~/assets/antd-icons"
 import { KeepAliveTab, useTabs } from "~/hooks/use-tabs"
 import { KeepAliveTabContext } from "../tabs-context"
 import DraggableTab from "~/components/draggable-Tab"
+import { t } from "~/utils/i18n"
 
 
 enum OperationType {
@@ -27,15 +28,15 @@ enum OperationType {
    const menuItems: MenuItemType[] = useMemo(
             () => [
               {
-                label: '刷新',
+                label: t('QgaYSPal'),
                 key: OperationType.REFRESH,
               },
               keepAliveTabs.length <= 1 ? null : {
-                label: '关闭',
+                label: t('QgaYSPak'),
                 key: OperationType.CLOSE,
               },
               keepAliveTabs.length <= 1 ? null : {
-                label: '关闭其他',
+                label: t('QgaYSPam'),
                 key: OperationType.CLOSEOTHER,
               },
             ].filter(o => o !== null) as MenuItemType[],

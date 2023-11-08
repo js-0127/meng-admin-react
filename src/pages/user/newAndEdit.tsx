@@ -104,7 +104,7 @@ const NewAndEditForm:ForwardRefRenderFunction<FormInstance, PropsType> = ({
           initialValues={initialValues || {sex: 1}}
         >
          
-          <Form.Item label="头像" name="avatar">
+          <Form.Item label={t('QbaYSPlL')} name="avatar">
             <Avatar />
           </Form.Item>
 
@@ -156,7 +156,7 @@ const NewAndEditForm:ForwardRefRenderFunction<FormInstance, PropsType> = ({
       </Form.Item>
 
       <Form.Item 
-         name="emailCaptcha" label="邮箱验证码" rules={[{required: true,}]}
+         name="emailCaptcha" label={t('QgaYSPab')} rules={[{required: true,}]}
       >
         <Input  />
       </Form.Item>
@@ -172,7 +172,7 @@ const NewAndEditForm:ForwardRefRenderFunction<FormInstance, PropsType> = ({
       </Form.Item>
         
          <Form.Item 
-           label="角色"
+           label={t('QgaYSPac')}
            name="user_Role"
          >
           <Select 

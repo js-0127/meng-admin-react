@@ -2,11 +2,14 @@ import React, {useEffect, useState, useMemo} from "react"
 import { Button, Divider, Table, Tag, Space, TablePaginationConfig, Popconfirm } from 'antd';
 import { antdIcons } from '~/assets/antd-icons';
 import { antdUtils } from '~/utils/antd';
+import { t } from "~/utils/i18n";
 import { useRequest } from '~/hooks/use-request';
 import menuService, { Menu } from './service';
 import { MenuType } from "./interface";
 import NewAndEditForm from './new-edit-form';
 import { WithAuth } from "~/components/with-auth";
+import { PlusOutlined } from "@ant-design/icons";
+
 
 const MenuPage:React.FC = () => {
     const [dataSource, setDataSource] = useState<Menu[]>([])
@@ -46,12 +49,12 @@ const MenuPage:React.FC = () => {
   const columns: any[] = useMemo(
     () => [
       {
-        title: '名称',
+        title: t('LhjNVSoc'),
         dataIndex: 'name',
         width: 170,
       },
       {
-        title: '类型',
+        title: t('QkaYSPaL'),
         dataIndex: 'type',
         align: 'center',
         width: 100,
@@ -60,14 +63,14 @@ const MenuPage:React.FC = () => {
         ),
       },
       {
-        title: '图标',
+        title: t('QlaYSPaM'),
         align: 'center',
         width: 100,
         dataIndex: 'icon',
         render: value => antdIcons[value] && React.createElement(antdIcons[value])
       },
       {
-        title: '路由',
+        title: t('QmaYSPaN'),
         dataIndex: 'route',
       },
       {
@@ -75,20 +78,20 @@ const MenuPage:React.FC = () => {
         dataIndex: 'url',
       },
       {
-        title: '文件地址',
+        title: t('QnaYSPaO'),
         dataIndex: 'filePath',
       },
       {
-        title: '排序号',
+        title: t('QoaYSPaP'),
         dataIndex: 'orderNumber',
         width: 100,
       },
       {
-        title: '按钮权限码',
+        title: t('QpaYSPaQ'),
         dataIndex: 'authCode'
       },
       {
-        title: '操作',
+        title: t('QkOmYwne'),
         dataIndex: 'id',
         align: 'center',
         width: 200,
@@ -106,7 +109,7 @@ const MenuPage:React.FC = () => {
                   setCurRowData(record);
                 }}
               >
-                添加
+                {t('QgaYSPai')}
               </a>
               <a
                 onClick={() => {
@@ -114,26 +117,26 @@ const MenuPage:React.FC = () => {
                   setCreateVisible(true);
                 }}
               >
-                编辑
+               {t('qEIlwmxC')}
               </a>
               <Popconfirm
                 
-                title="是否删除？"
-                cancelText="取消"
-                okText="确定"
+                title={t('nlZBTfzL')}
+                cancelText={t('QapYSPaT')}
+                okText={t('QbaYSPaU')}
                 onConfirm={async () => {
                   
                   const [error] = await menuService.removeMenu(value);
 
                   if (!error) {
-                    antdUtils.message?.success('删除成功');
+                    antdUtils.message?.success(t('bvwOSeoJ'));
                     getMenus();
                     setExpandedRowKeys([]);
                   }
                 }}
                 placement='topRight'
               >
-                <a>删除</a>
+                <a>{t('HJYhipnp')}</a>
               </Popconfirm>
             </Space>
           );
@@ -190,11 +193,12 @@ const MenuPage:React.FC = () => {
       <CreateButton
         className="mb-[12px]"
         type="primary"
+        icon={<PlusOutlined />}
         onClick={() => {
           setCreateVisible(true);
         }}
       >
-        新建
+      {t('morEPEyc')}
       </CreateButton>
       <Table
         columns={columns}

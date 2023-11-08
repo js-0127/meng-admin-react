@@ -151,10 +151,22 @@ import axios, {
           this.refreshToken();
         });
       } else {
-        antdUtils.notification?.error({
-          message: '出错了',
-          description: error?.response?.data?.message,
-        });
+        if(status === 403) {
+          antdUtils.notification?.error({
+            message: '出错了',
+            description: '没有权限',
+          });
+        } else if(status === 404) {
+          antdUtils.notification?.error({
+            message: '出错了',
+            description: '找不到文件',
+          });
+        } else if (status === 500){
+          antdUtils.notification?.error({
+            message: '出错了',
+            description: '服务器错误',
+          });
+        }
         return Promise.resolve([true, error?.response?.data]);
       }
     }

@@ -34,11 +34,12 @@ const UserPage = () => {
     
     const [saveLoding, setSaveLoding] = useState(false)
     const CreateButton = WithAuth('user:create')(Button)
+    const SearchButton = WithAuth('user:search')(Button)
     const formRef = useRef<FormInstance>(null)
  
     const columns: ColumnsType<any> = [
         {
-            title: '头像',
+            title: t('QbaYSPlL'),
             dataIndex: 'avatar',
             render: (value: string) => (
               
@@ -92,8 +93,8 @@ const UserPage = () => {
                     </a>
                     <Popconfirm
                     title={t("JjwFfqHG" /* 警告*/ )}
-                    cancelText="取消"
-                    okText="确认"
+                    cancelText={t('QapYSPaT')}
+                    okText={t('QbaYSPaU')}
                     description={t("nlZBTfzL" /* 确认删除这条数据？ */)}
                     onConfirm={async () => {
                        const [error] =  await deleteUser(record.id);
@@ -144,7 +145,7 @@ const UserPage = () => {
                     </Col>
                     <Col lg={24} xl={8}>
                        <Space>
-                         <Button onClick={submit} type='primary'>{t("YHapJMTT" /* 搜索 */)}</Button>
+                         <SearchButton onClick={submit} type='primary'>{t("YHapJMTT" /* 搜索 */)}</SearchButton>
                          <Button onClick={reset}>{t("uCkoPyVp" /* 清除 */)}</Button>
                        </Space>
                     </Col>

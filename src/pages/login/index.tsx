@@ -14,6 +14,7 @@ import loginService, { LoginDTO } from "./service"
 
 import './index.css'
 
+
 const Login = () => {
   
   const navigate = useNavigate()
@@ -28,7 +29,7 @@ const Login = () => {
   const [checkEmail,setCheckEmail] = useState<string>()
 
   const {loading: resetPasswordBtnLoading, runAsync:sendResetCheckEmail} = useRequest(loginService.sendCheckEmail, {manual: true})
-
+  
   const onFinish = async(values:LoginDTO) =>{
     if(!captcha?.data){
       return ;
@@ -49,27 +50,27 @@ const Login = () => {
    values.publicKey = publicKey
       const [loginError, data] = await login(values)
       if(loginError) {
-        return 
+        return
       }
       setToken(data.token)
       setRefreshToken(data.refreshToken)
       navigate('/')
       antdUtils.message?.success(
-         '登陆成功',
+         t('QgaYSPaq')
       )
     } 
 
   const sendCheckEmail = async() => {
         if(!checkEmail) {
           antdUtils.message?.error(
-            '无效的邮箱格式',
+           t('QgaYSPar')
           )
           return 
         } 
         const [error] = await sendResetCheckEmail(checkEmail) 
 
         if(!error){
-          antdUtils.message?.success('邮件已发送，请到邮箱查看。');
+          antdUtils.message?.success(t('QgaYSPas'));
           setEmailResetPasswordOpen(false);
         }
   }
@@ -83,7 +84,7 @@ const Login = () => {
                           <IconBuguang className="text-[20px] text-blue-500"></IconBuguang>
                           <h1 className="dark:(text-white)" style={{marginBottom: '0.2em'}}>meng-admin</h1>
                   </div>
-                  <h3 className="dark:(text-white) text-[rgba(0,0,0,.45)] mb-[1em] text-[14px] font-normal">
+                  <h3 className="dark:text-white text-[rgba(0,0,0,.45)] mb-[1em] text-[14px] font-normal">
                   {t("wbTMzvDM" /* 一个高颜值后台管理系统 */)}
                   </h3>
            </div>
@@ -117,11 +118,11 @@ const Login = () => {
             </Form.Item>
             <Form.Item
                name="captcha"
-               rules={[{required:true, message:'请输入验证码'}]}            
+               rules={[{required:true, message:t('QgaYSPaz')}]}            
             >
              <Input
                 prefix={<IconYanzhengma className="text-[20px] " />}
-                placeholder="验证码"
+                placeholder={t('QgaYSPaA0')}
                 suffix={
                 ( <div 
                   className="cursor-pointer " 
@@ -137,7 +138,7 @@ const Login = () => {
               <div className="text-right mb-[18px]">
                 <a onClick={() => {
                   setEmailResetPasswordOpen(true)
-                }} className="text-[16px] !text-[rgb(124,77,255)] select-none" type="link" >忘记密码?</a>
+                }} className="text-[16px] !text-[rgb(124,77,255)] select-none" type="link" >{t('QgaYSPap')}</a>
               </div>
 
             </Form.Item>
@@ -218,12 +219,12 @@ const Login = () => {
       </div>
 
       <Modal 
-         title="重置密码"
+         title={t('QgaYSPau')}
          open={emailResetPasswordOpen}
          footer={null}
          width={400}
-         cancelText='取消'
-         okText="确认"
+         cancelText={t('QapYSPaT')}
+         okText={t('QbaYSPaU')}
          maskClosable={false}
          bodyStyle={{padding: '20px', position: 'relative'}}
          style={{top: 240}}
@@ -245,7 +246,7 @@ const Login = () => {
        
        <Input 
          size="large"
-         placeholder="请输入邮箱"
+         placeholder={t('QgaYSPaA1')}
          onBlur={() => {setEmailInputFocus(false)}}
          onFocus={() => {setEmailInputFocus(true)}}
          onChange={(e) => {
@@ -259,7 +260,7 @@ const Login = () => {
           onClick={sendCheckEmail}
           loading={resetPasswordBtnLoading}
         >
-          发送验证邮件
+          {t('QgaYSPaA2')}
         </Button>
       </Modal>
         </div>

@@ -59,7 +59,7 @@ const NewAndEditForm: ForwardRefRenderFunction<FormInstance, PropsType> = ({
            name='addAndEdit'
         >
         <Form.Item
-           label="代码"
+           label={t('QjaYSPaK')}
            name="code"
            rules={[{
             required: true,
@@ -70,7 +70,7 @@ const NewAndEditForm: ForwardRefRenderFunction<FormInstance, PropsType> = ({
         </Form.Item>
         
         <Form.Item
-        label="名称"
+        label={t('LhjNVSoc')}
         name="name"
         rules={[{
           required: true,
@@ -81,12 +81,12 @@ const NewAndEditForm: ForwardRefRenderFunction<FormInstance, PropsType> = ({
       </Form.Item>
 
       <Form.Item
-         label="分配菜单"
+         label={t('QpaYSPaR')}
          name="menus"
       >
         <a onClick={() => {
             setRoleMenuVisible(true)
-        }}>选择菜单</a>
+        }}>{t('QpaYSPaS')}</a>
         
       </Form.Item>
      <RoleMenu

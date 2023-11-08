@@ -2,6 +2,7 @@ import React, { ChangeEventHandler, useEffect, useRef, useState } from "react";
 import { Button, Form, Input } from 'antd';
 import { useRequest } from "~/hooks/use-request";
 import userService from './service';
+import { t } from "~/utils/i18n";
 
 interface PropsType {
     value?: string
@@ -52,7 +53,7 @@ const EmailInput: React.FC<PropsType> = ({
             <Input disabled={disabled} onChange={onChange} value={value} className="flex-1" />
             {!disabled && (
              <Button className="flex-1" disabled={timer < 0} onClick={sendEmailCaptcha}>
-                {timer > 0 ? `重新发送(${timer}秒)` : '发送验证码'}
+                {timer > 0 ? `${t('QeaYSPaZ')}${timer}${t('QgaYSPaa')}` : t('QeaYSPaY')}
              </Button>
             )}
         </div>

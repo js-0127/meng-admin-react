@@ -4,33 +4,36 @@ import dayjs from "dayjs"
 import type { ColumnsType } from "antd/es/table"
 import { t } from "~/utils/i18n"
 import { LoginLogService } from "./service"
+import { WithAuth } from "~/components/with-auth"
 
 export const LoginLog = () => {
     const [form] = Form.useForm()
-    const {tableProps, search: {submit, reset}} = useAntdTable(LoginLogService.getUserListByPage, {form}) 
+    const {tableProps, search: {submit, reset}} = useAntdTable(LoginLogService.getUserListByPage, {form})
+    
+    const SearchButton = WithAuth('log:search')(Button)
     const columns: ColumnsType<any> = [
         {
-            title: t('qYznwlfj'), /*用户名*/
+            title: t('qYznwlfj'),
             dataIndex: 'userName'
         },
         {
-            title: '登录ip',
+            title: t('QadYSPmR'),
             dataIndex: 'ip'
         },
         {
-            title: '登录地址',
+            title: t('QcaYSPaA'),
             dataIndex: 'address',
         },
         {
-            title: '浏览器',
+            title: t('QdaYSPaD'),
             dataIndex: 'browser',
           },
           {
-            title: '操作系统',
+            title: t('QeaYSPaF'),
             dataIndex: 'os',
           },
           {
-            title: '登陆状态',
+            title: t('QgaYSPaH'),
             dataIndex: 'status',
             render: (value: boolean) => 
               value ? (
@@ -42,12 +45,12 @@ export const LoginLog = () => {
 
           },
           {
-            title: '登录信息',
+            title: t('QhaYSPaI'),
             dataIndex: 'message',  
           },
 
           {
-            title: '登陆时间',
+            title: t('QiaYSPaJ'),
             dataIndex: 'createAt',
             render: (value: number) => value && dayjs(value).format('YYYY-MM-DD HH:mm:ss'),
           },
@@ -67,7 +70,7 @@ export const LoginLog = () => {
             </Col>
             <Col className='w-full text-right' lg={24} xl={8}>
               <Space>
-               <Button onClick={submit} type='primary'>{t("YHapJMTT" /* 搜索 */)}</Button>
+               <SearchButton onClick={submit} type='primary'>{t("YHapJMTT" /* 搜索 */)}</SearchButton>
                 <Button onClick={reset}>{t("uCkoPyVp" /* 清除 */)}</Button>
               </Space>
             </Col>

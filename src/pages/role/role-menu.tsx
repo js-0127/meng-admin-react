@@ -5,6 +5,7 @@ import { antdUtils } from '~/utils/antd';
 import { useRequest } from "~/hooks/use-request";
 import roleService from './service';
 import { Menu } from "../menu/service";
+import { t } from "i18next";
 
 interface RoleMenuProps {
     visible: boolean;
@@ -117,7 +118,7 @@ const RoleMenu: React.FC<RoleMenuProps> = ({
         setSaveLoading(false)
 
         if(!error){
-            antdUtils.message?.success('分配成功')
+            antdUtils.message?.success(t('QgaYSPah'))
             onCancel()
         }
     }
@@ -134,10 +135,10 @@ const RoleMenu: React.FC<RoleMenuProps> = ({
     }, [visible])
     return (
         <Modal
-           title='分配菜单'
+           title={t('QpaYSPaR')}
            open={visible}
-           cancelText='取消'
-           okText="确认"
+           cancelText={t('QapYSPaT')}
+           okText={t('QbaYSPaU')}
            onCancel={() => {
             onCancel()
            }} 
@@ -151,7 +152,7 @@ const RoleMenu: React.FC<RoleMenuProps> = ({
           <Spin/> 
           :  (
             <div>
-                <label>选择类型</label>
+                <label>{t('QgaYSPad')}</label>
                 <Radio.Group
                    onChange={(e) => setSelectType(e.target.value)}
                    defaultValue="allChildren"
@@ -159,9 +160,9 @@ const RoleMenu: React.FC<RoleMenuProps> = ({
                    buttonStyle="solid"
                    className="ml-[10px]"
                 >
-                    <Radio value="allChildren">所有子级</Radio>
-                    <Radio value="current">当前</Radio>
-                    <Radio value="firstChildren">一级子级</Radio>
+                    <Radio value="allChildren">{t('QgaYSPae')}</Radio>
+                    <Radio value="current">{t('QgaYSPaf')}</Radio>
+                    <Radio value="firstChildren">{t('QgaYSPag')}</Radio>
                 </Radio.Group>
 
                 <div className="mt-[16px]">

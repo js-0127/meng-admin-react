@@ -33,7 +33,7 @@ const rolePage = () => {
     const formRef = useRef<FormInstance>(null)
     
     const CreateButton = WithAuth('role:create')(Button)
-    
+    const SerchButton = WithAuth('role:search')(Button)
     useEffect(() => {
       if(tableProps.dataSource){
         
@@ -41,16 +41,16 @@ const rolePage = () => {
     })
     const columns: any[] = [
         {
-            title: '名称',
+            title: t('LhjNVSoc'),
             dataIndex: 'name'
         },
         {
-            title: '代码',
+            title: t('QjaYSPaK'),
             dataIndex: 'code',
             valueType: 'text',
         },
         {
-            title: '创建时间',
+            title: t('TMuQjpWo'),
             dataIndex: 'createdAt',
             hideInForm: true,
             search: false,
@@ -61,7 +61,7 @@ const rolePage = () => {
             } 
         },
         {
-            title: '操作',
+            title: t('QkOmYwne'),
             dataIndex: 'id',
             hideInForm: true,
             width: 240,
@@ -81,7 +81,7 @@ const rolePage = () => {
                     
                   }}
                 >
-                  分配菜单
+                  {t('QpaYSPaR')}
                 </a>
                 <a
                   onClick={async() => {
@@ -91,23 +91,23 @@ const rolePage = () => {
                     
                   }}
                 >
-                  编辑
+                 {t('qEIlwmxC')}
                 </a>
                 <Popconfirm
-                   cancelText="取消"
-                   okText="确认"
-                   title="确认删除？"
+                   cancelText={t('QapYSPaT')}
+                   okText={t('QbaYSPaU')}
+                   title={t('nlZBTfzL')}
                    onConfirm={async () => {
                     const [error] = await roleService.removeRole(id);
                     if (!error) {
-                      antdUtils.message?.success('删除成功!');
+                      antdUtils.message?.success(t('bvwOSeoJ'));
                       submit();
                     }
                   }}
                   placement="topRight"
                 >
                   <a className="select-none">
-                    删除
+                   {t('HJYhipnp')}
                   </a>
                 </Popconfirm>
               </Space>
@@ -139,24 +139,23 @@ const rolePage = () => {
             >
                 <Row
                    gutter={24}
-                
                 >
                        <Col className='w-full' lg={24} xl={8}>
-                        <Form.Item name="code" label="代码">
+                        <Form.Item name="code" label={t('QjaYSPaK')}>
                               <Input onPressEnter={submit} />
                         </Form.Item>
                        </Col>
                        <Col className='w-full' lg={24} xl={8}>
-                        <Form.Item name="name" label="名称">
+                        <Form.Item name="name" label={t('LhjNVSoc')}>
                               <Input onPressEnter={submit} />
                         </Form.Item>
                        </Col>
 
                        <Col className='w-full' lg={24} xl={8}>
                          <Space>
-                            <Button onClick={submit} type="primary">
+                            <SerchButton onClick={submit} type="primary">
                             {t('YHapJMTT' /* 搜索 */)}
-                            </Button>
+                            </SerchButton>
                             <Button onClick={reset} type="primary">
                             {t('uCkoPyVp' /* 清除 */)}
                             </Button>
@@ -194,8 +193,8 @@ const rolePage = () => {
                onOk={() => {
                 formRef.current?.submit()
                }}
-               cancelText='取消'
-               okText="确认"
+               cancelText={t('QapYSPaT')}
+               okText={t('QbaYSPaU')}
                destroyOnClose
                onCancel={closeForm}
                confirmLoading={saveLoading}

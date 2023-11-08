@@ -5,6 +5,7 @@ import { antdUtils } from '~/utils/antd';
 import BasicLayout from '~/layout';
 import Login from '~/pages/login';
 import RouterErrorElement from '~/router-error-element';
+import ResetPassword from '~/pages/login/password-reset';
 
 export const router = createBrowserRouter(
     [
@@ -12,10 +13,10 @@ export const router = createBrowserRouter(
         path: '/login',
         Component: Login,
       },
-      // {
-      //   path: '/user/reset-password',
-      //   Component: ResetPassword,
-      // },
+      {
+        path: '/user/reset-password',
+        Component: ResetPassword,
+      },
       {
         path: '/',
         element: (
@@ -70,8 +71,6 @@ export const router = createBrowserRouter(
     curNode.children = routes;
   }
   }
-	
- 
 
   const Router = () => {
     const {notification, message, modal} = App.useApp()

@@ -5,6 +5,7 @@ import { componentPaths } from '~/config/routes';
 import { antdUtils } from '~/utils/antd';
 import { MenuType } from './interface';
 import menuService, { Menu } from './service';
+import { t } from '~/utils/i18n';
 
 interface CreateMemuProps {
     visible: boolean;
@@ -43,7 +44,7 @@ const NewAndEditForm : React.FC<CreateMemuProps> = (props) => {
             values.parentId = editData.parentId
             const [error] = await menuService.updateMenu({...editData, ...values})
             if(!error) {
-                antdUtils?.message?.success('更新成功')
+                antdUtils?.message?.success(t('NfOSPWDa'))
                 onSave()
             }
         } else {
@@ -51,7 +52,7 @@ const NewAndEditForm : React.FC<CreateMemuProps> = (props) => {
             const [error] = await menuService.addMenu(values)
            
             if(!error) {
-                antdUtils.message?.success('新增成功')
+                antdUtils.message?.success(t('QgaYSPaj'))
                 onSave()
             }
         }
@@ -66,9 +67,9 @@ const NewAndEditForm : React.FC<CreateMemuProps> = (props) => {
     return (
         <Modal
           open={visible}
-          title='新建'
-          cancelText='取消'
-          okText="确认"
+          title={editData ? t('qEIlwmxC') : t('morEPEyc')}
+          cancelText={t('QapYSPaT')}
+          okText={t('QbaYSPaU')}
           onOk={() => {
             form.submit()
           }}
@@ -91,25 +92,25 @@ const NewAndEditForm : React.FC<CreateMemuProps> = (props) => {
             show: 'true'
            }}
         >
-          <Form.Item label="类型" name="type">
+          <Form.Item label={t('QkaYSPaL')} name="type">
                <Radio.Group 
                optionType='button'
                buttonStyle='solid'
                >
-               <Radio value={MenuType.DIRECTORY}>目录</Radio>
-               <Radio value={MenuType.MENU}>菜单</Radio>
+               <Radio value={MenuType.DIRECTORY}>{t('QcaYSPaV')}</Radio>
+               <Radio value={MenuType.MENU}>{t('QdaYSPaW')}</Radio>
                </Radio.Group>
             </Form.Item>  
 
              <Form.Item 
-                label="名称" 
+                label={t('LhjNVSoc')}
                 name="name"
                 required
                 >
                     <Input />
              </Form.Item>
 
-             <Form.Item label="图标" name="icon" required>
+             <Form.Item label={t('QlaYSPaM')} name="icon" required>
                  <Select>
                     {Object.keys(antdIcons).map((key: React.Key) => (
                         <Select.Option key={key}>{React.createElement(antdIcons[key])}</Select.Option>
@@ -119,7 +120,7 @@ const NewAndEditForm : React.FC<CreateMemuProps> = (props) => {
 
              <Form.Item  
                 tooltip="以/开头, 不用手动拼接上级路由。参数格式:/id"
-                label="路由"
+                label={t('QmaYSPaN')}
                 name="route"
                 required
                 rules={[{
@@ -135,7 +136,7 @@ const NewAndEditForm : React.FC<CreateMemuProps> = (props) => {
                    {() => (
                     form.getFieldValue("type") === 2 && (
                         <Form.Item
-                           label="文件地址"
+                           label={t('QnaYSPaO')}
                            name="filePath"
                         >
                             <Select
@@ -154,7 +155,7 @@ const NewAndEditForm : React.FC<CreateMemuProps> = (props) => {
                         form.getFieldValue('type') === 2 && (
                             <Form.Item
                                valuePropName='checkd'
-                               label="是否显示"
+                               label={t('QdaYSPaX')}
                                name="show"
                             >
                                 <Switch defaultChecked onChange={onChangeShow}  />
@@ -163,7 +164,7 @@ const NewAndEditForm : React.FC<CreateMemuProps> = (props) => {
                      )}
                  </Form.Item>
 
-                 <Form.Item label="排序号" name="orderNumber" required>
+                 <Form.Item label={t('QoaYSPaP')} name="orderNumber" required>
                     <InputNumber />
                  </Form.Item>
 

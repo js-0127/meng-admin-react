@@ -40,7 +40,7 @@ const aboutPage:React.FC = () => {
                 <div className="flex-[2.5] mr-5" >
                     <Card className="h-[620px] py-2 px-4 flex flex-col">
                         <div className="h-[300px] flex items-center flex-col justify-start">
-                         <img className="w-[100px] aspect-auto rounded-[50%]" src="/src/assets/image/author.jpg" alt="失败" />
+                         <img className="w-[100px] aspect-auto rounded-[50%]" src="/images/author.jpg" alt="失败" />
                         <div className="flex flex-col justify-center items-center">
                         <h6 className="mt-6 text-xl font-sans text-[#000000d8] dark:text-white font-medium ">Meng</h6>
                         <span>
@@ -79,7 +79,7 @@ const aboutPage:React.FC = () => {
                                 <span>特别鸣谢</span>
                             </div>
                             <div className="flex-1 flex justify-start mt-4 items-start">
-                                  <Avatar src="/src/assets/image/dbfu.awebp" alt=""/>
+                                  <Avatar src="/images/dbfu.awebp" alt=""/>
                                   <span className="mt-[6px] ml-2">
                                     dbfu
                                   </span>

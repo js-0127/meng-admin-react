@@ -34,7 +34,7 @@ const Header = () => {
       return;
     } else {
       antdUtils.message?.success(
-        '退出成功'
+        t('QgaYSPao')
       )
     }
     useGlobalStore.setState({
@@ -155,7 +155,7 @@ const Header = () => {
                   </div>
                   <hr style={{ borderWidth: '0 0 thin' }} className='m-[0] border-solid dark:border-[rgb(45,55,72)] border-[rgb(242,244,247)]' />
                   <div className='p-[16px] text-center'>
-                    <Button onClick={logout} type='text' size='small'>退出登录</Button>
+                    <Button onClick={logout} type='text' size='small'>{t('QgaYSPan')}</Button>
                   </div>
                 </div>
               )
