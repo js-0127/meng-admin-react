@@ -156,15 +156,10 @@ import axios, {
             message: '出错了',
             description: '没有权限',
           });
-        } else if(status === 404) {
+        }  else {
           antdUtils.notification?.error({
             message: '出错了',
-            description: '找不到文件',
-          });
-        } else if (status === 500){
-          antdUtils.notification?.error({
-            message: '出错了',
-            description: '服务器错误',
+            description: error.response.data.message,
           });
         }
         return Promise.resolve([true, error?.response?.data]);
