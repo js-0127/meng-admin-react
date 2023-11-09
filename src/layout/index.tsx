@@ -7,7 +7,7 @@ import {SocketMessage, useMessageStore} from '~/stores/global/message'
 import { components } from '~/config/routes';
 import { useWebSocketMessage } from '~/hooks/use-websocket';
 import { useRequest } from '~/hooks/use-request';
-import userService, { Menu } from '~/pages/user/service';
+import userService, { Menu } from '~/pages/user/service'
 
 import GlobalLoading from '~/components/global-loading';
 import Result404 from '~/pages/404';
