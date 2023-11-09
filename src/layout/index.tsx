@@ -16,7 +16,7 @@ import Header from './header';
 import Slide from './slide';
 import MessageHandle from './message-handle';
 import { MenuType } from '~/pages/menu/interface';
-import TabsLayout from './tabs-layout';
+import TabsLayout from './tabs-layout'
 import './index.css'
 const BasicLayout: React.FC = () => {
 
