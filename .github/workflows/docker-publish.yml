@@ -68,5 +68,5 @@ jobs:
           PORT: 22 
           USER: root
           PRIVATE_SSH_KEY: ${{ secrets.SERVER_KEY }}
-          COMMAND: cd /root && ./run.sh
+        
 
