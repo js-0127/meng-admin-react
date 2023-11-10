@@ -30,7 +30,7 @@ const BasicLayout: React.FC = () => {
 
   // 当获取完用户信息后，手动连接
   const { latestMessage, connect } = useWebSocketMessage(
-    `${window.location.protocol.replace('http', 'ws')}//localhost:3000/?token=${token}`,
+    `${window.location.protocol.replace('http', 'ws')}//localhost:3001/?token=${token}`,
     { manual: true }
   );
 

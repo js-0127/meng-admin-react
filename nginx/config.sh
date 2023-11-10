@@ -54,7 +54,7 @@ cat >> /etc/nginx/conf.d/default.conf <<EOF
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
     }
 
-    location /upload/ {
+    location /file/ {
         proxy_pass $FILE_URL;
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
