@@ -82,7 +82,7 @@ const Header = () => {
           placeholder={t("jhqxJPbn" /* 搜索菜单 */)}
           allowClear
         />
-        <div className='pl-[20px] lg:hidden'>
+        <div className='pl-[20px] lg:hidden flex' >
           <div
             className='btn-icon'
             onClick={() => {
