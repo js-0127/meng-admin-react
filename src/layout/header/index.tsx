@@ -69,7 +69,7 @@ const Header = () => {
             outline: 'none',
             boxShadow: 'none'
           }}
-          className='w-[400px] h-[50px] focus:border-[rgb(135,94,196)] sm:hidden md:hidden lg:flex'
+          className='w-[400px] h-[50px] focus:border-[rgb(135,94,196)] hidden lg:flex'
           size="large"
           prefix={
             <IconFangdajing
