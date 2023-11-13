@@ -24,6 +24,7 @@ import userService, { User } from './service';
 
 import NewAndEditForm from './newAndEdit';
 import { WithAuth } from '~/components/with-auth';
+import { useUserStore } from '~/stores/global/user';
 
 const UserPage = () => {
     const [form] = Form.useForm()
@@ -35,6 +36,8 @@ const UserPage = () => {
     const [saveLoding, setSaveLoding] = useState(false)
     const CreateButton = WithAuth('user:create')(Button)
     const SearchButton = WithAuth('user:search')(Button)
+
+    const {currentUser} = useUserStore()
     const formRef = useRef<FormInstance>(null)
  
     const columns: ColumnsType<any> = [
@@ -91,21 +94,24 @@ const UserPage = () => {
                     }}>
                         {t("qEIlwmxC"  /*编辑 */)}
                     </a>
-                    <Popconfirm
-                    title={t("JjwFfqHG" /* 警告*/ )}
-                    cancelText={t('QapYSPaT')}
-                    okText={t('QbaYSPaU')}
-                    description={t("nlZBTfzL" /* 确认删除这条数据？ */)}
-                    onConfirm={async () => {
-                       const [error] =  await deleteUser(record.id);
-                       if(!error){
-                        message.success(t("bvwOSeoJ" /* 删除成功！ */))
-                        submit();
-                       }
-                    }}
-                    >
-                       <a>{t("HJYhipnp" /* 删除 */)}</a> 
-                    </Popconfirm>
+                     {currentUser?.userName !== record.userName && (
+                       <Popconfirm
+                       title={t("JjwFfqHG" /* 警告*/ )}
+                       cancelText={t('QapYSPaT')}
+                       okText={t('QbaYSPaU')}
+                       description={t("nlZBTfzL" /* 确认删除这条数据？ */)}
+                       onConfirm={async () => {
+                          const [error] =  await deleteUser(record.id);
+                          if(!error){
+                           message.success(t("bvwOSeoJ" /* 删除成功！ */))
+                           submit();
+                          }
+                       }}
+                       >
+                          <a>{t("HJYhipnp" /* 删除 */)}</a> 
+                       </Popconfirm>
+                     )}
+                    
                 </Space>
             )
           }

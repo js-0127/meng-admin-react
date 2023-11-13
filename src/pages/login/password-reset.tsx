@@ -20,7 +20,6 @@ const ResetPassword = () => {
         const params = getParamsBySearchParams(query);
         if(!params.email || !params.emailCaptcha) {
             antdUtils.message?.error(t('QgaYSPax'))
-
         }
     }, [query])
 

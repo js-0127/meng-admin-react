@@ -14,7 +14,7 @@ export const router = createBrowserRouter(
         Component: Login,
       },
       {
-        path: '/user/reset-password',
+        path: '/reset-password',
         Component: ResetPassword,
       },
       {
