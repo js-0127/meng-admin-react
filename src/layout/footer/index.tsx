@@ -5,8 +5,7 @@ const Footer = () => {
         
 <p style={{
           background:"none",
-          height: '5%',
-          position:'fixed',
+          height: '50px',
           bottom: "0px", 
           width: '100%',
           textAlign: 'center'
