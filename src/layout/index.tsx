@@ -18,6 +18,7 @@ import MessageHandle from './message-handle';
 import { MenuType } from '~/pages/menu/interface';
 import TabsLayout from './tabs-layout'
 import './index.css'
+import Footer from './footer';
 const BasicLayout: React.FC = () => {
 
   const [loading, setLoading] = useState(true);
@@ -183,6 +184,7 @@ const BasicLayout: React.FC = () => {
         <Content>
           <TabsLayout />
         </Content>
+        <Footer></Footer>
       </div>
     </div>
   );
